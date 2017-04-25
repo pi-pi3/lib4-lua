@@ -27,3 +27,7 @@ To customize this repository for your project, you'll have to do the following:
  - release/mac/game.app (the name of this directory)
  - release/mac/game.app/Info.plist (all places marked with #XXX)
  - src/conf.lua (t.identity and t.window.title)
+
+## Testing
+You can test some features by launching the included binary located in
+releases/<your-os>.
