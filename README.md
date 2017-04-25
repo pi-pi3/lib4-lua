@@ -21,7 +21,7 @@ look at how `src/menu.lua` uses `lgui` and launch the test suite using `love src
 ## Customization
 To customize this repository for your project, you'll have to do the following:
 1. customize this README
-1. customize config.mk
+2. customize config.mk
 3. change the name of the game in the following places:
  - release/linux/launch.sh (game title, aka $GAME)
  - release/mac/game.app (the name of this directory)
