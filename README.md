@@ -6,12 +6,17 @@ letters + extension.
 - `util.lua` General purpose utilities for games.
 - `lgui.lua` General purpose gui for games (requires löve).
 
-#### collections
+### collections
 - `list.lua` General purpose singly-linked list optimized with tail-calls.
 - `vec2.lua` and `vec3.lua` Easy vectors for games.
 
-#### other
- - `rect.lua` A rectangle for collision checks.
+### other
+- `rect.lua` A rectangle for collision checks.
+
+### submodules
+- `autobatch` Small LÖVE module to automate the use of SpriteBatches
+- `log.lua` A tiny logging module for Lua
+- `tick` Lua module for delaying function calls
 
 ## util.lua
 Most functions are documented and are so tiny, they're rather easy to understand.
@@ -33,3 +38,11 @@ To customize this repository for your project, you'll have to do the following:
 ## Testing
 You can test some features by launching the included binary located in
 releases/<your-os>.
+
+## Other libraries
+Other libraries that might be useful for you, but weren't included as
+submodules.  
+- `lume` Lua functions geared towards gamedev
+- `lovebpm` A LÖVE library for syncing events to the BPM of an audio track
+- `classic` Tiny class module for Lua
+- `lurker` Auto-swaps changed Lua files in a running LÖVE project

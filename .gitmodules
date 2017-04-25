@@ -1,0 +1,9 @@
+[submodule "lib/autobatch"]
+	path = lib/autobatch
+	url = https://github.com/rxi/autobatch
+[submodule "lib/log.lua"]
+	path = lib/log.lua
+	url = https://github.com/rxi/log.lua
+[submodule "lib/tick"]
+	path = lib/tick
+	url = https://github.com/rxi/tick
