@@ -1,7 +1,7 @@
 
 # These must variables be in sync with vars in butler.sh
 VERSION = 0.1
-GAME = ld-38
+GAME = game
 AUTHOR = pi_pi3
 ITCH = $(AUTHOR)
 
