@@ -5,10 +5,12 @@ letters + extension.
 ## included libraries:
 - `util.lua` General purpose utilities for games.
 - `lgui.lua` General purpose gui for games (requires löve).
-- **collections**:
- - `list.lua` General purpose singly-linked list optimized with tail-calls.
- - `vec2.lua and `vec3.lua` Easy vectors for games.
-- **other**:
+
+#### collections
+- `list.lua` General purpose singly-linked list optimized with tail-calls.
+- `vec2.lua` and `vec3.lua` Easy vectors for games.
+
+#### other
  - `rect.lua` A rectangle for collision checks.
 
 ## util.lua
