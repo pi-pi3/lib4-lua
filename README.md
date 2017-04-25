@@ -41,7 +41,7 @@ To customize this repository for your project, you'll have to do the following:
 
 ## Testing
 You can test some features by launching the included binary located in
-releases/<your-os>.
+releases/\<your-os\>.
 
 ## Other libraries
 Other libraries that might be useful for you, but weren't included as
