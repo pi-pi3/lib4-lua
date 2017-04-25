@@ -1,5 +1,5 @@
 
---[[ utils.lua A minimalistic util library useful for games.
+--[[ util.lua A minimalistic util library useful for games.
     Copyright (c) 2017 Szymon "pi_pi3" Walter
 
     This software is provided 'as-is', without any express or implied
@@ -21,8 +21,6 @@
     3. This notice may not be removed or altered from any source
     distribution.
 ]]
-
-local table = require('table')
 
 local util = {}
 
@@ -78,7 +76,7 @@ function util.ttostr(t, b, e, sep, recurse)
     b = b or '{'
     e = e or '}'
     sep = sep or ', '
-    recurse = (recurse ~= nil) and recurse or true
+    if recurse == nil then recurse = true end
 
     local str = b
     for k, v in pairs(t) do
@@ -142,9 +140,19 @@ function util.copy(orig, recurse)
     return copy
 end
 
+function util.sign(a)
+    if a == 0 then return 0
+    elseif a > 0 then return 1
+    elseif a < 0 then return -1 end
+end
+
 -- clamp x into the range min-max
 -- min and max may be nil for unbounded range on either side
 function util.clamp(x, min, max)
+    if min > max then
+        min, max = max, min
+    end
+
     if min == nil then
         if max == nil then
             return x
