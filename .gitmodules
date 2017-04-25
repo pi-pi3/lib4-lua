@@ -7,3 +7,15 @@
 [submodule "lib/tick"]
 	path = lib/tick
 	url = https://github.com/rxi/tick
+[submodule "lib/cpml"]
+	path = lib/cpml
+	url = https://github.com/excessive/cpml
+[submodule "lib/love3d"]
+	path = lib/love3d
+	url = https://github.com/excessive/love3d
+[submodule "lib/iqm"]
+	path = lib/iqm
+	url = https://github.com/excessive/iqm
+[submodule "lib/anim9"]
+	path = lib/anim9
+	url = https://github.com/excessive/anim9

@@ -14,9 +14,13 @@ letters + extension.
 - `rect.lua` A rectangle for collision checks.
 
 ### submodules
-- `autobatch` Small LÖVE module to automate the use of SpriteBatches
-- `log.lua` A tiny logging module for Lua
-- `tick` Lua module for delaying function calls
+- [`autobatch`](https://github.com/rxi/autobatch) Small LÖVE module to automate the use of SpriteBatches
+- [`log.lua`](https://github.com/rxi/log.lua) A tiny logging module for Lua
+- [`tick`](https://github.com/rxi/tick) Lua module for delaying function calls
+- [`cpml`](https://github.com/excessive/cpml) Cirno's Perfect Math Library: Just about everything you need for 2D/3D games. Hopefully.
+- [`love3d`](https://github.com/excessive/cpml)  A 3D extension for LÖVE (requires `cpml`)
+- [`iqm`](https://github.com/excessive/cpml)  Load an Inter-Quake Model file into LÖVE (works perfect with `love3d`)
+- [`anim9`](https://github.com/excessive/cpml)  Animation library for LÖVE3D
 
 ## util.lua
 Most functions are documented and are so tiny, they're rather easy to understand.
