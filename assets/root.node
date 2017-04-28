@@ -1,0 +1,12 @@
+# json-like?
+{
+    "player": {
+        "position": [0.0, 0.0, 0.0],
+        "rotation": [0.0, 0.0, 0.0, 0.0], # quaternion, xyzw
+        "scale": [1.0, 1.0, 1.0]
+        "model": "assets://models/player.iqm", # custom assets scheme
+        "textures": ["assets://textures/player.tga"],
+        "script": "src://player.lua", # custom src scheme
+    },
+    "skeleton": "assets://skeleton.node", # alternative syntax for defining nodes
+}
