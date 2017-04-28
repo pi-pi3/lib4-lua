@@ -1,6 +1,6 @@
 
 --[[ main.lua Entry point in this game.
-    Copyright (c) 2017 Szymon "pi_pi3" Walter, Szymon Bednarek
+    Copyright (c) 2017 Szymon "pi_pi3" Walter
 
     This software is provided 'as-is', without any express or implied
     warranty. In no event will the authors be held liable for any damages
