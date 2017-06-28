@@ -34,6 +34,8 @@ lgui = require('lgui')
 log = require('log')
 declare = util.declare -- global alias for declare, should work in every file
 
+local file = require('file')
+
 function love.load()
     math.randomseed(os.time()) -- don't forget your randomseed!
     love.keyboard.setKeyRepeat(true)
@@ -43,14 +45,10 @@ function love.load()
     util.init_G()
 
     love3d.load()
+    file.load()
 
     -- beyond this point in program execution every global variable has to be
     -- declared like this:
-    declare('scheme', {})
-    scheme.root = '/'
-    scheme.assets = 'assets/'
-    scheme.src = 'src/'
-
     declare('game', {})
 
     -- initial game state is the menu, but you can change it into a splash

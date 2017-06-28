@@ -1,5 +1,5 @@
 
---[[ node/sprite.lua
+--[[ node/model.lua
     Copyright (c) 2017 Szymon "pi_pi3" Walter
 
     This software is provided 'as-is', without any express or implied
@@ -22,48 +22,60 @@
     distribution.
 ]]
 
-local file = require('file')
+local anim9 = require('anim9')
 local node = require('node')
 
-local sprite = {}
-setmetatable(sprite, {
+local model = {}
+setmetatable(model, {
     __index = node,
-    __call = sprite.new,
+    __call = model.new,
 })
 
-local mt = {__index = sprite}
+local mt = {__index = model}
 
--- Create a new sprite
-function sprite.new(texture, quad, children, script)
+-- Create a new model
+function model.new(model, textures, anim, children, script)
+    assert(model)
+
     local self = node.new(children, script)
     setmetatable(self, mt)
 
-    self.t = "sprite"
-
-    if type(texture) == 'string' then
-        self.texture = file.load(texture)
+    self.t = "model"
+    if type(model) == 'string' then
+        self.model = file.load_model(model)
     else
-        self.texture = texture
+        self.model = model
     end
 
-    if quad then
-        if quad.x and quad.y and quad.w and quad.h then
-            local x, y, w, h = quad.x, quad.y, quad.w, quad.h
-            self.quad = love.graphics.newQuad(x, y, w, h)
-        elseif quad[1] and quad[2] and quad[3] and quad[4] then
-            local x, y, w, h = quad[1], quad[2], quad[3], quad[4]
-            self.quad = love.graphics.newQuad(x, y, w, h)
+    if type(model) == 'string' then
+        self.model.textures = {}
+        for k, t in pairs(textures) do
+            self.model.textures[k] = file.load_image(t)
+            assert(self.model.textures[k])
         end
     else
-        self.quad = love.graphics.newQuad(0, 0, self.texture.getWidth(),
-                                                self.texture.getHeight())
+        self.model.textures = textures
+    end
+
+    if anim then
+        if type(anim) == 'string' then
+            self.model.anims = file.load_anims(anim)
+        else
+            self.model.anims = anim
+        end
+        self.model.anim = anim9(self.model.anims)
+        assert(self.model.anim)
+
+        self.anim = self.model.anim:add_track(anim)
+        self.anim.playing = true
+        self.model.anim:update(0)
     end
 
     return self
 end
 
-function sprite:draw()
-    love.graphics.draw(self.texture, self.quad, 0, 0)
+function model:draw()
+    love3d.draw(self.model)
 end
 
-return sprite
+return model
