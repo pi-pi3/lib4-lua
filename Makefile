@@ -44,4 +44,9 @@ example:
 	cd example/; zip -9 -r example.love *
 	cd src/; zip -9 -r ../example/example.love *
 	zip -9 -r example/example.love lib/
+	for lib in anim9 autobatch log tick; do \
+		mv lib/$$lib/$$lib.lua lib/$$lib/init.lua; \
+		zip -9 -r example/example.love lib/$$lib/*; \
+		mv lib/$$lib/init.lua lib/$$lib/$$lib.lua; \
+	done
 	@echo "Done."
