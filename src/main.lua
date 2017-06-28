@@ -56,9 +56,11 @@ function love.load()
     -- initial game state is the menu, but you can change it into a splash
     -- screen for example
     game.state = require('game')
-    pcall(game.state.load)
+    local success, err = pcall(game.state.load)
+    if not success then
+        log.error('lib4: ' .. err)
+    end
 end
-
 
 function love.update(dt)
     if not game.state.pause
@@ -68,7 +70,10 @@ function love.update(dt)
 
     if not game.state.pause
         and game.state.update then
-        pcall(game.state.update, dt)
+        local success, err = pcall(game.state.update, dt)
+        if not success then
+            log.error('lib4: ' .. err)
+        end
     end
 
     lgui.updateall(game.state.elements)
@@ -84,7 +89,10 @@ function love.draw()
     end
 
     if game.state.draw then
-        pcall(game.state.draw)
+        local success, err = pcall(game.state.draw)
+        if not success then
+            log.error('lib4: ' .. err)
+        end
     end
 
     lgui.drawall(game.state.elements)
@@ -100,7 +108,10 @@ function love.mousepressed(mx, my, button)
 
     if not game.state.pause
         and game.state.mousepressed then
-        pcall(game.state.mousepressed, mx, my, button)
+        local success, err = pcall(game.state.mousepressed, mx, my, button)
+        if not success then
+            log.error('lib4: ' .. err)
+        end
     end
 
     if button == 1 then
@@ -116,7 +127,10 @@ function love.mousereleased(mx, my, button)
 
     if not game.state.pause
         and game.state.mousereleased then
-        pcall(game.state.mousereleased, mx, my, button)
+        local success, err = pcall(game.state.mousereleased, mx, my, button)
+        if not success then
+            log.error('lib4: ' .. err)
+        end
     end
 
     if button == 1 then
@@ -132,7 +146,10 @@ function love.mousemoved(mx, my, dx, dy)
 
     if not game.state.pause
         and game.state.mousemoved then
-        pcall(game.state.mousemoved, mx, my, dx, dy)
+        local success, err = pcall(game.state.mousemoved, mx, my, dx, dy)
+        if not success then
+            log.error('lib4: ' .. err)
+        end
     end
 
     lgui.mousemoved(game.state.elements, mx, my, dx, dy)
@@ -146,7 +163,10 @@ function love.wheelmoved(dx, dy)
 
     if not game.state.pause
         and game.state.wheelmoved then
-        pcall(game.state.wheelmoved, dx, dy)
+        local success, err = pcall(game.state.wheelmoved, dx, dy)
+        if not success then
+            log.error('lib4: ' .. err)
+        end
     end
 
     lgui.wheelmoved(game.state.elements, dx, dy)
@@ -160,7 +180,10 @@ function love.textinput(c)
 
     if not game.state.pause
         and game.state.textinput then
-        pcall(game.state.textinput, mx, my, dx, dy)
+        local success, err = pcall(game.state.textinput, mx, my, dx, dy)
+        if not success then
+            log.error('lib4: ' .. err)
+        end
     end
 
     lgui.textinput(game.state.elements, c)
@@ -174,7 +197,10 @@ function love.keypressed(key, scancode, isrepeat)
 
     if not game.state.pause
         and game.state.keypressed then
-        pcall(game.state.keypressed, key, scancode, isrepeat)
+        local success, err = pcall(game.state.keypressed, key, scancode, isrepeat)
+        if not success then
+            log.error('lib4: ' .. err)
+        end
     end
 
     lgui.keypressed(game.state.elements, key, scancode, isrepeat)
@@ -187,7 +213,10 @@ function love.quit()
     end
 
     if game.state.quit then
-        pcall(game.state.quit)
+        local success, err = pcall(game.state.quit)
+        if not success then
+            log.error('lib4: ' .. err)
+        end
     end
 end
 

@@ -41,7 +41,10 @@ function node.new(children, script)
     end
 
     if script and script.load then
-        script.load(self)
+        local success, result = pcall(script.load, self)
+        if not success then
+            log.error('lib4: ' .. err)
+        end
     end
 
     return self
@@ -58,12 +61,16 @@ function node:signal(s, ...)
         if self[func] then
             success, result = pcall(self[string.sub(s, 3)], self, ...)
             if not success then
+                log.error('lib4: ' .. err)
                 return success, result
             end
         end
 
         if self.script and self.script[func] then
-            pcall(self.script[func], self, ...)
+            local success, err = pcall(self.script[func], self, ...)
+            if not success then
+                log.error('lib4: ' .. err)
+            end
         end
     end
 
