@@ -2,6 +2,7 @@
 local node = require('node')
 local node2d = require('node/node2d')
 local rect = require('node/rect')
+local cpml = require('cpml')
 
 local game = {}
 
@@ -16,19 +17,19 @@ local bullet = function(pos, vx, vy)
     local b = node2d.new(
         r,
         {
-            load = function(self)
-                self.vx = vx
-                self.vy = vy
-            end,
-
             update = function(self, dt)
                 self.position.x = self.position.x + self.vx*dt
                 self.position.y = self.position.y + self.vy*dt
             end
         }
     )
+
     b.position.x = pos.x
     b.position.y = pos.y
+    b.vx = vx
+    b.vy = vy
+
+    return b
 end
 
 function game.load()
@@ -42,8 +43,7 @@ function game.load()
             {
                 load = function(self)
                     self.speed = 220
-                    self.shooting = -1
-                    self.shot = false
+                    self.shooting = 0
                 end,
 
                 update = function(self, dt)
@@ -52,6 +52,7 @@ function game.load()
                     end
 
                     local vx, vy = 0, 0
+                    local sx, sy = 0, 0
 
                     if love.keyboard.isScancodeDown('h') then
                         vx = vx - self.speed
@@ -66,13 +67,14 @@ function game.load()
                         vy = vy + self.speed
                     end
 
-                    if love.keyboard.isScancodeDown('z') 
-                        and self.shooting < 0 then
-                        self.shooting = 0
-                    end
-
-                    if vx == 0 and vy == 0 then
-                        self.shot = false
+                    if love.keyboard.isScancodeDown('a') then
+                        sx = -self.speed*10
+                    elseif love.keyboard.isScancodeDown('f') then
+                        sx = self.speed*10
+                    elseif love.keyboard.isScancodeDown('d') then
+                        sy = -self.speed*10
+                    elseif love.keyboard.isScancodeDown('s') then
+                        sy = self.speed*10
                     end
 
                     if vx ~= 0 and vy ~= 0 then
@@ -80,14 +82,14 @@ function game.load()
                         vy = 0
                     end
 
-                    if self.shooting == 0 and (vx ~= 0 or vy ~= 0) then
-                        game.root:add(bullet(self.position, vx*10, vy*10))
-                        self.shooting = 3
-                        self.shot = true
-                    elseif not self.shot then
-                        self.position.x = self.position.x + vx*dt
-                        self.position.y = self.position.y + vy*dt
+                    if (sx ~= 0 or sy ~= 0) and self.shooting <= 0 then
+                        game.root:add(bullet(self.position+cpml.vec2(10, 10),
+                                             sx, sy))
+                        self.shooting = 1
                     end
+
+                    self.position.x = self.position.x + vx*dt
+                    self.position.y = self.position.y + vy*dt
                 end
             }
         )

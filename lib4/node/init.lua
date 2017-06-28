@@ -59,16 +59,16 @@ function node:signal(s, ...)
     if string.sub(s, 1, 2) == 'f_' then
         local func = string.sub(s, 3)
         if self[func] then
-            success, result = pcall(self[string.sub(s, 3)], self, ...)
-            if not success then
-                log.error('lib4: ' .. err)
+            success, result = pcall(self[func], self, ...)
+            if success == false then
+                log.error('lib4: ' .. result)
                 return success, result
             end
         end
 
         if self.script and self.script[func] then
             local success, err = pcall(self.script[func], self, ...)
-            if not success then
+            if success == false then
                 log.error('lib4: ' .. err)
             end
         end
@@ -76,7 +76,7 @@ function node:signal(s, ...)
 
     for _, c in pairs(self.children) do
         local eh, r = c:signal(s, ...)
-        if not eh then
+        if eh == false then
             return eh, r
         end
 
