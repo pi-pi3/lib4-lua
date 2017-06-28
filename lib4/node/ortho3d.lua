@@ -1,5 +1,5 @@
 
---[[ node/node3d.lua
+--[[ node/ortho3d.lua
     Copyright (c) 2017 Szymon "pi_pi3" Walter
 
     This software is provided 'as-is', without any express or implied
@@ -25,57 +25,67 @@
 local cpml = require('cpml')
 local node = require('node')
 
-local node3d = {}
-setmetatable(node3d, {
+local ortho3d = {}
+setmetatable(ortho3d, {
     __index = node,
-    __call = node3d.new,
+    __call = ortho3d.new,
 })
 
-local mt = {__index = node3d}
+local mt = {__index = ortho3d}
 
--- Create a new node3d
-function node3d.new(children, script)
+-- Create a new ortho3d
+function ortho3d.new(cam, children, script)
     local self = node.new(children, script)
     setmetatable(self, mt)
 
-    self.t = "3d"
+    self.t = "ortho3d"
 
-    self.origin = false
+    self.origin = cpml.vec3()
     self.position = cpml.vec3()
     self.rotation = cpml.quaternion()
-    self.scale = cpml.vec3(1.0)
+
+    self.cam = {}
+    if cam then
+        self.cam.l = cam.l or cam[1] or -love.graphics.getWidth()/2
+        self.cam.r = cam.r or cam[2] or -self.cam.l
+        self.cam.t = cam.t or cam[3] or -love.graphics.getHeight()/2
+        self.cam.b = cam.b or cam[4] or -self.cam.t
+        self.cam.n = cam.n or cam[5] or -0.01
+        self.cam.f = cam.f or cam[6] or -100
+    else
+        self.cam.l = -love.graphics.getWidth()/2
+        self.cam.r = -self.cam.l
+        self.cam.t = -love.graphics.getHeight()/2
+        self.cam.b = -self.cam.t
+        self.cam.n = -0.01
+        self.cam.f = -100
+    end
 
     return self
 end
 
-function node3d:signal(s, ...)
+function ortho3d:signal(s, ...)
     if s == 'f_draw' then
-        love3d.matrix_mode('model')
+        love3d.matrix_mode('proj')
+
+        love3d.identity()
+        love3d.ortho(self.cam.l, self.cam.r,
+                     self.cam.t, self.cam.b,
+                     self.cam.n, self.cam.f)
+
+        love3d.matrix_mode('view')
         love3d.push()
 
-        if self.origin then
-            love3d.identity()
-        end
-
-        love3d.translate(self.position.x,
-                                  self.position.y,
-                                  self.position.z)
-        love3d.rotate(self.rotation.w,
-                               self.rotation.x,
-                               self.rotation.y,
-                               self.rotation.z)
-        love3d.scale(self.scale.x,
-                              self.scale.y,
-                              self.scale.z)
+        love3d.camera(self.position, self.rotation, self.origin)
         love3d.transform()
 
         node.signal(self, s, ...)
 
-        love3d.matrix_mode('model')
+        love3d.matrix_mode('view')
         love3d.pop()
     else
         node.signal(self, s, ...)
     end
 end
 
-return node3d
+return ortho3d

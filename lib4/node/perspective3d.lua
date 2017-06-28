@@ -1,5 +1,5 @@
 
---[[ node/node3d.lua
+--[[ node/perspective3d.lua
     Copyright (c) 2017 Szymon "pi_pi3" Walter
 
     This software is provided 'as-is', without any express or implied
@@ -25,57 +25,63 @@
 local cpml = require('cpml')
 local node = require('node')
 
-local node3d = {}
-setmetatable(node3d, {
+local perspective3d = {}
+setmetatable(perspective3d, {
     __index = node,
-    __call = node3d.new,
+    __call = perspective3d.new,
 })
 
-local mt = {__index = node3d}
+local mt = {__index = perspective3d}
 
--- Create a new node3d
-function node3d.new(children, script)
+-- Create a new perspective3d
+function perspective3d.new(children, script)
     local self = node.new(children, script)
     setmetatable(self, mt)
 
-    self.t = "3d"
+    self.t = "perspective3d"
 
-    self.origin = false
+    self.origin = cpml.vec3()
     self.position = cpml.vec3()
     self.rotation = cpml.quaternion()
-    self.scale = cpml.vec3(1.0)
+
+    self.cam = {}
+    if cam then
+        self.cam.fov = cam.fov or cam[1] or 90
+        self.cam.aspect = cam.aspect or cam[2]
+            or love.graphics.getWidth()/love.graphics.getHeight()
+        self.cam.zn = cam.zn or cam[3] or -0.01
+        self.cam.zf = cam.zf or cam[4] or -100
+    else
+        self.cam.fov = 90
+        self.cam.aspect = love.graphics.getWidth()/love.graphics.getHeight()
+        self.cam.zn = -0.01
+        self.cam.zf = -100
+    end
 
     return self
 end
 
-function node3d:signal(s, ...)
+function perspective3d:signal(s, ...)
     if s == 'f_draw' then
-        love3d.matrix_mode('model')
+        love3d.matrix_mode('proj')
+
+        love3d.identity()
+        love3d.perspective(self.cam.fov, self.cam.aspect,
+                           self.cam.zn, self.cam.zf)
+
+        love3d.matrix_mode('view')
         love3d.push()
 
-        if self.origin then
-            love3d.identity()
-        end
-
-        love3d.translate(self.position.x,
-                                  self.position.y,
-                                  self.position.z)
-        love3d.rotate(self.rotation.w,
-                               self.rotation.x,
-                               self.rotation.y,
-                               self.rotation.z)
-        love3d.scale(self.scale.x,
-                              self.scale.y,
-                              self.scale.z)
+        love3d.camera(self.position, self.rotation, self.origin)
         love3d.transform()
 
         node.signal(self, s, ...)
 
-        love3d.matrix_mode('model')
+        love3d.matrix_mode('view')
         love3d.pop()
     else
         node.signal(self, s, ...)
     end
 end
 
-return node3d
+return perspective3d

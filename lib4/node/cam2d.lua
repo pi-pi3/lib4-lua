@@ -1,5 +1,5 @@
 
---[[ node/node3d.lua
+--[[ node/cam2d.lua
     Copyright (c) 2017 Szymon "pi_pi3" Walter
 
     This software is provided 'as-is', without any express or implied
@@ -25,57 +25,47 @@
 local cpml = require('cpml')
 local node = require('node')
 
-local node3d = {}
-setmetatable(node3d, {
+local cam2d = {}
+setmetatable(cam2d, {
     __index = node,
-    __call = node3d.new,
+    __call = cam2d.new,
 })
 
-local mt = {__index = node3d}
+local mt = {__index = cam2d}
 
--- Create a new node3d
-function node3d.new(children, script)
+-- Create a new cam2d
+function cam2d.new(children, script)
     local self = node.new(children, script)
     setmetatable(self, mt)
 
-    self.t = "3d"
+    self.t = "cam2d"
 
-    self.origin = false
-    self.position = cpml.vec3()
-    self.rotation = cpml.quaternion()
-    self.scale = cpml.vec3(1.0)
+    self.origin = cpml.vec2()
+    self.position = cpml.vec2()
+    self.rotation = 0
 
     return self
 end
 
-function node3d:signal(s, ...)
+function cam2d:signal(s, ...)
     if s == 'f_draw' then
-        love3d.matrix_mode('model')
-        love3d.push()
+        love.graphics.push()
 
-        if self.origin then
-            love3d.identity()
-        end
+        local pos = -self.position 
+        local rot = -self.rotation
+        local origin = pos - self.origin
 
-        love3d.translate(self.position.x,
-                                  self.position.y,
-                                  self.position.z)
-        love3d.rotate(self.rotation.w,
-                               self.rotation.x,
-                               self.rotation.y,
-                               self.rotation.z)
-        love3d.scale(self.scale.x,
-                              self.scale.y,
-                              self.scale.z)
-        love3d.transform()
+        love.graphics.translate(origin.x, origin.y)
+        love.graphics.rotate(rot)
+        love.graphics.translate(-origin.x, -origin.y)
+        love.graphics.translate(pos.x, pos.y)
 
         node.signal(self, s, ...)
 
-        love3d.matrix_mode('model')
-        love3d.pop()
+        love.graphics.pop()
     else
         node.signal(self, s, ...)
     end
 end
 
-return node3d
+return cam2d
