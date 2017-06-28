@@ -31,6 +31,7 @@ require('autobatch')
 love3d = require('lo3d')
 util = require('util')
 lgui = require('lgui')
+log = require('log')
 declare = util.declare -- global alias for declare, should work in every file
 
 function love.load()
@@ -55,7 +56,7 @@ function love.load()
     -- initial game state is the menu, but you can change it into a splash
     -- screen for example
     game.state = require('game')
-    game.state.load()
+    pcall(game.state.load)
 end
 
 
@@ -67,7 +68,7 @@ function love.update(dt)
 
     if not game.state.pause
         and game.state.update then
-        game.state.update(dt)
+        pcall(game.state.update, dt)
     end
 
     lgui.updateall(game.state.elements)
@@ -83,7 +84,7 @@ function love.draw()
     end
 
     if game.state.draw then
-        game.state.draw()
+        pcall(game.state.draw)
     end
 
     lgui.drawall(game.state.elements)
@@ -99,7 +100,7 @@ function love.mousepressed(mx, my, button)
 
     if not game.state.pause
         and game.state.mousepressed then
-        game.state.mousepressed(mx, my, button)
+        pcall(game.state.mousepressed, mx, my, button)
     end
 
     if button == 1 then
@@ -115,7 +116,7 @@ function love.mousereleased(mx, my, button)
 
     if not game.state.pause
         and game.state.mousereleased then
-        game.state.mousereleased(mx, my, button)
+        pcall(game.state.mousereleased, mx, my, button)
     end
 
     if button == 1 then
@@ -131,7 +132,7 @@ function love.mousemoved(mx, my, dx, dy)
 
     if not game.state.pause
         and game.state.mousemoved then
-        game.state.mousemoved(mx, my, dx, dy)
+        pcall(game.state.mousemoved, mx, my, dx, dy)
     end
 
     lgui.mousemoved(game.state.elements, mx, my, dx, dy)
@@ -145,7 +146,7 @@ function love.wheelmoved(dx, dy)
 
     if not game.state.pause
         and game.state.wheelmoved then
-        game.state.wheelmoved(dx, dy)
+        pcall(game.state.wheelmoved, dx, dy)
     end
 
     lgui.wheelmoved(game.state.elements, dx, dy)
@@ -159,7 +160,7 @@ function love.textinput(c)
 
     if not game.state.pause
         and game.state.textinput then
-        game.state.textinput(mx, my, dx, dy)
+        pcall(game.state.textinput, mx, my, dx, dy)
     end
 
     lgui.textinput(game.state.elements, c)
@@ -173,7 +174,7 @@ function love.keypressed(key, scancode, isrepeat)
 
     if not game.state.pause
         and game.state.keypressed then
-        game.state.keypressed(key, scancode, isrepeat)
+        pcall(game.state.keypressed, key, scancode, isrepeat)
     end
 
     lgui.keypressed(game.state.elements, key, scancode, isrepeat)
@@ -186,7 +187,7 @@ function love.quit()
     end
 
     if game.state.quit then
-        game.state.quit()
+        pcall(game.state.quit)
     end
 end
 
