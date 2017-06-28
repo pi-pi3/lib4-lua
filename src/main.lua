@@ -24,9 +24,10 @@
 
 -- set require path
 local path = love.filesystem.getRequirePath()
-love.filesystem.setRequirePath(path .. ';lib/?.lua;lib/?/init.lua')
+love.filesystem.setRequirePath(path .. ';lib/?.lua;lib/?/init.lua;lib4/?.lua;lib4/?/init.lua')
 
 -- global definitions
+require('autobatch')
 love3d = require('lo3d')
 util = require('util')
 lgui = require('lgui')
@@ -42,18 +43,18 @@ function love.load()
 
     love3d.load()
 
+    -- beyond this point in program execution every global variable has to be
+    -- declared like this:
     declare('scheme', {})
     scheme.root = '/'
     scheme.assets = 'assets/'
     scheme.src = 'src/'
 
-    -- beyond this point in program execution every global variable has to be
-    -- declared like this:
     declare('game', {})
 
     -- initial game state is the menu, but you can change it into a splash
     -- screen for example
-    game.state = require('menu')
+    game.state = require('game')
     game.state.load()
 end
 
@@ -61,7 +62,7 @@ end
 function love.update(dt)
     if not game.state.pause
         and game.state.root then
-        game.state.root.signal('f_update', dt)
+        game.state.root:signal('f_update', dt)
     end
 
     if not game.state.pause
@@ -73,15 +74,16 @@ function love.update(dt)
 end
 
 function love.draw()
-    love3d.clear(true, true)
+    if love3d.enabled then
+        love3d.clear()
+    end
 
-    if not game.state.pause
-        and game.state.root then
-        game.state.root.signal('f_draw', dt)
+    if game.state.root then
+        game.state.root:signal('f_draw')
     end
 
     if game.state.draw then
-        game.state.draw(dt)
+        game.state.draw()
     end
 
     lgui.drawall(game.state.elements)
@@ -92,7 +94,7 @@ end
 function love.mousepressed(mx, my, button)
     if not game.state.pause
         and game.state.root then
-        game.state.root.signal('f_mousepressed', mx, my, button)
+        game.state.root:signal('f_mousepressed', mx, my, button)
     end
 
     if not game.state.pause
@@ -108,7 +110,7 @@ end
 function love.mousereleased(mx, my, button)
     if not game.state.pause
         and game.state.root then
-        game.state.root.signal('f_mousereleased', mx, my, button)
+        game.state.root:signal('f_mousereleased', mx, my, button)
     end
 
     if not game.state.pause
@@ -124,7 +126,7 @@ end
 function love.mousemoved(mx, my, dx, dy)
     if not game.state.pause
         and game.state.root then
-        game.state.root.signal('f_mousemoved', mx, my, dx, dy)
+        game.state.root:signal('f_mousemoved', mx, my, dx, dy)
     end
 
     if not game.state.pause
@@ -138,7 +140,7 @@ end
 function love.wheelmoved(dx, dy)
     if not game.state.pause
         and game.state.root then
-        game.state.root.signal('f_wheelmoved', dx, dy)
+        game.state.root:signal('f_wheelmoved', dx, dy)
     end
 
     if not game.state.pause
@@ -152,7 +154,7 @@ end
 function love.textinput(c)
     if not game.state.pause
         and game.state.root then
-        game.state.root.signal('f_textinput', c)
+        game.state.root:signal('f_textinput', c)
     end
 
     if not game.state.pause
@@ -166,7 +168,7 @@ end
 function love.keypressed(key, scancode, isrepeat)
     if not game.state.pause
         and game.state.root then
-        game.state.root.signal('f_keypressed', key, scancode, isrepeat)
+        game.state.root:signal('f_keypressed', key, scancode, isrepeat)
     end
 
     if not game.state.pause
@@ -180,7 +182,7 @@ end
 function love.quit()
     if not game.state.pause
         and game.state.root then
-        game.state.root.signal('f_quit')
+        game.state.root:signal('f_quit')
     end
 
     if game.state.quit then
