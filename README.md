@@ -5,6 +5,7 @@ letters + extension.
 ## included libraries:
 - `util.lua` General purpose utilities for games.
 - `lgui.lua` General purpose gui for games (requires löve).
+- `node.lua` Node system for löve
 
 ### collections
 - `list.lua` General purpose singly-linked list optimized with tail-calls.
@@ -18,9 +19,9 @@ letters + extension.
 - [`log.lua`](https://github.com/rxi/log.lua) A tiny logging module for Lua
 - [`tick`](https://github.com/rxi/tick) Lua module for delaying function calls
 - [`cpml`](https://github.com/excessive/cpml) Cirno's Perfect Math Library: Just about everything you need for 2D/3D games. Hopefully.
-- [`love3d`](https://github.com/excessive/cpml)  A 3D extension for LÖVE (requires `cpml`)
-- [`iqm`](https://github.com/excessive/cpml)  Load an Inter-Quake Model file into LÖVE (works perfect with `love3d`)
-- [`anim9`](https://github.com/excessive/cpml)  Animation library for LÖVE3D
+- [`love3d`](https://github.com/excessive/love3d)  A 3D extension for LÖVE (requires `cpml`)
+- [`iqm`](https://github.com/excessive/iqm)  Load an Inter-Quake Model file into LÖVE (works perfect with `love3d`)
+- [`anim9`](https://github.com/excessive/anim9)  Animation library for LÖVE3D
 
 ## util.lua
 Most functions are documented and are so tiny, they're rather easy to understand.
