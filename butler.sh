@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 push() {
     GAME=$1;

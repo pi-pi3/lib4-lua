@@ -8,11 +8,7 @@ default: love
 all: love linux windows mac
 
 love:
-	@echo "Creating love file..."
-	rm -f release/$(GAME).love
-	cd lib4; zip -9 -r ../release/$(GAME).love *.lua
-	zip -9 -r release/$(GAME).love assets LICENSE README.md
-	@echo "Done."
+	@./build.sh src release/$(GAME).love
 
 linux:
 	@echo "Building for linux..."
@@ -39,14 +35,4 @@ clean:
 	rm -f $(MAC_NAME)/Contents/Resources/$(GAME).love
 
 example:
-	@echo "Creating example..."
-	rm -f example/example.love
-	cd example/; zip -9 -r example.love *
-	cd lib4/; zip -9 -r ../example/example.love *
-	zip -9 -r example/example.love lib/
-	for lib in anim9 autobatch log tick; do \
-		mv lib/$$lib/$$lib.lua lib/$$lib/init.lua; \
-		zip -9 -r example/example.love lib/$$lib/*; \
-		mv lib/$$lib/init.lua lib/$$lib/$$lib.lua; \
-	done
-	@echo "Done."
+	@./build.sh example example/example.love
