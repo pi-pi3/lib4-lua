@@ -22,8 +22,11 @@
     distribution.
 ]]
 
+local l3d = require('love3d');
+l3d.import()
+
 local love3d = {}
-setmetatable(love3d, {__index = require('love3d')})
+setmetatable(love3d, {__index = l3d})
 
 local cpml = require('cpml')
 
@@ -90,8 +93,6 @@ function love3d.load()
     love3d.static_shader = love.graphics.newShader(static_shader)
     love3d.anim_shader = love.graphics.newShader(anim_shader)
 
-    love3d.set_shader(love3d.static_shader)
-
     love3d.model = {cpml.mat4()}
     love3d.view = {cpml.mat4()}
     love3d.proj = {cpml.mat4()}
@@ -101,11 +102,33 @@ function love3d.load()
     cpml.mat4.identity(love3d.model[1])
     cpml.mat4.identity(love3d.view[1])
     cpml.mat4.identity(love3d.proj[1])
+
+    love3d.enable()
 end
 
-function love3d.set_shader()
-    love3d.shader = static_shader
-    love.graphics.setShader(love3d.static_shader)
+function love3d.enable(p)
+    if p or p == nil then 
+        love3d.enabled = true
+
+        love3d.set_shader(love3d.static_shader)
+        love3d.set_depth_test('less')
+        love3d.set_culling('back')
+    else 
+        love3d.disable()
+    end
+end
+
+function love3d.disable()
+    love3d.enabled = false
+    
+    love3d.set_shader(nil)
+    love3d.set_depth_test(nil)
+    love3d.set_culling(nil)
+end
+
+function love3d.set_shader(shader)
+    love3d.shader = shader
+    love.graphics.setShader(shader)
 end
 
 function love3d.matrix_mode(mat)

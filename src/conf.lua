@@ -1,13 +1,13 @@
 
 function love.conf(t)
-    t.identity = 'ld-38'
+    t.identity = 'game'
     t.version = "0.10.2"
     t.console = true
     t.accelerometerjoystick = false
     t.externalstorage = false
     t.gammacorrect = false
 
-    t.window.title = "LD #38"
+    t.window.title = "Game"
     t.window.icon = nil
     t.window.width = 640
     t.window.height = 360

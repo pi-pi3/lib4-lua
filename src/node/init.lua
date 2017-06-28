@@ -40,7 +40,7 @@ function node.new(children, script)
         self.children = children or {}
     end
 
-    if script.load then
+    if script and script.load then
         script.load(self)
     end
 
@@ -68,7 +68,7 @@ function node:signal(s, ...)
     end
 
     for _, c in pairs(self.children) do
-        local eh, r = c:signal(s)
+        local eh, r = c:signal(s, ...)
         if not eh then
             return eh, r
         end
