@@ -24,6 +24,8 @@
 
 local iqm = require('iqm')
 local json = require('json')
+local cpml = require('cpml')
+
 local file = {}
 
 function file.load()
@@ -34,11 +36,11 @@ function file.load()
 end
 
 function file.expand(path)
-    for s, val in pairs(s) do
-        if util.startswith(path, s .. ':') then
-            return scheme.root .. scheme[s] .. string.sub(path, #s+ 2)
-        elseif util.startswith(path, s .. '://') then
-            return scheme.root .. scheme[s] .. string.sub(path, #s+ 4)
+    for s, val in pairs(scheme) do
+        if util.startswith(path, s .. '://') then
+            return scheme.root .. scheme[s] .. string.sub(path, #s + 4)
+        elseif util.startswith(path, s .. ':') then
+            return scheme.root .. scheme[s] .. string.sub(path, #s + 6)
         end
     end
 
@@ -63,7 +65,8 @@ function file.load_node(path)
     end
 
     function types.src(val)
-        return pcall(file.load_src(val))
+        local success, result = pcall(file.load_src(val))
+        return result
     end
 
     function types.img(val)
@@ -105,11 +108,20 @@ function file.load_node(path)
         end
     end
 
-    local t = require('node/' .. node.t)
+    local t
+    if data.t == 'node' then
+        t = require('node')
+    else
+        t = require('node/' .. data.t)
+    end
     local node = t.new()
 
     for k, v in pairs(data) do
         node[k] = data[k]
+    end
+
+    if node.script and node.script.load then
+        pcall(node.script.load, node)
     end
 
     return node

@@ -39,6 +39,10 @@ function rect.new(rect, col, children, script)
 
     self.t = "rect"
 
+    if not rect then
+        return self
+    end
+
     local x = rect.x or rect[1] or 0
     local y = rect.y or rect[2] or 0
     local w = rect.w or rect[3] or 0
