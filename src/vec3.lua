@@ -25,7 +25,7 @@
 -- Thanks a lot, Egor!
 
 local vec3 = {}
-setmetatable(vec3, {__call = vector.new}
+setmetatable(vec3, {__call = vector.new})
 
 local mt = {
     __index = vec3,

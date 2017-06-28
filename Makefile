@@ -1,7 +1,7 @@
 
 include config.mk
 
-.PHONY: all love linux windows mac
+.PHONY: all love linux windows mac push clean example
 
 default: love
 
@@ -38,3 +38,10 @@ clean:
 	rm -f $(WINDOWS_NAME)
 	rm -f $(MAC_NAME)/Contents/Resources/$(GAME).love
 
+example:
+	@echo "Creating example..."
+	rm -f example/example.love
+	cd example/; zip -9 -r example.love *
+	cd src/; zip -9 -r ../example/example.love *
+	zip -9 -r example/example.love lib/
+	@echo "Done."

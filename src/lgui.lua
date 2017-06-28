@@ -23,7 +23,6 @@
 ]]
 
 local math = require('math')
-local util = require('util')
 
 local lgui = {}
 

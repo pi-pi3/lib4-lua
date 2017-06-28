@@ -22,8 +22,14 @@
     distribution.
 ]]
 
-local util = require('util')
-local lgui = require('lgui')
+-- set require path
+local path = love.filesystem.getRequirePath()
+love.filesystem.setRequirePath(path .. ';lib/?.lua;lib/?/init.lua')
+
+-- global definitions
+love3d = require('lo3d')
+util = require('util')
+lgui = require('lgui')
 declare = util.declare -- global alias for declare, should work in every file
 
 function love.load()
@@ -33,6 +39,13 @@ function love.load()
     -- this is called in love.load, because some external libraries might
     -- require global variables
     util.init_G()
+
+    love3d.load()
+
+    declare('scheme', {})
+    scheme.root = '/'
+    scheme.assets = 'assets/'
+    scheme.src = 'src/'
 
     -- beyond this point in program execution every global variable has to be
     -- declared like this:
@@ -47,6 +60,11 @@ end
 
 function love.update(dt)
     if not game.state.pause
+        and game.state.root then
+        game.state.root.signal('f_update', dt)
+    end
+
+    if not game.state.pause
         and game.state.update then
         game.state.update(dt)
     end
@@ -55,7 +73,12 @@ function love.update(dt)
 end
 
 function love.draw()
-    love.graphics.clear(0, 0, 0)
+    love3d.clear(true, true)
+
+    if not game.state.pause
+        and game.state.root then
+        game.state.root.signal('f_draw', dt)
+    end
 
     if game.state.draw then
         game.state.draw(dt)
@@ -68,6 +91,11 @@ end
 -- functions beyond this point normally don't have to be editted
 function love.mousepressed(mx, my, button)
     if not game.state.pause
+        and game.state.root then
+        game.state.root.signal('f_mousepressed', mx, my, button)
+    end
+
+    if not game.state.pause
         and game.state.mousepressed then
         game.state.mousepressed(mx, my, button)
     end
@@ -78,6 +106,11 @@ function love.mousepressed(mx, my, button)
 end
 
 function love.mousereleased(mx, my, button)
+    if not game.state.pause
+        and game.state.root then
+        game.state.root.signal('f_mousereleased', mx, my, button)
+    end
+
     if not game.state.pause
         and game.state.mousereleased then
         game.state.mousereleased(mx, my, button)
@@ -90,6 +123,11 @@ end
 
 function love.mousemoved(mx, my, dx, dy)
     if not game.state.pause
+        and game.state.root then
+        game.state.root.signal('f_mousemoved', mx, my, dx, dy)
+    end
+
+    if not game.state.pause
         and game.state.mousemoved then
         game.state.mousemoved(mx, my, dx, dy)
     end
@@ -98,6 +136,11 @@ function love.mousemoved(mx, my, dx, dy)
 end
 
 function love.wheelmoved(dx, dy)
+    if not game.state.pause
+        and game.state.root then
+        game.state.root.signal('f_wheelmoved', dx, dy)
+    end
+
     if not game.state.pause
         and game.state.wheelmoved then
         game.state.wheelmoved(dx, dy)
@@ -108,6 +151,11 @@ end
 
 function love.textinput(c)
     if not game.state.pause
+        and game.state.root then
+        game.state.root.signal('f_textinput', c)
+    end
+
+    if not game.state.pause
         and game.state.textinput then
         game.state.textinput(mx, my, dx, dy)
     end
@@ -117,6 +165,11 @@ end
 
 function love.keypressed(key, scancode, isrepeat)
     if not game.state.pause
+        and game.state.root then
+        game.state.root.signal('f_keypressed', key, scancode, isrepeat)
+    end
+
+    if not game.state.pause
         and game.state.keypressed then
         game.state.keypressed(key, scancode, isrepeat)
     end
@@ -125,6 +178,11 @@ function love.keypressed(key, scancode, isrepeat)
 end
 
 function love.quit()
+    if not game.state.pause
+        and game.state.root then
+        game.state.root.signal('f_quit')
+    end
+
     if game.state.quit then
         game.state.quit()
     end

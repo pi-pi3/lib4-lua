@@ -3,7 +3,15 @@
     "position": [6.0, 0.0, 0.0],
     "rotation": [0.0, 0.0, 0.0, 0.0], # quaternion, xyzw
     "scale": [1.0, 1.0, 1.0]
-    "model": "assets://models/skeleton.iqm", # custom assets scheme
-    "textures": ["assets://textures/skeleton.tga"],
     "script": "src://enemy.lua", # custom src scheme
+    "children": {
+        "model": {
+            "t": "3d"
+            "position": [0.0, 0.0, 0.0],
+            "rotation": [0.0, 0.0, 0.0, 0.0], # quaternion, xyzw
+            "scale": [1.0, 1.0, 1.0]
+            "model": "assets://models/skeleton.iqm", # custom assets scheme
+            "textures": ["assets://textures/skeleton.tga"],
+        }
+    }
 },

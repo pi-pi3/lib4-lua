@@ -1,5 +1,5 @@
 
---[[ node.lua
+--[[ node/node2d.lua
     Copyright (c) 2017 Szymon "pi_pi3" Walter
 
     This software is provided 'as-is', without any express or implied
@@ -23,58 +23,49 @@
 ]]
 
 local cpml = require('cpml')
+local node = require('node')
 
-local node = {}
-local mt = {__index = node}
+local node2d = {}
+setmetatable(node2d, {
+    __index = node,
+    __call = node2d.new,
+})
 
--- Create a new empty node
-function node.new()
-    local self = {}
+local mt = {__index = node2d}
+
+-- Create a new node2d
+function node2d.new(children, script)
+    local self = node.new(children, script)
     setmetatable(self, mt)
 
-    self.t = "node"
+    self.t = "2d"
 
-    self.position = cpml.vec3()
-    self.rotation = cpml.quaternion()
-    self.scale = cpml.vec3(1.0)
-    self.children = {}
+    self.origin = false
+    self.position = cpml.vec2()
+    self.rotation = 0
+    self.scale = cpml.vec2(1.0)
 
     return self
 end
 
--- Draw the node
-function node:draw()
-    -- push()
-    -- if self.origin then identity()
-    -- translate
-    -- rotate
-    -- scale
-    -- draw
-    -- pop()
-end
+function node2d:signal(s, ...)
+    if s == 'f_draw' then
+        love.graphics.push()
 
--- Update physics, etc.
-function node:update()
-end
-
--- Send a signal to all children (recursively by default)
--- Any function can be considered a signal
-function node:signal(s, recurse)
-    recurse = (recurse == nil and true) or recurse
-
-    for _, c in self.children do
-    end
-end
-
--- Adds a child
-function node:add_child(c, n)
-    if n and n > 1 then
-        for i = 1, n do
-            table.insert(self.children, c[i])
+        if self.origin then
+            love.graphics.identity()
         end
+
+        love.graphics.translate(self.position.x, self.position.y)
+        love.graphics.rotate(self.rotation)
+        love.graphics.scale(self.scale.x, self.scale.y)
+
+        node.signal(self, s, ...)
+
+        love.graphics.pop()
     else
-        table.insert(self.children, c)
+        node.signal(self, s, ...)
     end
 end
 
-return node
+return node2d
