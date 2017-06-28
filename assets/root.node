@@ -1,21 +1,18 @@
-# json
 {
     "player": {
-        "t": "kinematic",
-        "position": [0.0, 0.0, 0.0],
-        "rotation": [0.0, 0.0, 0.0, 0.0], # quaternion, xyzw
-        "scale": [1.0, 1.0, 1.0]
-        "script": "src://player.lua", # custom src scheme
-        "children": {
-            "model": {
-                "t": "3d"
-                "position": [0.0, 0.0, 0.0],
-                "rotation": [0.0, 0.0, 0.0, 0.0], # quaternion, xyzw
-                "scale": [1.0, 1.0, 1.0]
-                "model": "assets://models/player.iqm", # custom assets scheme
-                "textures": ["assets://textures/player.tga"],
+        "t": "node2d",
+        "vec:position": [0.0, 0.0],
+        "rotation": 0.0,
+        "vec:scale": [1.0, 1.0]
+        "src:script": "src://player.lua",
+        "[node]:children": {
+            "drawable": {
+                "t": "rect",
+                "mesh:rect": [[0, 0, 0, 0, 255, 0, 127, 255],
+                              [0, 24, 0, 0, 255, 0, 127, 255],
+                              [24, 24, 0, 0, 255, 0, 127, 255],
+                              [24, 0, 0, 0, 255, 0, 127, 255]]
             }
         }
     },
-    "skeleton": "assets://skeleton.node", # alternative syntax for defining nodes
 }
