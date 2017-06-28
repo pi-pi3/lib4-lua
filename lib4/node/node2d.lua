@@ -38,7 +38,7 @@ function node2d.new(children, script)
     local self = node.new(children, script)
     setmetatable(self, mt)
 
-    self.t = "2d"
+    self.t = "node2d"
 
     self.origin = false
     self.position = cpml.vec2()

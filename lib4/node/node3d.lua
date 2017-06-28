@@ -38,7 +38,7 @@ function node3d.new(children, script)
     local self = node.new(children, script)
     setmetatable(self, mt)
 
-    self.t = "3d"
+    self.t = "node3d"
 
     self.origin = false
     self.position = cpml.vec3()

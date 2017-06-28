@@ -23,11 +23,12 @@
 ]]
 
 local iqm = require('iqm')
+local json = require('json')
 local file = {}
 
 function file.load()
     declare('scheme', {})
-    scheme.root = '/'
+    scheme.root = ''
     scheme.assets = 'assets/'
     scheme.src = 'src/'
 end
@@ -42,6 +43,80 @@ function file.expand(path)
     end
 
     return path
+end
+
+function file.load_node(path)
+    local types = {}
+
+    function types.vec(val)
+        if #val == 2 then
+            return cpml.vec2(val[1], val[2])
+        elseif #val == 3 then
+            return cpml.vec3(val[1], val[2], val[3])
+        elseif #val == 4 then
+            return cpml.vec4(val[1], val[2], val[3], val[4])
+        end
+    end
+
+    function types.quat(val)
+        return cpml.quaternion(val[1], val[2], val[3], val[4])
+    end
+
+    function types.src(val)
+        return pcall(file.load_src(val))
+    end
+
+    function types.img(val)
+        return file.load_image(val)
+    end
+
+    function types.model(val)
+        return file.load_model(val)
+    end
+
+    function types.node(val)
+        return file.load_node(val)
+    end
+
+    function types.mesh(val)
+        return love.graphics.newMesh(val)
+    end
+
+    local data
+    if type(path) == 'string' then
+        data = json.decode(love.filesystem.read(file.expand(path)))
+    else
+        data = path
+    end
+
+    for field, val in pairs(data) do
+        for k, t in pairs(types) do
+            if util.startswith(field, k .. ':') then
+                local f = string.sub(field, #k + 2)
+                data[f] = t(val)
+                data[field] = nil
+                break
+            elseif util.startswith(field, '[' .. k .. ']:') then
+                local f = string.sub(field, #k + 4)
+                data[f] = util.map(val, function(_, v) return t(v) end)
+                data[field] = nil
+                break
+            end
+        end
+    end
+
+    local t = require('node/' .. node.t)
+    local node = t.new()
+
+    for k, v in pairs(data) do
+        node[k] = data[k]
+    end
+
+    return node
+end
+
+function file.load_src(path)
+    return love.filesystem.load(file.expand(path))
 end
 
 function file.load_image(path)

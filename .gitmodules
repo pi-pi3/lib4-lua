@@ -19,3 +19,6 @@
 [submodule "lib/anim9"]
 	path = lib/anim9
 	url = https://github.com/excessive/anim9
+[submodule "lib/json"]
+	path = lib/json
+	url = git@github.com:rxi/json.lua
