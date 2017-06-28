@@ -14,11 +14,13 @@ cd ../lib4/
 zip -9 -r ../$2 *
 cd ..
 
+zip -9 -r $2 assets src
+
 for lib in cpml iqm love3d; do
     zip -9 -r $2 lib/$lib
 done
 
-for lib in anim9 autobatch log tick; do
+for lib in anim9 autobatch log tick json; do
     echo "mv lib/$lib/$lib.lua lib/$lib/init.lua"
     mv lib/$lib/$lib.lua lib/$lib/init.lua
 
