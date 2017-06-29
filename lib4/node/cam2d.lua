@@ -48,7 +48,7 @@ function cam2d.new(children, script)
 end
 
 function cam2d:signal(s, ...)
-    if s == 'f_draw' then
+    if s == 'draw' then
         love.graphics.push()
 
         local pos = -self.position 

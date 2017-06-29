@@ -65,7 +65,7 @@ function ortho3d.new(cam, children, script)
 end
 
 function ortho3d:signal(s, ...)
-    if s == 'f_draw' then
+    if s == 'draw' then
         love3d.matrix_mode('proj')
 
         love3d.identity()

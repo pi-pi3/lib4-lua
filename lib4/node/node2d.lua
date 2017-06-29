@@ -49,7 +49,7 @@ function node2d.new(children, script)
 end
 
 function node2d:signal(s, ...)
-    if s == 'f_draw' then
+    if s == 'draw' then
         love.graphics.push()
 
         if self.origin then

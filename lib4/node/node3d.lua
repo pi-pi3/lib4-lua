@@ -49,7 +49,7 @@ function node3d.new(children, script)
 end
 
 function node3d:signal(s, ...)
-    if s == 'f_draw' then
+    if s == 'draw' then
         love3d.matrix_mode('model')
         love3d.push()
 
