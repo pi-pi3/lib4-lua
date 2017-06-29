@@ -53,10 +53,12 @@ function love.load()
 
     -- initial game state is the menu, but you can change it into a splash
     -- screen for example
-    game.state = require('intro')
-    local success, err = pcall(game.state.load)
-    if not success then
-        log.error('lib4: ' .. err)
+    game.state = require('init')
+    if game.state.load then
+        local success, err = pcall(game.state.load)
+        if not success then
+            log.error('lib4: ' .. err)
+        end
     end
 end
 
