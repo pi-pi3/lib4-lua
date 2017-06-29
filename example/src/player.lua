@@ -74,7 +74,7 @@ function player:update(dt)
     end
 
     if (sx ~= 0 or sy ~= 0) and self.shooting <= 0 then
-        game.state.root:add(bullet(self.position+cpml.vec2(10, 10),
+        lib4.state.root:add(bullet(self.position+cpml.vec2(10, 10),
                              sx, sy))
         self.shooting = 1
     end

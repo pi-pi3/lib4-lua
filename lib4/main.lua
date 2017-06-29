@@ -97,15 +97,11 @@ function love.load()
     love3d.load()
     file.load()
 
-    -- beyond this point in program execution every global variable has to be
-    -- declared like this:
-    declare('game', {})
-
-    -- initial game state is the menu, but you can change it into a splash
+    -- initial lib4.state is the menu, but you can change it into a splash
     -- screen for example
-    game.state = require('init')
-    if game.state.load then
-        local success, err = pcall(game.state.load)
+    lib4.state = require('init')
+    if lib4.state.load then
+        local success, err = pcall(lib4.state.load)
         if not success then
             log.error('lib4: ' .. err)
         end
@@ -122,20 +118,20 @@ function love.update(dt)
         end
     end
 
-    if not game.state.pause
-        and game.state.root then
-        game.state.root:signal('update', dt)
+    if not lib4.state.pause
+        and lib4.state.root then
+        lib4.state.root:signal('update', dt)
     end
 
-    if not game.state.pause
-        and game.state.update then
-        local success, err = pcall(game.state.update, dt)
+    if not lib4.state.pause
+        and lib4.state.update then
+        local success, err = pcall(lib4.state.update, dt)
         if not success then
             log.error('lib4: ' .. err)
         end
     end
 
-    lgui.updateall(game.state.elements)
+    lgui.updateall(lib4.state.elements)
 end
 
 function love.draw()
@@ -143,18 +139,18 @@ function love.draw()
         love3d.clear()
     end
 
-    if game.state.root then
-        game.state.root:signal('draw')
+    if lib4.state.root then
+        lib4.state.root:signal('draw')
     end
 
-    if game.state.draw then
-        local success, err = pcall(game.state.draw)
+    if lib4.state.draw then
+        local success, err = pcall(lib4.state.draw)
         if not success then
             log.error('lib4: ' .. err)
         end
     end
 
-    lgui.drawall(game.state.elements)
+    lgui.drawall(lib4.state.elements)
 end
 
 for _, func in pairs({
@@ -168,21 +164,21 @@ for _, func in pairs({
     'joystickpressed', 'joystickreleased', 'joystickremoved',
 }) do
     love[func] = function(...)
-        if not game.state.pause
-            and game.state.root then
-            game.state.root:signal(func, ...)
+        if not lib4.state.pause
+            and lib4.state.root then
+            lib4.state.root:signal(func, ...)
         end
 
-        if not game.state.pause
-            and game.state[func] then
-            local success, err = pcall(game.state[func], ...)
+        if not lib4.state.pause
+            and lib4.state[func] then
+            local success, err = pcall(lib4.state[func], ...)
             if not success then
                 log.error('lib4: ' .. err)
             end
         end
 
         if lgui[func] then
-            pcall(lgui[func], game.state.elements, ...)
+            pcall(lgui[func], lib4.state.elements, ...)
         end
     end
 end
