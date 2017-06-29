@@ -14,7 +14,7 @@ cd ../lib4/
 zip -9 -r ../$2 *
 cd ..
 
-zip -9 -r $2 assets src
+zip -9 -r $2 assets src LICENSE README.md
 
 for lib in cpml iqm love3d; do
     zip -9 -r $2 lib/$lib
