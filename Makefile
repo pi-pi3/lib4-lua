@@ -8,7 +8,7 @@ default: love
 all: love linux windows mac
 
 love:
-	@./build.sh src release/$(GAME).love
+	@./build.sh $(GAME) release/$(GAME).love
 
 linux:
 	@echo "Building for linux..."

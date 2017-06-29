@@ -773,6 +773,9 @@ function lgui.keypressed(elements, key, scancode, isrepeat)
     end
 end
 
+function lgui.keyreleased(elements, key, scancode, isrepeat)
+end
+
 function lgui.update_slider(self, mx, my)
     if self.down
         and mx >= self.x and mx <= self.x+self.width
