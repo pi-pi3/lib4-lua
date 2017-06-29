@@ -55,38 +55,48 @@ end
 function node:signal(s, ...)
     local success = true
     local result = nil
+    local err = nil
 
-    if string.sub(s, 1, 2) == 'f_' then
-        local func = string.sub(s, 3)
-        if self[func] then
-            success, result = pcall(self[func], self, ...)
-            if success == false then
-                log.error('lib4: ' .. result)
-                return success, result
-            end
+    if self[s] then
+        local s, err = pcall(self[s], self, ...)
+        if s == false then
+            success = false
+            err = err
+            log.error('lib4: ' .. err)
         end
+        if result == nil then
+            result = err
+        end
+    end
 
-        if self.script and self.script[func] then
-            local success, err = pcall(self.script[func], self, ...)
-            if success == false then
-                log.error('lib4: ' .. err)
-            end
+    if self.script and self.script[s] then
+        local s, err = pcall(self.script[s], self, ...)
+        if s == false then
+            success = false
+            err = err
+            log.error('lib4: ' .. err)
+        end
+        if result == nil then
+            result = err
         end
     end
 
     for _, c in pairs(self.children) do
-        local eh, r = c:signal(s, ...)
-        if eh == false then
-            return eh, r
+        local s, err = c:signal(s, ...)
+        if s == false then
+            success = false
+            err = err
         end
-
-        success = success and eh
         if result == nil then
-            result = r
+            result = err
         end
     end
 
-    return success, result
+    if success then
+        return true, result
+    else
+        return false, err
+    end
 end
 
 -- Set an arbitrary key to value

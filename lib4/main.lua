@@ -63,7 +63,7 @@ end
 function love.update(dt)
     if not game.state.pause
         and game.state.root then
-        game.state.root:signal('f_update', dt)
+        game.state.root:signal('update', dt)
     end
 
     if not game.state.pause
@@ -83,7 +83,7 @@ function love.draw()
     end
 
     if game.state.root then
-        game.state.root:signal('f_draw')
+        game.state.root:signal('draw')
     end
 
     if game.state.draw then
@@ -101,7 +101,7 @@ end
 function love.mousepressed(mx, my, button)
     if not game.state.pause
         and game.state.root then
-        game.state.root:signal('f_mousepressed', mx, my, button)
+        game.state.root:signal('mousepressed', mx, my, button)
     end
 
     if not game.state.pause
@@ -120,7 +120,7 @@ end
 function love.mousereleased(mx, my, button)
     if not game.state.pause
         and game.state.root then
-        game.state.root:signal('f_mousereleased', mx, my, button)
+        game.state.root:signal('mousereleased', mx, my, button)
     end
 
     if not game.state.pause
@@ -139,7 +139,7 @@ end
 function love.mousemoved(mx, my, dx, dy)
     if not game.state.pause
         and game.state.root then
-        game.state.root:signal('f_mousemoved', mx, my, dx, dy)
+        game.state.root:signal('mousemoved', mx, my, dx, dy)
     end
 
     if not game.state.pause
@@ -156,7 +156,7 @@ end
 function love.wheelmoved(dx, dy)
     if not game.state.pause
         and game.state.root then
-        game.state.root:signal('f_wheelmoved', dx, dy)
+        game.state.root:signal('wheelmoved', dx, dy)
     end
 
     if not game.state.pause
@@ -173,7 +173,7 @@ end
 function love.textinput(c)
     if not game.state.pause
         and game.state.root then
-        game.state.root:signal('f_textinput', c)
+        game.state.root:signal('textinput', c)
     end
 
     if not game.state.pause
@@ -190,7 +190,7 @@ end
 function love.keypressed(key, scancode, isrepeat)
     if not game.state.pause
         and game.state.root then
-        game.state.root:signal('f_keypressed', key, scancode, isrepeat)
+        game.state.root:signal('keypressed', key, scancode, isrepeat)
     end
 
     if not game.state.pause
@@ -207,7 +207,7 @@ end
 function love.quit()
     if not game.state.pause
         and game.state.root then
-        game.state.root:signal('f_quit')
+        game.state.root:signal('quit')
     end
 
     if game.state.quit then
