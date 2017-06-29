@@ -40,7 +40,6 @@ function node2d.new(children, script)
 
     self.t = "node2d"
 
-    self.origin = false
     self.position = cpml.vec2()
     self.rotation = 0
     self.scale = cpml.vec2(1.0)
@@ -51,10 +50,6 @@ end
 function node2d:signal(s, ...)
     if s == 'draw' then
         love.graphics.push()
-
-        if self.origin then
-            love.graphics.identity()
-        end
 
         love.graphics.translate(self.position.x, self.position.y)
         love.graphics.rotate(self.rotation)

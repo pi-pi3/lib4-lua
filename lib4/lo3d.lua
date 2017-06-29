@@ -277,9 +277,9 @@ function love3d.camera(pos, rot, origin)
     local ry = rot.y or rot[2] or 0
     local rz = rot.z or rot[3] or 0
 
+    origin = -cpml.vec3(ox, oy, oz)
     pos = -cpml.vec3(tx, ty, tz)
     rot = cpml.mat4.from_quaternion(-cpml.quat(rx, ry, rz, rw))
-    origin = pos - cpml.vec3(ox, oy, oz)
 
     local mat = love3d.top()
 

@@ -33,6 +33,9 @@ setmetatable(cam2d, {
 
 local mt = {__index = cam2d}
 
+local screen = cpml.vec2(love.graphics.getWidth(),
+                         love.graphics.getHeight())
+
 -- Create a new cam2d
 function cam2d.new(children, script)
     local self = node.new(children, script)
@@ -50,10 +53,11 @@ end
 function cam2d:signal(s, ...)
     if s == 'draw' then
         love.graphics.push()
+        love.graphics.origin()
 
-        local pos = -self.position 
-        local rot = -self.rotation
-        local origin = pos - self.origin
+        local origin = -self.origin + screen/2
+        local pos = -self.position + screen/2
+        local rot = -math.rad(self.rotation)
 
         love.graphics.translate(origin.x, origin.y)
         love.graphics.rotate(rot)
@@ -66,6 +70,10 @@ function cam2d:signal(s, ...)
     else
         node.signal(self, s, ...)
     end
+end
+
+function cam2d:resize(width, height)
+    screen = cpml.vec2(width, height)
 end
 
 return cam2d

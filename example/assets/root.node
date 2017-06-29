@@ -1,19 +1,24 @@
 {
     "t": "node",
     "[node]:children": {
-        "player": {
-            "t": "node2d",
-            "vec:position": [0.0, 0.0],
-            "rotation": 0.0,
-            "vec:scale": [1.0, 1.0],
-            "src:script": "src://player.lua",
+        "camera": {
+            "t": "cam2d",
             "[node]:children": {
-                "drawable": {
-                    "t": "rect",
-                    "mesh:rect": [[0, 0, 0, 0, 255, 0, 127, 255],
-                                  [0, 24, 0, 0, 255, 0, 127, 255],
-                                  [24, 24, 0, 0, 255, 0, 127, 255],
-                                  [24, 0, 0, 0, 255, 0, 127, 255]]
+                "player": {
+                    "t": "node2d",
+                    "vec:position": [0.0, 0.0],
+                    "rotation": 0.0,
+                    "vec:scale": [1.0, 1.0],
+                    "src:script": "src://player.lua",
+                    "[node]:children": {
+                        "drawable": {
+                            "t": "rect",
+                            "mesh:rect": [[-12, -12, 0, 0, 255, 0, 127, 255],
+                                          [-12,  12, 0, 0, 255, 0, 127, 255],
+                                          [ 12,  12, 0, 0, 255, 0, 127, 255],
+                                          [ 12, -12, 0, 0, 255, 0, 127, 255]]
+                        }
+                    }
                 }
             }
         }
