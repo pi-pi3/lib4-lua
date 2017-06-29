@@ -22,8 +22,8 @@
     distribution.
 ]]
 
-local file = require('file')
-local node = require('node')
+local file = require('lib4/file')
+local node = require('lib4/node')
 
 local sprite = {}
 setmetatable(sprite, {

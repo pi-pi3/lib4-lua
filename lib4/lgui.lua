@@ -22,8 +22,6 @@
     distribution.
 ]]
 
-local math = require('math')
-
 local lgui = {}
 
 function lgui.label(prot)

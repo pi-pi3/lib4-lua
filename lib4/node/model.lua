@@ -23,7 +23,7 @@
 ]]
 
 local anim9 = require('anim9')
-local node = require('node')
+local node = require('lib4/node')
 
 local model = {}
 setmetatable(model, {

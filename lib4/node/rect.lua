@@ -22,7 +22,7 @@
     distribution.
 ]]
 
-local node = require('node')
+local node = require('lib4/node')
 
 local rect = {}
 setmetatable(rect, {

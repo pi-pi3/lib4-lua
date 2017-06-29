@@ -1,9 +1,10 @@
 
-local node = require('node')
-local node2d = require('node/node2d')
-local rect = require('node/rect')
+local node = require('lib4/node')
+local node2d = require('lib4/node/node2d')
+local rect = require('lib4/node/rect')
+local file = require('lib4/file')
+
 local cpml = require('cpml')
-local file = require('file')
 
 local game = {}
 

@@ -23,7 +23,7 @@
 ]]
 
 local cpml = require('cpml')
-local node = require('node')
+local node = require('lib4/node')
 
 local ortho3d = {}
 setmetatable(ortho3d, {

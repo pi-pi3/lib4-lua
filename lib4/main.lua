@@ -24,7 +24,7 @@
 
 -- set require path
 local path = love.filesystem.getRequirePath()
-love.filesystem.setRequirePath(path .. ';lib/?.lua;lib/?/init.lua;lib4/?.lua;lib4/?/init.lua')
+love.filesystem.setRequirePath(path .. ';lib/?.lua;lib/?/init.lua')
 
 lib4 = {}
 lib4.keyevents = true
@@ -78,13 +78,13 @@ end
 
 -- global definitions
 require('autobatch')
-love3d = require('lo3d')
-util = require('util')
-lgui = require('lgui')
+love3d = require('lib4/lo3d')
+util = require('lib4/util')
+lgui = require('lib4/lgui')
 log = require('log')
 declare = util.declare -- global alias for declare, should work in every file
 
-local file = require('file')
+local file = require('lib4/file')
 
 function love.load()
     math.randomseed(os.time()) -- don't forget your randomseed!
@@ -99,6 +99,7 @@ function love.load()
 
     -- initial lib4.state is the menu, but you can change it into a splash
     -- screen for example
+    --love.filesystem.setRequirePath(path .. ';lib/?.lua;lib/?/init.lua')
     lib4.state = require('init')
     if lib4.state.load then
         local success, err = pcall(lib4.state.load)

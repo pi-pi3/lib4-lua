@@ -110,9 +110,9 @@ function file.load_node(path)
 
     local t
     if data.t == 'node' then
-        t = require('node')
+        t = require('lib4/node')
     else
-        t = require('node/' .. data.t)
+        t = require('lib4/node/' .. data.t)
     end
     local node = t.new()
 

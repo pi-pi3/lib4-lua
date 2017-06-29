@@ -23,7 +23,7 @@
 ]]
 
 local cpml = require('cpml')
-local node = require('node')
+local node = require('lib4/node')
 
 local node2d = {}
 setmetatable(node2d, {
