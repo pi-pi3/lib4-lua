@@ -15,7 +15,7 @@ done
 
 cd $1/
 for f in $(find . -type f -regex '.*\.lua'); do
-    zip -9 -r ../$2 $f
+    [[ $f != *.git ]] && zip -9 -r ../$2 $f
 done
 
 for f in src assets LICENSE README.md; do
@@ -24,12 +24,16 @@ done
 cd $dir
 
 for lib in cpml iqm love3d; do
-    zip -9 -r $2 lib/$lib
+    for f in $(find lib/$lib -type f); do
+        [[ $f != *.git ]] && zip -9 -r $2 $f
+    done
 done
 
 for lib in anim9 autobatch log tick json; do
     mv lib/$lib/$lib.lua lib/$lib/init.lua
-    zip -9 -r $2 lib/$lib
+    for f in $(find lib/$lib -type f); do
+        [[ $f != *.git ]] && zip -9 -r $2 $f
+    done
     mv lib/$lib/init.lua lib/$lib/$lib.lua
 done
 
