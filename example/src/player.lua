@@ -1,7 +1,7 @@
 
 local node = require('lib4/node')
 local node2d = require('lib4/node/node2d')
-local rect = require('lib4/node/rect')
+local rect = require('lib4/node/node2d/rect')
 local cpml = require('cpml')
 
 local player = {}
