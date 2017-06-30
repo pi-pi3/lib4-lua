@@ -38,7 +38,7 @@ function sprite.new(texture, quad, children, script)
     local self = node.new(children, script)
     setmetatable(self, mt)
 
-    self.t = "sprite"
+    self.t = "node2d/sprite"
 
     if type(texture) == 'string' then
         self.texture = file.load(texture)

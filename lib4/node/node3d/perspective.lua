@@ -38,7 +38,7 @@ function perspective3d.new(children, script)
     local self = node.new(children, script)
     setmetatable(self, mt)
 
-    self.t = "perspective3d"
+    self.t = "node3d/perspective"
 
     self.origin = cpml.vec3()
     self.position = cpml.vec3()

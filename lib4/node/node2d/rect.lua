@@ -37,7 +37,7 @@ function rect.new(rect, col, children, script)
     local self = node.new(children, script)
     setmetatable(self, mt)
 
-    self.t = "rect"
+    self.t = "node2d/rect"
 
     if not rect then
         return self

@@ -38,7 +38,7 @@ function ortho3d.new(cam, children, script)
     local self = node.new(children, script)
     setmetatable(self, mt)
 
-    self.t = "ortho3d"
+    self.t = "node3d/ortho"
 
     self.origin = cpml.vec3()
     self.position = cpml.vec3()

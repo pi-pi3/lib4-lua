@@ -40,7 +40,7 @@ function model.new(model, textures, anim, children, script)
     local self = node.new(children, script)
     setmetatable(self, mt)
 
-    self.t = "model"
+    self.t = "node3d/model"
     if type(model) == 'string' then
         self.model = file.load_model(model)
     else

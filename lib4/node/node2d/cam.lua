@@ -41,7 +41,7 @@ function cam2d.new(children, script)
     local self = node.new(children, script)
     setmetatable(self, mt)
 
-    self.t = "cam2d"
+    self.t = "node2d/cam"
 
     self.origin = cpml.vec2()
     self.position = cpml.vec2()
