@@ -50,6 +50,31 @@ function node.new(children, script)
     return self
 end
 
+-- Create an identical node without inheriting children
+function node:clone()
+    local new = {}
+    setmetatable(new, getmetatable(self))
+
+    new.t = self.t
+    new.script = self.script
+    new.children = {}
+
+    for k, v in pairs(self) do
+        if k ~= 'children' then
+            new[k] = util.copy(v, true)
+        end
+    end
+
+    if new.script and script.load then
+        local success, result = pcall(script.load, self)
+        if not success then
+            log.error('lib4: ' .. err)
+        end
+    end
+
+    return new
+end
+
 -- Send a signal to all children (recursively)
 -- Any function can be considered a signal
 function node:signal(s, ...)
