@@ -1,6 +1,7 @@
 
 local node = require('lib4/node')
 local node2d = require('lib4/node/node2d')
+local phys2d = require('lib4/node/phys2d')
 local rect = require('lib4/node/node2d/rect')
 local cpml = require('cpml')
 
@@ -19,20 +20,12 @@ local bullet = function(pos, vx, vy)
         r = rect.new({0, 0, 4, 12}, {127, 0, 255})
     end
 
-    local b = node2d.new(
-        r,
-        {
-            update = function(self, dt)
-                self.position.x = self.position.x + self.vx*dt
-                self.position.y = self.position.y + self.vy*dt
-            end
-        }
-    )
+    local b = phys2d.new(r)
 
     b.position.x = pos.x
     b.position.y = pos.y
-    b.vx = vx
-    b.vy = vy
+    b.velocity.x = vx
+    b.velocity.y = vy
 
     return b
 end
