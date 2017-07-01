@@ -80,11 +80,12 @@ end
 require('autobatch')
 love3d = require('lib4/lo3d')
 util = require('lib4/util')
-lgui = require('lib4/lgui')
 log = require('log')
 declare = util.declare -- global alias for declare, should work in every file
 
+local lgui = require('lib4/lgui')
 local file = require('lib4/file')
+local phys = require('lib4/phys')
 
 function love.load()
     math.randomseed(os.time()) -- don't forget your randomseed!
@@ -96,6 +97,7 @@ function love.load()
 
     love3d.load()
     file.load()
+    phys.load()
 
     -- initial lib4.state is the menu, but you can change it into a splash
     -- screen for example

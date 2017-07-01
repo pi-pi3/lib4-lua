@@ -68,19 +68,16 @@ function player:update(dt)
         sy = self.speed*10
     end
 
-    if vx ~= 0 and vy ~= 0 then
-        vx = 0
-        vy = 0
-    end
-
     if (sx ~= 0 or sy ~= 0) and self.shooting <= 0 then
         lib4.state.root.children.camera:add(
             bullet(self.position, sx, sy))
         self.shooting = 1
     end
 
-    self.position.x = self.position.x + vx*dt
-    self.position.y = self.position.y + vy*dt
+    if vx == 0 and vy == 0 then
+        self.deceleration = self.velocity:normalize() * self.speed
+    end
+    self.acceleration = cpml.vec2(vx, vy)
 end
 
 return player

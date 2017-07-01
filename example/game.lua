@@ -1,4 +1,5 @@
 
+local phys = require('lib4/phys')
 local node = require('lib4/node')
 local node2d = require('lib4/node/node2d')
 local rect = require('lib4/node/node2d/rect')
@@ -10,6 +11,7 @@ local game = {}
 
 function game.load()
     love3d.disable()
+    phys.enable()
 
     game.elements = {}
     game.root = file.load_node('assets://root.node')

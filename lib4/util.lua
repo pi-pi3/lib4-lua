@@ -277,4 +277,14 @@ function util.map_key(t, fn)
     return new
 end
 
+-- checks if val is inside t
+function util.isin(t, val)
+    for _, v in pairs(t) do
+        if v == val then
+            return true
+        end
+    end
+    return false
+end
+
 return util
