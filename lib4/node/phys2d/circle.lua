@@ -34,8 +34,8 @@ setmetatable(circle, {
 local mt = {__index = circle}
 
 -- Create a new circle
-function circle.new(position, radius, rotation, children, script)
-    local self = node.new(children, script)
+function circle.new(position, radius, rotation, children)
+    local self = node.new(children)
     setmetatable(self, mt)
 
     self.t = "phys2d/circle"

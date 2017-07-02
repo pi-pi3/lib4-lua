@@ -34,8 +34,8 @@ setmetatable(node3d, {
 local mt = {__index = node3d}
 
 -- Create a new node3d
-function node3d.new(children, script)
-    local self = node.new(children, script)
+function node3d.new(children)
+    local self = node.new(children)
     setmetatable(self, mt)
 
     self.t = "node3d"

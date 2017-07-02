@@ -120,8 +120,8 @@ function file.load_node(path)
         node[k] = data[k]
     end
 
-    if node.script and node.script.load then
-        pcall(node.script.load, node)
+    if node.script then
+        node:set_script(node.script)
     end
 
     return node

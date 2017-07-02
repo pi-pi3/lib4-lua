@@ -7,7 +7,7 @@ local cpml = require('cpml')
 
 local player = {}
 
-function player:load()
+function player:_load()
     self.speed = 220
     self.shooting = 0
 end
@@ -30,7 +30,7 @@ local bullet = function(pos, vx, vy)
     return b
 end
 
-function player:update(dt)
+function player:_update(dt)
     if self.shooting > 0 then
         self.shooting = self.shooting - dt
     end

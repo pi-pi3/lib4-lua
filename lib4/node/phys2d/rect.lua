@@ -32,13 +32,13 @@ setmetatable(rect, {
 })
 
 -- Create a new rect
-function rect.new(shape, children, script)
+function rect.new(shape, children)
     local x = shape.x or shape[1] or 0
     local y = shape.y or shape[2] or 0
     local w = shape.w or shape[3] or 0
     local h = shape.h or shape[4] or 0
 
-    return polygon.new({x, y, x, y+h x+w, y+h, x+w, y}, children, script)
+    return polygon.new({x, y, x, y+h x+w, y+h, x+w, y}, children)
 end
 
 return rect

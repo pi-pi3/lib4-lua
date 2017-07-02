@@ -34,8 +34,8 @@ setmetatable(perspective3d, {
 local mt = {__index = perspective3d}
 
 -- Create a new perspective3d
-function perspective3d.new(children, script)
-    local self = node.new(children, script)
+function perspective3d.new(children)
+    local self = node.new(children)
     setmetatable(self, mt)
 
     self.t = "node3d/perspective"

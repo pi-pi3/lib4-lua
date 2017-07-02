@@ -32,11 +32,11 @@ setmetatable(point, {
 })
 
 -- Create a new point
-function point.new(shape, children, script)
+function point.new(shape, children)
     local x = shape.x or shape[1] or 0
     local y = shape.y or shape[2] or 0
 
-    return polygon.new({x, y}, children, script)
+    return polygon.new({x, y}, children)
 end
 
 return point

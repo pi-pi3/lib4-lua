@@ -27,12 +27,11 @@ setmetatable(node, {__call = node.new})
 local mt = {__index = node}
 
 -- Create a new empty node
-function node.new(children, script)
+function node.new(children)
     local self = {}
     setmetatable(self, mt)
 
     self.t = "node"
-    self.script = script
 
     if children and children.t then
         self.children = {children}
@@ -40,14 +39,25 @@ function node.new(children, script)
         self.children = children or {}
     end
 
-    if script and script.load then
-        local success, result = pcall(script.load, self)
+    return self
+end
+
+function node:set_script(script)
+    self.script = script
+
+    for k, v in pairs(script) do
+        if not util.startswith(k, '_') then
+            self[k] = v
+            script[k] = nil
+        end
+    end
+
+    if script._load then
+        local success, err = pcall(script._load, self)
         if not success then
             log.error('lib4: ' .. err)
         end
     end
-
-    return self
 end
 
 -- Create an identical node without inheriting children
@@ -65,11 +75,8 @@ function node:clone()
         end
     end
 
-    if new.script and script.load then
-        local success, result = pcall(script.load, self)
-        if not success then
-            log.error('lib4: ' .. err)
-        end
+    if new.script then
+        new:set_script(new.script)
     end
 
     return new
@@ -94,8 +101,8 @@ function node:signal(s, ...)
         end
     end
 
-    if self.script and self.script[s] then
-        local s, err = pcall(self.script[s], self, ...)
+    if self.script and self.script['_' .. s] then
+        local s, err = pcall(self.script['_' .. s], self, ...)
         if s == false then
             success = false
             err = err

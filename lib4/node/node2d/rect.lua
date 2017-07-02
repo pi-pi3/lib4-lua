@@ -33,8 +33,8 @@ setmetatable(rect, {
 local mt = {__index = rect}
 
 -- Create a new rect
-function rect.new(rect, col, children, script)
-    local self = node.new(children, script)
+function rect.new(rect, col, children)
+    local self = node.new(children)
     setmetatable(self, mt)
 
     self.t = "node2d/rect"

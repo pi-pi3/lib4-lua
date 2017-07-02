@@ -37,8 +37,8 @@ local screen = cpml.vec2(love.graphics.getWidth(),
                          love.graphics.getHeight())
 
 -- Create a new cam2d
-function cam2d.new(children, script)
-    local self = node.new(children, script)
+function cam2d.new(children)
+    local self = node.new(children)
     setmetatable(self, mt)
 
     self.t = "node2d/cam"

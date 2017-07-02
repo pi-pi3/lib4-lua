@@ -34,8 +34,8 @@ setmetatable(sprite, {
 local mt = {__index = sprite}
 
 -- Create a new sprite
-function sprite.new(texture, quad, children, script)
-    local self = node.new(children, script)
+function sprite.new(texture, quad, children)
+    local self = node.new(children)
     setmetatable(self, mt)
 
     self.t = "node2d/sprite"

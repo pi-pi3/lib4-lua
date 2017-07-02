@@ -33,8 +33,8 @@ setmetatable(polygon, {
 local mt = {__index = polygon}
 
 -- Create a new polygon
-function polygon.new(shape, children, script)
-    local self = node.new(children, script)
+function polygon.new(shape, children)
+    local self = node.new(children)
     setmetatable(self, mt)
 
     self.t = "phys2d/polygon"

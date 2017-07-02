@@ -34,10 +34,10 @@ setmetatable(model, {
 local mt = {__index = model}
 
 -- Create a new model
-function model.new(model, textures, anim, children, script)
+function model.new(model, textures, anim, children)
     assert(model)
 
-    local self = node.new(children, script)
+    local self = node.new(children)
     setmetatable(self, mt)
 
     self.t = "node3d/model"
