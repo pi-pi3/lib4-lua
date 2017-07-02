@@ -35,6 +35,10 @@ function file.load()
     scheme.src = 'src/'
 end
 
+function file.exists(path)
+    love.filesystem.exists(file.expand(path))
+end
+
 function file.expand(path)
     for s, val in pairs(scheme) do
         if util.startswith(path, s .. '://') then
