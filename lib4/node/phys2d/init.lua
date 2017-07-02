@@ -27,11 +27,6 @@ local phys = require('lib4/phys')
 local node = require('lib4/node')
 
 local phys2d = {}
-setmetatable(phys2d, {
-    __index = node,
-    __call = phys2d.new,
-})
-
 local mt = {__index = phys2d}
 
 -- Create a new phys2d
@@ -108,5 +103,10 @@ end
 function phys2d:set_collide(layer, p)
     self.mask[layer] = (p == nil) or p
 end
+
+setmetatable(phys2d, {
+    __index = node,
+    __call = phys2d.new,
+})
 
 return phys2d

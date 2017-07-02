@@ -26,11 +26,6 @@ local file = require('lib4/file')
 local node = require('lib4/node')
 
 local sprite = {}
-setmetatable(sprite, {
-    __index = node,
-    __call = sprite.new,
-})
-
 local mt = {__index = sprite}
 
 -- Create a new sprite
@@ -65,5 +60,10 @@ end
 function sprite:draw()
     love.graphics.draw(self.texture, self.quad, 0, 0)
 end
+
+setmetatable(sprite, {
+    __index = node,
+    __call = sprite.new,
+})
 
 return sprite

@@ -25,11 +25,6 @@
 local node = require('lib4/node')
 
 local polygon = {}
-setmetatable(polygon, {
-    __index = node,
-    __call = polygon.new,
-})
-
 local mt = {__index = polygon}
 
 -- Create a new polygon
@@ -46,5 +41,10 @@ end
 function polygon:intersects(other)
     return phys.intersects(self, other)
 end
+
+setmetatable(polygon, {
+    __index = node,
+    __call = polygon.new,
+})
 
 return polygon

@@ -26,11 +26,6 @@ local cpml = require('cpml')
 local node = require('lib4/node')
 
 local ortho3d = {}
-setmetatable(ortho3d, {
-    __index = node,
-    __call = ortho3d.new,
-})
-
 local mt = {__index = ortho3d}
 
 -- Create a new ortho3d
@@ -87,5 +82,10 @@ function ortho3d:signal(s, ...)
         node.signal(self, s, ...)
     end
 end
+
+setmetatable(ortho3d, {
+    __index = node,
+    __call = ortho3d.new,
+})
 
 return ortho3d

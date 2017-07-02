@@ -26,11 +26,6 @@ local cpml = require('cpml')
 local node = require('lib4/node')
 
 local cam2d = {}
-setmetatable(cam2d, {
-    __index = node,
-    __call = cam2d.new,
-})
-
 local mt = {__index = cam2d}
 
 local screen = cpml.vec2(love.graphics.getWidth(),
@@ -75,5 +70,10 @@ end
 function cam2d:resize(width, height)
     screen = cpml.vec2(width, height)
 end
+
+setmetatable(cam2d, {
+    __index = node,
+    __call = cam2d.new,
+})
 
 return cam2d

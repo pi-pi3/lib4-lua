@@ -26,11 +26,6 @@ local cpml = require('cpml')
 local node = require('lib4/node')
 
 local node2d = {}
-setmetatable(node2d, {
-    __index = node,
-    __call = node2d.new,
-})
-
 local mt = {__index = node2d}
 
 -- Create a new node2d
@@ -62,5 +57,10 @@ function node2d:signal(s, ...)
         node.signal(self, s, ...)
     end
 end
+
+setmetatable(node2d, {
+    __index = node,
+    __call = node2d.new,
+})
 
 return node2d

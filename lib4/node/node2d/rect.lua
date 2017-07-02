@@ -25,11 +25,6 @@
 local node = require('lib4/node')
 
 local rect = {}
-setmetatable(rect, {
-    __index = node,
-    __call = rect.new,
-})
-
 local mt = {__index = rect}
 
 -- Create a new rect
@@ -101,5 +96,10 @@ end
 function rect:draw()
     love.graphics.draw(self.rect, 0, 0)
 end
+
+setmetatable(rect, {
+    __index = node,
+    __call = rect.new,
+})
 
 return rect

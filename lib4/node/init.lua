@@ -23,7 +23,6 @@
 ]]
 
 local node = {}
-setmetatable(node, {__call = node.new})
 local mt = {__index = node}
 
 -- Create a new empty node
@@ -163,5 +162,7 @@ end
 function node:find(k)
     return self.children[k]
 end
+
+setmetatable(node, {__call = node.new})
 
 return node

@@ -26,11 +26,6 @@ local anim9 = require('anim9')
 local node = require('lib4/node')
 
 local model = {}
-setmetatable(model, {
-    __index = node,
-    __call = model.new,
-})
-
 local mt = {__index = model}
 
 -- Create a new model
@@ -77,5 +72,10 @@ end
 function model:draw()
     love3d.draw(self.model)
 end
+
+setmetatable(model, {
+    __index = node,
+    __call = model.new,
+})
 
 return model

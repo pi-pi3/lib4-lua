@@ -26,11 +26,6 @@ local polygon = require('lib4/polygon')
 local node = require('lib4/node')
 
 local point = {}
-setmetatable(point, {
-    __index = polygon,
-    __call = point.new,
-})
-
 -- Create a new point
 function point.new(shape, children)
     local x = shape.x or shape[1] or 0
@@ -38,5 +33,10 @@ function point.new(shape, children)
 
     return polygon.new({x, y}, children)
 end
+
+setmetatable(point, {
+    __index = polygon,
+    __call = point.new,
+})
 
 return point

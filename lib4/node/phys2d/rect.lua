@@ -26,11 +26,6 @@ local polygon = require('lib4/polygon')
 local node = require('lib4/node')
 
 local rect = {}
-setmetatable(rect, {
-    __index = polygon,
-    __call = rect.new,
-})
-
 -- Create a new rect
 function rect.new(shape, children)
     local x = shape.x or shape[1] or 0
@@ -40,5 +35,10 @@ function rect.new(shape, children)
 
     return polygon.new({x, y, x, y+h x+w, y+h, x+w, y}, children)
 end
+
+setmetatable(rect, {
+    __index = polygon,
+    __call = rect.new,
+})
 
 return rect

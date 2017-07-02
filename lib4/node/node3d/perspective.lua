@@ -26,11 +26,6 @@ local cpml = require('cpml')
 local node = require('lib4/node')
 
 local perspective3d = {}
-setmetatable(perspective3d, {
-    __index = node,
-    __call = perspective3d.new,
-})
-
 local mt = {__index = perspective3d}
 
 -- Create a new perspective3d
@@ -83,5 +78,10 @@ function perspective3d:signal(s, ...)
         node.signal(self, s, ...)
     end
 end
+
+setmetatable(perspective3d, {
+    __index = node,
+    __call = perspective3d.new,
+})
 
 return perspective3d

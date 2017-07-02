@@ -26,11 +26,6 @@ local cpml = require('cpml')
 local node = require('lib4/node')
 
 local circle = {}
-setmetatable(circle, {
-    __index = node,
-    __call = circle.new,
-})
-
 local mt = {__index = circle}
 
 -- Create a new circle
@@ -72,5 +67,10 @@ end
 function circle:intersects(other)
     return phys.intersects(self, other)
 end
+
+setmetatable(circle, {
+    __index = node,
+    __call = circle.new,
+})
 
 return circle
