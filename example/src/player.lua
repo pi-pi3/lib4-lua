@@ -71,6 +71,9 @@ function player:_update(dt)
         self.deceleration = self.velocity:normalize() * self.speed
     end
     self.acceleration = cpml.vec2(vx, vy)
+
+    self.velocity.x = util.clamp(self.velocity.x, -self.speed, self.speed)
+    self.velocity.y = util.clamp(self.velocity.y, -self.speed, self.speed)
 end
 
 return player
