@@ -22,3 +22,6 @@
 [submodule "lib/json"]
 	path = lib/json
 	url = git@github.com:rxi/json.lua
+[submodule "lib4/splash"]
+	path = lib4/splash
+	url = git@github.com:pi-pi3/splash.git

@@ -87,6 +87,8 @@ local lgui = require('lib4/lgui')
 local file = require('lib4/file')
 local phys = require('lib4/phys')
 
+local node = require('lib4/node')
+
 function love.load()
     math.randomseed(os.time()) -- don't forget your randomseed!
     love.keyboard.setKeyRepeat(true)
@@ -99,10 +101,18 @@ function love.load()
     file.load()
     phys.load()
 
-    -- initial lib4.state is the menu, but you can change it into a splash
-    -- screen for example
-    --love.filesystem.setRequirePath(path .. ';lib/?.lua;lib/?/init.lua')
-    lib4.state = require('init')
+    lib4.load_splash()
+end
+
+function lib4.load_splash()
+    local splash = 'lib4/splash'
+    if love.filesystem.exists('splash.lua') 
+        or love.filesystem.exists('splash/init.lua') then
+        splash = 'splash'
+    end
+
+    lib4.state = require(splash)
+    lib4.issplash = true
     if lib4.state.load then
         local success, err = pcall(lib4.state.load)
         if not success then
@@ -111,7 +121,27 @@ function love.load()
     end
 end
 
+function lib4.load_game()
+    if love.filesystem.exists('game.lua') 
+        or love.filesystem.exists('game/init.lua') then
+        lib4.state = require('game')
+        if lib4.state.load then
+            local success, err = pcall(lib4.state.load)
+            if not success then
+                log.error('lib4: ' .. err)
+            end
+        end
+    else
+        lib4.state = {root = node.new()}
+    end
+end
+
 function love.update(dt)
+    if lib4.issplash and lib4.state.done then
+        lib4.issplash = false
+        lib4.load_game()
+    end
+
     if lib4.keyevents then
         for _, scancode in ipairs({}) do
             if love.keyboard.isScancodeDown(scancode) then
@@ -134,7 +164,9 @@ function love.update(dt)
         end
     end
 
-    lgui.updateall(lib4.state.elements)
+    if lib4.state.elements then
+        lgui.updateall(lib4.state.elements)
+    end
 end
 
 function love.draw()
@@ -153,7 +185,9 @@ function love.draw()
         end
     end
 
-    lgui.drawall(lib4.state.elements)
+    if lib4.state.elements then
+        lgui.drawall(lib4.state.elements)
+    end
 end
 
 for _, func in pairs({
@@ -180,7 +214,7 @@ for _, func in pairs({
             end
         end
 
-        if lgui[func] then
+        if lgui[func] and lib4.state.elements then
             pcall(lgui[func], lib4.state.elements, ...)
         end
     end
