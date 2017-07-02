@@ -120,6 +120,10 @@ function lib4.load_splash()
             log.error('lib4: ' .. err)
         end
     end
+
+    if not lib4.state.do3d then
+        love3d.disable()
+    end
 end
 
 function lib4.load_game()
@@ -140,6 +144,7 @@ end
 function love.update(dt)
     if lib4.issplash and lib4.state.done then
         lib4.issplash = false
+        love3d.enable()
         lib4.load_game()
     end
 
