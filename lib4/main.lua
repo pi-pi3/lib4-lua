@@ -91,6 +91,7 @@ local node = require('lib4/node')
 
 function love.load()
     math.randomseed(os.time()) -- don't forget your randomseed!
+    love.math.setRandomSeed(os.time())
     love.keyboard.setKeyRepeat(true)
 
     -- this is called in love.load, because some external libraries might
