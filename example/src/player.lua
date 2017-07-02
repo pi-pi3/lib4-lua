@@ -62,8 +62,7 @@ function player:_update(dt)
     end
 
     if (sx ~= 0 or sy ~= 0) and self.shooting <= 0 then
-        lib4.state.root.children.camera:add(
-            bullet(self.position, sx, sy))
+        lib4.root.children.camera:add(bullet(self.position, sx, sy))
         self.shooting = 1
     end
 

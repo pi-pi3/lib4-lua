@@ -103,7 +103,7 @@ function love3d.load()
     cpml.mat4.identity(love3d.view[1])
     cpml.mat4.identity(love3d.proj[1])
 
-    love3d.enable()
+    love3d.disable()
 end
 
 function love3d.enable(p)

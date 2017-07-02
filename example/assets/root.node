@@ -1,5 +1,6 @@
 {
     "t": "node",
+    "src:script": "src://script",
     "[node]:children": {
         "camera": {
             "t": "node2d/cam",
