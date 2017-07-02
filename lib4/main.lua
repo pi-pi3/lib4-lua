@@ -27,7 +27,7 @@ local path = love.filesystem.getRequirePath()
 love.filesystem.setRequirePath(path .. ';lib/?.lua;lib/?/init.lua')
 
 lib4 = {}
-lib4.keyevents = true
+lib4.keyevents = false
 lib4.scancodes = {
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
     'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
@@ -149,6 +149,7 @@ function love.update(dt)
     end
 
     if lib4.keyevents then
+        print('beep')
         for _, scancode in ipairs(lib4.scancodes) do
             if love.keyboard.isScancodeDown(scancode) then
                 local key = love.keyboard.getKeyFromScancode(scancode)
