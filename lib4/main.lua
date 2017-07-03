@@ -22,6 +22,26 @@
     distribution.
 ]]
 
+if arg[2] == '-d' or arg[2] == '--debug' then
+    DEBUG = true
+else
+    DEBUG = false
+end
+
+if DEBUG then
+    function dcall(func, ...)
+        local success, result = pcall(func, ...)
+        if not success then
+            log.error('lib4: ' .. result)
+        end
+        return success, result
+    end
+else
+    function dcall(func, ...)
+        return true, func(...)
+    end
+end
+
 -- set require path
 local path = love.filesystem.getRequirePath()
 love.filesystem.setRequirePath(path .. ';lib/?.lua;lib/?/init.lua')
@@ -112,3 +132,41 @@ for _, func in pairs({
     end
 end
 
+function love.run()
+    dcall(love.load, arg)
+ 
+    -- We don't want the first frame's dt to include time taken by love.load.
+    love.timer.step()
+ 
+    local dt = 0
+ 
+    -- Main loop time.
+    while true do
+        -- Process events.
+        love.event.pump()
+        for name, a,b,c,d,e,f in love.event.poll() do
+            if name == "quit" then
+                if not love.quit or not love.quit() then
+                    return a
+                end
+            end
+            dcall(love.handlers[name], a, b, c, d, e, f)
+        end
+ 
+        -- Update dt, as we'll be passing it to update
+        love.timer.step()
+        dt = love.timer.getDelta()
+ 
+        -- Call update and draw
+        dcall(love.update, dt)
+ 
+        if love.graphics.isActive() then
+            love.graphics.clear(love.graphics.getBackgroundColor())
+            love.graphics.origin()
+            dcall(love.draw)
+            love.graphics.present()
+        end
+ 
+        love.timer.sleep(0.001)
+    end
+end

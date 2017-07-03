@@ -69,7 +69,7 @@ function file.load_node(path)
     end
 
     function types.src(val)
-        local success, result = pcall(file.load_src(val))
+        local success, result = dcall(file.load_src(val))
         return result
     end
 

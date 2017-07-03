@@ -52,10 +52,7 @@ function node:set_script(script)
     end
 
     if script._load then
-        local success, err = pcall(script._load, self)
-        if not success then
-            log.error('lib4: ' .. err)
-        end
+        dcall(script._load, self)
     end
 end
 
@@ -89,11 +86,10 @@ function node:signal(s, ...)
     local err = nil
 
     if self[s] then
-        local s, err = pcall(self[s], self, ...)
+        local s, err = dcall(self[s], self, ...)
         if s == false then
             success = false
             err = err
-            log.error('lib4: ' .. err)
         end
         if result == nil then
             result = err
@@ -101,11 +97,10 @@ function node:signal(s, ...)
     end
 
     if self.script and self.script['_' .. s] then
-        local s, err = pcall(self.script['_' .. s], self, ...)
+        local s, err = dcall(self.script['_' .. s], self, ...)
         if s == false then
             success = false
             err = err
-            log.error('lib4: ' .. err)
         end
         if result == nil then
             result = err
