@@ -59,11 +59,9 @@ end
 
 function love.update(dt)
     if lib4.keyevents then
-        for _, scancode in ipairs(lib4.scancodes) do
-            if love.keyboard.isScancodeDown(scancode) then
-                local key = love.keyboard.getKeyFromScancode(scancode)
-                love.keydown(key, scancode)
-            end
+        for scancode, _ in ipairs(lib4.keysdown) do
+            local key = love.keyboard.getKeyFromScancode(scancode)
+            love.keydown(key, scancode)
         end
     end
 
@@ -82,9 +80,25 @@ function love.draw()
     end
 end
 
+function love.keypressed(key, scancode, isrepeat)
+    lib4.keysdown[scancode] = true
+
+    if lib4.root and not lib4.root.pause then
+        lib4.root:signal('keypressed', key, scancode, isrepeat)
+    end
+end
+
+function love.keyreleased(key, scancode, isrepeat)
+    lib4.keysdown[scancode] = nil
+
+    if lib4.root and not lib4.root.pause then
+        lib4.root:signal('keyreleased', key, scancode, isrepeat)
+    end
+end
+
 for _, func in pairs({
     'directorydropped', 'errhand', 'filedropped', 'focus',
-    'keypressed', 'keyreleased', 'keydown', 'lowmemory',
+    'keydown', 'lowmemory',
     'mousefocus', 'mousemoved', 'mousepressed', 'mousereleased',
     'quit', 'resize', 'textedited', 'textinput',
     'threaderror', 'touchmoved', 'touchpressed', 'touchreleased',

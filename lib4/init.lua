@@ -28,6 +28,7 @@ local file = require('lib4/file')
 local lib4 = {}
 
 lib4.keyevents = false
+lib4.keysdown = {}
 lib4.scancodes = {
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
     'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
