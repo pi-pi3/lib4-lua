@@ -35,7 +35,6 @@ util = require('lib4/util')
 log = require('log')
 declare = util.declare -- global alias for declare, should work in every file
 
-local lgui = require('lib4/lgui')
 local file = require('lib4/file')
 local phys = require('lib4/phys')
 
