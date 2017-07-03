@@ -1,6 +1,6 @@
 {
     "t": "node",
-    "src:script": "src://script",
+    "src:script": "src://game.lua",
     "[node]:children": {
         "camera": {
             "t": "node2d/cam",

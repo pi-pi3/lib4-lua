@@ -20,7 +20,7 @@ local transition
 local seq
 local frame
 
-function splash._load()
+function splash:_load()
     floor = {}
     floor.color = {0x92, 0x88, 0xb0, 0xff}
     floor.height = 32
@@ -113,7 +113,7 @@ function splash._load()
     frame = 1
 end
 
-function splash._update(dt)
+function splash:_update(dt)
     seq[frame].duration = seq[frame].duration - dt
     if seq[frame].duration <= 0 then
         frame = frame + 1
@@ -223,7 +223,7 @@ local draw_stars = function()
     end
 end
 
-function splash._draw()
+function splash:_draw()
     if frame == 1 or frame == 2 then
         love.graphics.setCanvas(screen.star_canvas)
         draw_stars()
