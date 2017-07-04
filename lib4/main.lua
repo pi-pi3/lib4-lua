@@ -88,6 +88,12 @@ function love.update(dt)
     end
 end
 
+function love.phys_update(dt)
+    if lib4.root and not lib4.root.pause then
+        lib4.root:signal('phys_update', dt)
+    end
+end
+
 function love.draw()
     if love3d.enabled then
         love3d.clear()
@@ -123,7 +129,6 @@ for _, func in pairs({
     'visible', 'wheelmoved', 'gamepadaxis', 'gamepadpressed',
     'gamepadreleased', 'joystickadded', 'joystickaxis', 'joystickhat',
     'joystickpressed', 'joystickreleased', 'joystickremoved',
-    'phys_update',
 }) do
     love[func] = function(...)
         if lib4.root and not lib4.root.pause then
