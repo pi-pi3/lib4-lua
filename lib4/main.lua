@@ -124,6 +124,7 @@ for _, func in pairs({
     'visible', 'wheelmoved', 'gamepadaxis', 'gamepadpressed',
     'gamepadreleased', 'joystickadded', 'joystickaxis', 'joystickhat',
     'joystickpressed', 'joystickreleased', 'joystickremoved',
+    'phys_update',
 }) do
     love[func] = function(...)
         if lib4.root and not lib4.root.pause then
@@ -138,6 +139,8 @@ function love.run()
     -- We don't want the first frame's dt to include time taken by love.load.
     love.timer.step()
  
+    local delta = 0
+    local phys_dt = 0
     local dt = 0
  
     -- Main loop time.
@@ -155,10 +158,20 @@ function love.run()
  
         -- Update dt, as we'll be passing it to update
         love.timer.step()
-        dt = love.timer.getDelta()
+
+        delta = love.timer.getDelta()
+        phys_dt = phys_dt + delta
+        dt = dt + delta
  
-        -- Call update and draw
-        dcall(love.update, dt)
+        if phys_dt >= lib4.phys_delta then
+            dcall(love.phys_update, phys_dt)
+            phys_dt = phys_dt - lib4.phys_delta
+        end
+ 
+        if dt >= lib4.delta then
+            dcall(love.update, dt)
+            dt = dt - lib4.delta
+        end
  
         if love.graphics.isActive() then
             love.graphics.clear(love.graphics.getBackgroundColor())

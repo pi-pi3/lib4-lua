@@ -69,7 +69,7 @@ function phys2d:signal(s, ...)
     end
 end
 
-function phys2d:update(dt)
+function phys2d:phys_update(dt)
     if not phys.enabled then
         return
     end
