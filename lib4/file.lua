@@ -36,7 +36,7 @@ function file.load()
 end
 
 function file.exists(path)
-    love.filesystem.exists(file.expand(path))
+    return love.filesystem.exists(file.expand(path))
 end
 
 function file.expand(path)
