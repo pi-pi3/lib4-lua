@@ -72,11 +72,16 @@ lib4.scancodes = {
 }
 
 function lib4.update_rate(rate, phys_rate)
-    if rate then
+    if rate and rate > 0 then
         lib4.delta = 1/rate
+    elseif rate and rate == 0 then
+        lib4.delta = 0
     end
-    if phys_rate then
+
+    if phys_rate and rate > 0 then
         lib4.phys_delta = 1/phys_rate
+    elseif phys_rate and phys_rate == 0 then
+        lib4.phys_delta = 0
     end
 end
 

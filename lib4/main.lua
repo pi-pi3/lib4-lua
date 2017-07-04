@@ -162,21 +162,28 @@ function love.run()
  
         -- Update dt, as we'll be passing it to update
         love.timer.step()
-
         delta = love.timer.getDelta()
-        dt = dt + delta
  
         if phys.enabled then
             phys_dt = phys_dt + delta
             if phys_dt >= lib4.phys_delta then
                 dcall(love.phys_update, phys_dt)
-                phys_dt = phys_dt - lib4.phys_delta
+                if lib4.phys_delta == 0 then
+                    phys_dt = 0
+                else
+                    phys_dt = phys_dt - lib4.phys_delta
+                end
             end
         end
- 
+
+        dt = dt + delta
         if dt >= lib4.delta then
             dcall(love.update, dt)
-            dt = dt - lib4.delta
+            if lib4.delta == 0 then
+                dt = 0
+            else
+                dt = dt - lib4.delta
+            end
         end
  
         if love.graphics.isActive() then
