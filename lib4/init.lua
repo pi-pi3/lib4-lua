@@ -28,8 +28,8 @@ local file = require('lib4/file')
 local lib4 = {}
 
 lib4.keyevents = false
-lib4.delta = 1/60
-lib4.phys_delta = 1/30
+lib4.delta = 1/100
+lib4.phys_delta = 1/50
 lib4.keysdown = {}
 lib4.scancodes = {
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
