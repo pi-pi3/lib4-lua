@@ -51,6 +51,7 @@ function button:draw()
     love.graphics.setColor(self.framecolor)
     love.graphics.setLineStyle('smooth')
     love.graphics.setLineWidth(self.line_width)
+    love.graphics.rectangle('line', 0, 0, self.width, self.height)
 
     if self.text then
         love.graphics.printf(self.text, 0, 0, self.width, self.align)

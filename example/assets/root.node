@@ -1,31 +1,24 @@
 {
-    "t": "node",
-    "src:script": "src://game.lua",
+    "t": "gui/element",
+    "vec:position": [0, 0],
+    "width": 640,
+    "height": 360,
     "[node]:children": {
-        "camera": {
-            "t": "node2d/cam",
-            "[node]:children": {
-                "player": {
-                    "t": "phys2d",
-                    "vec:position": [0.0, 0.0],
-                    "rotation": 0.0,
-                    "vec:scale": [1.0, 1.0],
-                    "src:script": "src://player.lua",
-                    "[node]:children": {
-                        "body": {
-                            "t": "phys2d/circle",
-                            "vec:radius": [1, 1],
-                        },
-                        "drawable": {
-                            "t": "node2d/rect",
-                            "mesh:rect": [[-12, -12, 0, 0, 255, 0, 127, 255],
-                                          [-12,  12, 0, 0, 255, 0, 127, 255],
-                                          [ 12,  12, 0, 0, 255, 0, 127, 255],
-                                          [ 12, -12, 0, 0, 255, 0, 127, 255]]
-                        }
-                    }
-                }
-            }
+        "play": {
+            "t": "gui/button",
+            "text": "Play",
+            "vec:position": [260, 100],
+            "width": 120,
+            "height": 40,
+            "src:script": "src://menu/play.lua",
+        },
+        "quit": {
+            "t": "gui/button",
+            "text": "Quit",
+            "vec:position": [270, 160],
+            "width": 100,
+            "height": 40,
+            "src:script": "src://menu/quit.lua",
         }
     }
 }

@@ -69,8 +69,8 @@ function file.load_node(path)
     end
 
     function types.src(val)
-        local success, result = dcall(file.load_src, val)
-        return result
+        local _, src = dcall(file.load_src(val))
+        return src
     end
 
     function types.img(val)

@@ -69,7 +69,7 @@ function element:signal(s, ...)
         love.graphics.scale(self.scale.x, self.scale.y)
 
         love.graphics.stencil(function()
-            love.graphics.rectangle(0, 0, self.width, self.height)
+            love.graphics.rectangle('fill', 0, 0, self.width, self.height)
         end, 'replace', 1)
         love.graphics.setStencilTest('greater', 0)
 
@@ -77,14 +77,20 @@ function element:signal(s, ...)
 
         love.graphics.setStencilTest()
         love.graphics.pop()
-    elseif util.startswith(s, 'mouse') then
+    elseif util.startswith(s, 'mouse') and s ~= 'mousefocus' then
         local x, y = ...
         x = x - self.position.x
         y = y - self.position.y
         if x >= 0 and x <= self.width
             and y >= 0 and y <= self.height then
             local s = string.sub(s, 6)
-            node.signal(self, s, x, y, select(3, ...))
+            if self[s] then
+                dcall(self[s], self, x, y, select(3, ...))
+            end
+
+            if self.script and self.script['_' .. s] then
+                dcall(self.script['_' .. s], self, x, y, select(3, ...))
+            end
         end
         node.signal(self, s, x, y, select(3, ...))
     else
@@ -99,6 +105,7 @@ function element:draw()
     love.graphics.setColor(self.framecolor)
     love.graphics.setLineStyle('smooth')
     love.graphics.setLineWidth(self.line_width)
+    love.graphics.rectangle('line', 0, 0, self.width, self.height)
 end
 
 function element:pressed(x, y)
