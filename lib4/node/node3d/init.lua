@@ -75,7 +75,7 @@ end
 
 setmetatable(node3d, {
     __index = node,
-    __call = node3d.new,
+    __call = function(_, ...) return node3d.new(...) end ,
 })
 
 return node3d

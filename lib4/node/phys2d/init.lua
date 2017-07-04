@@ -102,7 +102,7 @@ end
 
 setmetatable(phys2d, {
     __index = node,
-    __call = phys2d.new,
+    __call = function(_, ...) return phys2d.new(...) end ,
 })
 
 return phys2d

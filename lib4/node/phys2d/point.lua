@@ -36,7 +36,7 @@ end
 
 setmetatable(point, {
     __index = polygon,
-    __call = point.new,
+    __call = function(_, ...) return point.new(...) end ,
 })
 
 return point

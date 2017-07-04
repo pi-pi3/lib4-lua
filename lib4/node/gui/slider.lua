@@ -68,7 +68,7 @@ end
 
 setmetatable(slider, {
     __index = element,
-    __call = slider.new
+    __call = function(_, ...) return slider.new(...) end 
 })
 
 return slider

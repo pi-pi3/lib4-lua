@@ -38,7 +38,7 @@ end
 
 setmetatable(rect, {
     __index = polygon,
-    __call = rect.new,
+    __call = function(_, ...) return rect.new(...) end ,
 })
 
 return rect

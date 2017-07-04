@@ -46,7 +46,7 @@ end
 
 setmetatable(checkbox, {
     __index = element,
-    __call = checkbox.new
+    __call = function(_, ...) return checkbox.new(...) end 
 })
 
 return checkbox

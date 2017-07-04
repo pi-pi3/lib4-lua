@@ -66,7 +66,7 @@ end
 
 setmetatable(textfield, {
     __index = element,
-    __call = textfield.new
+    __call = function(_, ...) return textfield.new(...) end 
 })
 
 return textfield

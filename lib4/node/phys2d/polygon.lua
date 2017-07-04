@@ -44,7 +44,7 @@ end
 
 setmetatable(polygon, {
     __index = node,
-    __call = polygon.new,
+    __call = function(_, ...) return polygon.new(...) end ,
 })
 
 return polygon

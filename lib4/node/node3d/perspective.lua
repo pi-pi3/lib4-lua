@@ -81,7 +81,7 @@ end
 
 setmetatable(perspective3d, {
     __index = node,
-    __call = perspective3d.new,
+    __call = function(_, ...) return perspective3d.new(...) end ,
 })
 
 return perspective3d

@@ -121,7 +121,7 @@ function file.load_node(path)
     local node = t.new()
 
     for k, v in pairs(data) do
-        node[k] = data[k]
+        node[k] = v
     end
 
     if node.script then

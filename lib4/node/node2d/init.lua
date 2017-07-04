@@ -60,7 +60,7 @@ end
 
 setmetatable(node2d, {
     __index = node,
-    __call = node2d.new,
+    __call = function(_, ...) return node2d.new(...) end ,
 })
 
 return node2d

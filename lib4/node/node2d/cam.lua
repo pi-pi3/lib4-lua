@@ -73,7 +73,7 @@ end
 
 setmetatable(cam2d, {
     __index = node,
-    __call = cam2d.new,
+    __call = function(_, ...) return cam2d.new(...) end ,
 })
 
 return cam2d

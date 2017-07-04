@@ -99,7 +99,7 @@ end
 
 setmetatable(rect, {
     __index = node,
-    __call = rect.new,
+    __call = function(_, ...) return rect.new(...) end ,
 })
 
 return rect

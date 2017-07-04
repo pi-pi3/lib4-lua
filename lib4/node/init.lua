@@ -158,6 +158,6 @@ function node:find(k)
     return self.children[k]
 end
 
-setmetatable(node, {__call = node.new})
+setmetatable(node, {__call = function(_, ...) return node.new(...) end })
 
 return node

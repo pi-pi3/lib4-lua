@@ -100,8 +100,9 @@ function lib4.load_splash()
     if file.exists('assets://splash.node') then
         lib4.set_root('assets://splash.node')
     else
-        lib4.set_root(node())
-        lib4.root:set_script(require('lib4/splash'))
+        local splash = node()
+        splash:set_script(require('lib4/splash'))
+        lib4.set_root(splash)
     end
 end
 

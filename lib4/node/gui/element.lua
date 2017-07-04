@@ -130,7 +130,7 @@ end
 
 setmetatable(element, {
     __index = node,
-    __call = element.new
+    __call = function(_, ...) return element.new(...) end 
 })
 
 return element

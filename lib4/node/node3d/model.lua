@@ -75,7 +75,7 @@ end
 
 setmetatable(model, {
     __index = node,
-    __call = model.new,
+    __call = function(_, ...) return model.new(...) end ,
 })
 
 return model

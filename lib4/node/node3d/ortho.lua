@@ -85,7 +85,7 @@ end
 
 setmetatable(ortho3d, {
     __index = node,
-    __call = ortho3d.new,
+    __call = function(_, ...) return ortho3d.new(...) end ,
 })
 
 return ortho3d

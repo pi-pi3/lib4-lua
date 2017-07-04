@@ -70,7 +70,7 @@ end
 
 setmetatable(circle, {
     __index = node,
-    __call = circle.new,
+    __call = function(_, ...) return circle.new(...) end ,
 })
 
 return circle

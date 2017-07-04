@@ -63,7 +63,7 @@ end
 
 setmetatable(sprite, {
     __index = node,
-    __call = sprite.new,
+    __call = function(_, ...) return sprite.new(...) end ,
 })
 
 return sprite

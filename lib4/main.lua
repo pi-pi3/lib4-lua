@@ -57,7 +57,6 @@ declare = util.declare -- global alias for declare, should work in every file
 
 local file = require('lib4/file')
 local phys = require('lib4/phys')
-
 local node = require('lib4/node')
 
 function love.load()

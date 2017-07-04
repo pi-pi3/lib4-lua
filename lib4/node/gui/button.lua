@@ -59,7 +59,7 @@ end
 
 setmetatable(button, {
     __index = element,
-    __call = button.new
+    __call = function(_, ...) return button.new(...) end 
 })
 
 return button
