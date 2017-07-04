@@ -70,10 +70,6 @@ function phys2d:signal(s, ...)
 end
 
 function phys2d:phys_update(dt)
-    if not phys.enabled then
-        return
-    end
-
     self.velocity = self.velocity + self.gravity * dt
 
     local vx, vy = self.velocity.x, self.velocity.y
