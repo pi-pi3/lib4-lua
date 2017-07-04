@@ -160,12 +160,14 @@ function love.run()
         love.timer.step()
 
         delta = love.timer.getDelta()
-        phys_dt = phys_dt + delta
         dt = dt + delta
  
-        if phys_dt >= lib4.phys_delta then
-            dcall(love.phys_update, phys_dt)
-            phys_dt = phys_dt - lib4.phys_delta
+        if phys.enabled then
+            phys_dt = phys_dt + delta
+            if phys_dt >= lib4.phys_delta then
+                dcall(love.phys_update, phys_dt)
+                phys_dt = phys_dt - lib4.phys_delta
+            end
         end
  
         if dt >= lib4.delta then
