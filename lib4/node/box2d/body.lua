@@ -118,7 +118,7 @@ function body:add(c, k, params)
 
     local f = fixture(params)
     f:make_fixture(self, c)
-    f.fixture:setUserData({self = self, shape = k})
+    f.fixture:setUserData(self)
 
     node.add(self, f, tostring(k) .. '_fixture')
     node.add(self, c, k)
