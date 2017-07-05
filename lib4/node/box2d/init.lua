@@ -71,74 +71,90 @@ end
 
 function box2d.pre_contact(a, b, ...)
     if a:getUserData().self.pre_contact then
-        dcall(a:getUserData().self.pre_contact, a, b, ...)
+        dcall(a:getUserData().self.pre_contact,
+              a:getUserData().self, b:getUserData().self, ...)
     end
     if a:getUserData().self.script 
         and a:getUserData().self.script._pre_contact then
-        dcall(a:getUserData().self.script._pre_contact, a, b, ...)
+        dcall(a:getUserData().self.script._pre_contact,
+              a:getUserData().self, b:getUserData().self, ...)
     end
 
     if b:getUserData().self.pre_contact then
-        dcall(b:getUserData().self.pre_contact, a, b, ...)
+        dcall(b:getUserData().self.pre_contact,
+              b:getUserData().self, a:getUserData().self, ...)
     end
     if b:getUserData().self.script 
         and b:getUserData().self.script._pre_contact then
-        dcall(b:getUserData().self.script._pre_contact, a, b, ...)
+        dcall(b:getUserData().self.script._pre_contact,
+              b:getUserData().self, a:getUserData().self, ...)
     end
 end
 
 function box2d.post_contact(a, b, ...)
     if a:getUserData().self.post_contact then
-        dcall(a:getUserData().self.post_contact, a, b, ...)
+        dcall(a:getUserData().self.post_contact,
+              a:getUserData().self, b:getUserData().self, ...)
     end
     if a:getUserData().self.script 
         and a:getUserData().self.script._post_contact then
-        dcall(a:getUserData().self.script._post_contact, a, b, ...)
+        dcall(a:getUserData().self.script._post_contact,
+              a:getUserData().self, b:getUserData().self, ...)
     end
 
     if b:getUserData().self.post_contact then
-        dcall(b:getUserData().self.post_contact, a, b, ...)
+        dcall(b:getUserData().self.post_contact,
+              b:getUserData().self, a:getUserData().self, ...)
     end
     if b:getUserData().self.script 
         and b:getUserData().self.script._post_contact then
-        dcall(b:getUserData().self.script._post_contact, a, b, ...)
+        dcall(b:getUserData().self.script._post_contact,
+              b:getUserData().self, a:getUserData().self, ...)
     end
 end
 
 function box2d.pre_solve(a, b, ...)
     if a:getUserData().self.pre_solve then
-        dcall(a:getUserData().self.pre_solve, a, b, ...)
+        dcall(a:getUserData().self.pre_solve,
+              a:getUserData().self, b:getUserData().self, ...)
     end
     if a:getUserData().self.script 
         and a:getUserData().self.script._pre_solve then
-        dcall(a:getUserData().self.script._pre_solve, a, b, ...)
+        dcall(a:getUserData().self.script._pre_solve,
+              a:getUserData().self, b:getUserData().self, ...)
     end
 
     if b:getUserData().self.pre_solve then
-        dcall(b:getUserData().self.pre_solve, a, b, ...)
+        dcall(b:getUserData().self.pre_solve,
+              b:getUserData().self, a:getUserData().self, ...)
     end
     if b:getUserData().self.script 
         and b:getUserData().self.script._pre_solve then
-        dcall(b:getUserData().self.script._pre_solve, a, b, ...)
+        dcall(b:getUserData().self.script._pre_solve,
+              b:getUserData().self, a:getUserData().self, ...)
 
     end
 end
 
 function box2d.post_solve(a, b, ...)
     if a:getUserData().self.post_solve then
-        dcall(a:getUserData().self.post_solve, a, b, ...)
+        dcall(a:getUserData().self.post_solve,
+              a:getUserData().self, b:getUserData().self, ...)
     end
     if a:getUserData().self.script 
         and a:getUserData().self.script._post_solve then
-        dcall(a:getUserData().self.script._post_solve, a, b, ...)
+        dcall(a:getUserData().self.script._post_solve,
+              a:getUserData().self, b:getUserData().self, ...)
     end
 
     if b:getUserData().self.post_solve then
-        dcall(b:getUserData().self.post_solve, a, b, ...)
+        dcall(b:getUserData().self.post_solve,
+              b:getUserData().self, a:getUserData().self, ...)
     end
     if b:getUserData().self.script 
         and b:getUserData().self.script._post_solve then
-        dcall(b:getUserData().self.script._post_solve, a, b, ...)
+        dcall(b:getUserData().self.script._post_solve,
+              b:getUserData().self, a:getUserData().self, ...)
     end
 end
 
