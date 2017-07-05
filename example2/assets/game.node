@@ -7,7 +7,7 @@
             "[node]:children": {
                 "world": {
                     "t": "box2d",
-                    "gravity": 2200,
+                    "gravity": 220,
                     "[node]:children": {
                         "player": {
                             "t": "box2d/body",

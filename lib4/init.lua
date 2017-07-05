@@ -78,7 +78,7 @@ function lib4.update_rate(rate, phys_rate)
         lib4.delta = 0
     end
 
-    if phys_rate and rate > 0 then
+    if phys_rate and phys_rate > 0 then
         lib4.phys_delta = 1/phys_rate
     elseif phys_rate and phys_rate == 0 then
         lib4.phys_delta = 0

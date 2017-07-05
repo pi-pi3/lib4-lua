@@ -6,8 +6,12 @@ function player:_load()
     self:set_params()
     self:add(rect(0, 0, 24, 24))
 
-    self.speed = 220
-    self.jump = 610
+    self.speed = 220000
+    self.jump = 610000
+end
+
+function player:_update()
+    print(self.body:getLinearVelocity())
 end
 
 function player:_keydown(_, key)
@@ -18,10 +22,6 @@ function player:_keydown(_, key)
     elseif key == 'k' then
         self.body:applyForce(0, -self.jump)
     end
-end
-
-function player:_pre_contact(other, coll)
-    print(coll)
 end
 
 return player
