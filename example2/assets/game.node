@@ -16,8 +16,7 @@
                                 "x": 0,
                                 "y": -180,
                                 "mass": 60,
-                                "category": [2],
-                                "mask": [2],
+                                "friction": 0.9,
                             },
                             "src:script": "src://player.lua",
                             "[node]:children": {
@@ -36,8 +35,7 @@
                                 "type": "static",
                                 "x": 0,
                                 "y": 135,
-                                "category": [1],
-                                "mask": [1],
+                                "friction": 1,
                             },
                             "src:script": "src://platform.lua",
                             "[node]:children": {
