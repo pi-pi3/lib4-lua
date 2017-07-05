@@ -131,7 +131,7 @@ end
 
 function element:keypressed(key, scancode, isrepeat)
     if key == 'escape' then
-        e.focus = false
+        self.focus = false
     end
 end
 
