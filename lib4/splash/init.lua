@@ -270,4 +270,10 @@ function splash:_draw()
     end
 end
 
+function splash:_keypressed(key)
+    if key == 'escape' then
+        lib4.load_game()
+    end
+end
+
 return splash
