@@ -58,6 +58,7 @@ function sprite.new(texture, quad, children)
 end
 
 function sprite:draw()
+    love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(self.texture, self.quad, 0, 0)
 end
 

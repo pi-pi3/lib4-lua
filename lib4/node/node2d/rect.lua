@@ -94,6 +94,7 @@ function rect.new(rect, col, children)
 end
 
 function rect:draw()
+    love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(self.rect, 0, 0)
 end
 
