@@ -70,6 +70,7 @@ function body:set_params(params)
     if params.type then self.body:setType(params.type) end
     if params.x then self.body:setX(params.x) end
     if params.y then self.body:setY(params.y) end
+    if params.mass then self.body:setMass(params.mass) end
     if params.active then self.body:setActive(params.active) end
     if params.awake then self.body:setAwake(params.awake) end
     if params.bullet then self.body:setBullet(params.bullet) end
@@ -85,9 +86,6 @@ function body:set_params(params)
     end
     if params.angular_damping then
         self.body:setAngularDamping(params.angular_damping)
-    end
-    if params.mass then
-        self.body:setMass(params.mass)
     end
 end
 
@@ -121,12 +119,6 @@ function body:add(c, k, params)
     local f = fixture(params)
     f:make_fixture(self, c)
     f.fixture:setUserData({self = self, shape = k})
-
-    local shape = f.fixture:getShape()
-    if params.friction then shape:setFriction(params.friction) end
-    if params.restitution then shape:setRestitution(params.restitution) end
-    if params.category then shape:setCategory(unpack(params.category)) end
-    if params.mask then shape:setMask(unpack(params.mask)) end
 
     node.add(self, f, tostring(k) .. '_fixture')
     node.add(self, c, k)
