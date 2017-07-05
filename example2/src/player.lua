@@ -8,11 +8,15 @@ function player:_load()
 
     self.speed = 22000
     self.jump = 61000
-    self.on_ground = false
+    self.ground = 0
+end
+
+function player:on_ground()
+    return self.ground > 0
 end
 
 function player:_keydown(_, key)
-    if self.on_ground then
+    if self:on_ground() then
         if key == 'h' then
             self.body:applyLinearImpulse(-self.speed, -self.jump/4)
         elseif key == 'l' then
@@ -29,17 +33,17 @@ function player:_keydown(_, key)
     end
 end
 
-function player:_pre_contact(other, coll)
+function player:_pre_contact(shape, other, other_shape, coll)
     local nx, ny = coll:getNormal()
     if ny > 0.85 then -- approx. 45 deg
-        self.on_ground = true
+        self.ground = self.ground + 1
     end
 end
 
-function player:_post_contact(other, coll)
+function player:_post_contact(shape, other, other_shape, coll)
     local nx, ny = coll:getNormal()
     if ny == 0 then -- approx. 45 deg
-        self.on_ground = false
+        self.ground = self.ground - 1
     end
 end
 
