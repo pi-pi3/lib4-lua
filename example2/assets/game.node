@@ -1,0 +1,48 @@
+{
+    "t": "node",
+    "src:script": "src://game.lua",
+    "[node]:children": {
+        "camera": {
+            "t": "node2d/cam",
+            "[node]:children": {
+                "world": {
+                    "t": "box2d",
+                    "gravity": 12,
+                    "[node]:children": {
+                        "player": {
+                            "t": "box2d/body",
+                            "src:script": "src://player.lua",
+                            "[node]:children": {
+                                "drawable": {
+                                    "t": "node2d/rect",
+                                    "mesh:rect": [[-12, -12, 0, 0, 255, 0, 127, 255],
+                                                  [-12,  12, 0, 0, 255, 0, 127, 255],
+                                                  [ 12,  12, 0, 0, 255, 0, 127, 255],
+                                                  [ 12, -12, 0, 0, 255, 0, 127, 255]]
+                                }
+                            }
+                        },
+                        "platform": {
+                            "t": "box2d/body",
+                            "params": {
+                                "type": "static",
+                                "x": 0,
+                                "y": 135,
+                            },
+                            "src:script": "src://platform.lua",
+                            "[node]:children": {
+                                "drawable": {
+                                    "t": "node2d/rect",
+                                    "mesh:rect": [[-320, -45, 0, 0, 127, 0, 192, 255],
+                                                  [-320,  45, 0, 0, 127, 0, 192, 255],
+                                                  [ 320,  45, 0, 0, 127, 0, 192, 255],
+                                                  [ 320, -45, 0, 0, 127, 0, 192, 255]]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

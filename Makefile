@@ -1,7 +1,7 @@
 
 include config.mk
 
-.PHONY: all love linux windows mac push clean example
+.PHONY: all love linux windows mac push clean example example2
 
 default: love
 
@@ -36,3 +36,6 @@ clean:
 
 example:
 	@./build.sh example example/example.love
+
+example2:
+	@./build.sh example2 example2/example.love
