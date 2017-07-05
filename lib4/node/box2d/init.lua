@@ -69,80 +69,80 @@ function box2d:set_script(script)
                             self.pre_solve,   self.post_solve)
 end
 
-function box2d.pre_contact(a, b, ...)
+function box2d.pre_contact(a, b, coll, ...)
     local a = a:getUserData()
     local b = b:getUserData()
 
     if a.pre_contact then
-        dcall(a.pre_contact, a, b, ...)
+        dcall(a.pre_contact, a, b, coll, ...)
     end
     if a.script and a.script._pre_contact then
-        dcall(a.script._pre_contact, a, b, ...)
+        dcall(a.script._pre_contact, a, b, coll, ...)
     end
 
     if b.pre_contact then
-        dcall(b.pre_contact, b, a, ...)
+        dcall(b.pre_contact, b, a, coll, ...)
     end
     if b.script and b.script._pre_contact then
-        dcall(b.script._pre_contact, b, a, ...)
+        dcall(b.script._pre_contact, b, a, coll, ...)
     end
 end
 
-function box2d.post_contact(a, b, ...)
+function box2d.post_contact(a, b, coll, ...)
     local a = a:getUserData()
     local b = b:getUserData()
 
     if a.post_contact then
-        dcall(a.post_contact, a, b, ...)
+        dcall(a.post_contact, a, b, coll, ...)
     end
     if a.script and a.script._post_contact then
-        dcall(a.script._post_contact, a, b, ...)
+        dcall(a.script._post_contact, a, b, coll, ...)
     end
 
     if b.post_contact then
-        dcall(b.post_contact, b, a, ...)
+        dcall(b.post_contact, b, a, coll, ...)
     end
     if b.script and b.script._post_contact then
-        dcall(b.script._post_contact, b, a, ...)
+        dcall(b.script._post_contact, b, a, coll, ...)
     end
 end
 
-function box2d.pre_solve(a, b, ...)
+function box2d.pre_solve(a, b, coll, ...)
     local a = a:getUserData()
     local b = b:getUserData()
 
     if a.pre_solve then
-        dcall(a.pre_solve, a, b, ...)
+        dcall(a.pre_solve, a, b, coll, ...)
     end
     if a.script and a.script._pre_solve then
-        dcall(a.script._pre_solve, a, b, ...)
+        dcall(a.script._pre_solve, a, b, coll, ...)
     end
 
     if b.pre_solve then
-        dcall(b.pre_solve, b, a, ...)
+        dcall(b.pre_solve, b, a, coll, ...)
     end
     if b.script and b.script._pre_solve then
-        dcall(b.script._pre_solve, b, a, ...)
+        dcall(b.script._pre_solve, b, a, coll, ...)
 
     end
 end
 
-function box2d.post_solve(a, b, ...)
+function box2d.post_solve(a, b, coll, ...)
     local a = a:getUserData()
     local b = b:getUserData()
 
     if a.post_solve then
-        dcall(a.post_solve, a, b, ...)
+        dcall(a.post_solve, a, b, coll, ...)
     end
     if a.script and a.script._post_solve then
-        dcall(a.script._post_solve, a, b, ...)
+        dcall(a.script._post_solve, a, b, coll, ...)
     end
 
     if b.post_solve then
-        dcall(b.post_solve, b, a, ...)
+        dcall(b.post_solve, b, a, coll, ...)
     end
     if b.script and b.script._post_solve then
-        dcall(b.script._post_solve, b, a, ...)
+        dcall(b.script._post_solve, b, a, coll, ...)
     end
 end
 
