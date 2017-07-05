@@ -77,7 +77,7 @@ end
 
 function love.update(dt)
     if lib4.keyevents then
-        for scancode, _ in ipairs(lib4.keysdown) do
+        for scancode, _ in pairs(lib4.keysdown) do
             local key = love.keyboard.getKeyFromScancode(scancode)
             love.keydown(key, scancode)
         end
