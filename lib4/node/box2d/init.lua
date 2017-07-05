@@ -78,16 +78,16 @@ for _, f in ipairs({'pre_contact', 'post_contact',
         if a[f] then
             dcall(a[f], a.node, a.shape, b.node, b.shape, coll, ...)
         end
-        if a.script and a.script['_' .. f] then
-            dcall(a.script['_' .. f], a.node, a.shape,
+        if a.node.script and a.node.script['_' .. f] then
+            dcall(a.node.script['_' .. f], a.node, a.shape,
                                       b.node, b.shape, coll, ...)
         end
     
         if b[f] then
             dcall(b[f], b.node, b.shape, a.node, a.shape, coll, ...)
         end
-        if b.script and b.script['_' .. f] then
-            dcall(b.script['_' .. f], b.node, b.shape,
+        if b.node.script and b.node.script['_' .. f] then
+            dcall(b.node.script['_' .. f], b.node, b.shape,
                                       a.node, a.shape, coll, ...)
         end
     end
