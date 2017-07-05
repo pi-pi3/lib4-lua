@@ -41,7 +41,7 @@ function node.new(children)
     return self
 end
 
-function node:set_script(script)
+function node:set_script(script, load)
     self.script = script
 
     for k, v in pairs(script) do
@@ -51,8 +51,10 @@ function node:set_script(script)
         end
     end
 
-    if script._load then
-        dcall(script._load, self)
+    if load == nil or load then
+        if script._load then
+            dcall(script._load, self)
+        end
     end
 end
 
@@ -144,12 +146,13 @@ end
 -- Adds a table of children
 function node:addn(c)
     for k, v in pairs(c) do
-        self.children[k] = v
+        self:add(v, k)
     end
 end
 
 -- Remove a child
 function node:remove(k)
+    self.children[k]:signal('destroy')
     self.children[k] = nil
 end
 

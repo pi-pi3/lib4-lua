@@ -121,11 +121,19 @@ function file.load_node(path)
     local node = t.new()
 
     for k, v in pairs(data) do
-        node[k] = v
-    end
-
-    if node.script then
-        node:set_script(node.script)
+        if k == 'children' then
+            node:addn(v)
+        else
+            if node['set_' .. k] then
+                if k == 'script' then
+                    node['set_' .. k](node, v, false)
+                else
+                    node['set_' .. k](node, v)
+                end
+            else
+                node[k] = v
+            end
+        end
     end
 
     return node
