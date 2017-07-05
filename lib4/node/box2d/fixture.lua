@@ -28,7 +28,6 @@ local node = require('lib4/node')
 local fixture = {}
 local mt = {__index = fixture}
 
--- TODO: shape, fixture
 -- Create a new fixture
 function fixture.new(params, children)
     local self = node.new(children)
@@ -50,6 +49,15 @@ function fixture:set_params(params)
 
     if not self.fixture then
         return
+    end
+
+    if params.friction then self.fixture:setFriction(params.friction) end
+    if params.restitution then
+        self.fixture:setRestitution(params.restitution)
+    end
+    if params.mask then self.fixture:setMask(unpack(params.mask)) end
+    if params.category then
+        self.fixture:setCategory(unpack(params.category))
     end
 end
 

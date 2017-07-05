@@ -35,9 +35,12 @@ function box2d.new(meter, children)
 
     self.t = "box2d"
 
-    self.meter = meter or 10
+    self.meter = meter or 1
+    love.physics.setMeter(self.meter)
     self.gravity = cpml.vec2()
     self.world = love.physics.newWorld()
+    self.world:setCallbacks(self.pre_contact, self.post_contact,
+                            self.pre_solve,   self.post_solve)
 
     return self
 end
@@ -58,6 +61,85 @@ function box2d:set_gravity(gravity)
     end
     self.gravity = cpml.vec2(gx, gy)
     self.world:setGravity(gx*self.meter, gy*self.meter)
+end
+
+function box2d:set_script(script)
+    node.set_script(self.script)
+    self.world:setCallbacks(self.pre_contact, self.post_contact,
+                            self.pre_solve,   self.post_solve)
+end
+
+function box2d.pre_contact(a, b, ...)
+    if a:getUserData().self.pre_contact then
+        dcall(a:getUserData().self.pre_contact, a, b, ...)
+    end
+    if a:getUserData().self.script 
+        and a:getUserData().self.script._pre_contact then
+        dcall(a:getUserData().self.script._pre_contact, a, b, ...)
+    end
+
+    if b:getUserData().self.pre_contact then
+        dcall(b:getUserData().self.pre_contact, a, b, ...)
+    end
+    if b:getUserData().self.script 
+        and b:getUserData().self.script._pre_contact then
+        dcall(b:getUserData().self.script._pre_contact, a, b, ...)
+    end
+end
+
+function box2d.post_contact(a, b, ...)
+    if a:getUserData().self.post_contact then
+        dcall(a:getUserData().self.post_contact, a, b, ...)
+    end
+    if a:getUserData().self.script 
+        and a:getUserData().self.script._post_contact then
+        dcall(a:getUserData().self.script._post_contact, a, b, ...)
+    end
+
+    if b:getUserData().self.post_contact then
+        dcall(b:getUserData().self.post_contact, a, b, ...)
+    end
+    if b:getUserData().self.script 
+        and b:getUserData().self.script._post_contact then
+        dcall(b:getUserData().self.script._post_contact, a, b, ...)
+    end
+end
+
+function box2d.pre_solve(a, b, ...)
+    if a:getUserData().self.pre_solve then
+        dcall(a:getUserData().self.pre_solve, a, b, ...)
+    end
+    if a:getUserData().self.script 
+        and a:getUserData().self.script._pre_solve then
+        dcall(a:getUserData().self.script._pre_solve, a, b, ...)
+    end
+
+    if b:getUserData().self.pre_solve then
+        dcall(b:getUserData().self.pre_solve, a, b, ...)
+    end
+    if b:getUserData().self.script 
+        and b:getUserData().self.script._pre_solve then
+        dcall(b:getUserData().self.script._pre_solve, a, b, ...)
+
+    end
+end
+
+function box2d.post_solve(a, b, ...)
+    if a:getUserData().self.post_solve then
+        dcall(a:getUserData().self.post_solve, a, b, ...)
+    end
+    if a:getUserData().self.script 
+        and a:getUserData().self.script._post_solve then
+        dcall(a:getUserData().self.script._post_solve, a, b, ...)
+    end
+
+    if b:getUserData().self.post_solve then
+        dcall(b:getUserData().self.post_solve, a, b, ...)
+    end
+    if b:getUserData().self.script 
+        and b:getUserData().self.script._post_solve then
+        dcall(b:getUserData().self.script._post_solve, a, b, ...)
+    end
 end
 
 function box2d:add(c, k)
