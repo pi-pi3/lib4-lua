@@ -4,12 +4,24 @@ local player = {}
 
 function player:_load()
     self:set_params()
-    self:add(rect(-12, -12, 24, 24))
+    self:add(rect(0, 0, 24, 24))
+
+    self.speed = 220
+    self.jump = 610
 end
 
-function player:_phys_update(dt)
-    print('delta: ' .. dt)
-    print(self.body:getPosition())
+function player:_keydown(_, key)
+    if key == 'h' then
+        self.body:applyForce(-self.speed, 0)
+    elseif key == 'l' then
+        self.body:applyForce(self.speed, 0)
+    elseif key == 'k' then
+        self.body:applyForce(0, -self.jump)
+    end
+end
+
+function player:_pre_contact(other, coll)
+    print(coll)
 end
 
 return player

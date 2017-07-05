@@ -7,10 +7,18 @@
             "[node]:children": {
                 "world": {
                     "t": "box2d",
-                    "gravity": 12,
+                    "gravity": 2200,
                     "[node]:children": {
                         "player": {
                             "t": "box2d/body",
+                            "params": {
+                                "type": "dynamic",
+                                "x": 0,
+                                "y": -180,
+                                "mass": 60,
+                                "category": [2],
+                                "mask": [2],
+                            },
                             "src:script": "src://player.lua",
                             "[node]:children": {
                                 "drawable": {
@@ -28,6 +36,8 @@
                                 "type": "static",
                                 "x": 0,
                                 "y": 135,
+                                "category": [1],
+                                "mask": [1],
                             },
                             "src:script": "src://platform.lua",
                             "[node]:children": {

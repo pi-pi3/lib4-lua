@@ -77,16 +77,16 @@ function file.load_node(path)
         return file.load_image(val)
     end
 
-    function types.model(val)
-        return file.load_model(val)
-    end
-
     function types.node(val)
         return file.load_node(val)
     end
 
     function types.mesh(val)
-        return love.graphics.newMesh(val)
+        if type(val) == 'string' then
+            return file.load_model(val)
+        else
+            return love.graphics.newMesh(val)
+        end
     end
 
     local data

@@ -36,8 +36,8 @@ clean:
 
 example:
 	@./build.sh example example/example.love
-	love example/example.love
+	love example/example.love -d
 
 example2:
 	@./build.sh example2 example2/example.love
-	love example2/example.love
+	love example2/example.love -d

@@ -30,7 +30,7 @@ local bullet = function(pos, vx, vy)
     return b
 end
 
-function player:_update(dt)
+function player:_phys_update(dt)
     if self.shooting > 0 then
         self.shooting = self.shooting - dt
     end
