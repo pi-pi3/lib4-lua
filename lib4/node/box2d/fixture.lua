@@ -52,6 +52,7 @@ function fixture:set_params(params)
         return
     end
 
+    if params.sensor then self.fixture:setSensor(params.sensor) end
     if params.friction then self.fixture:setFriction(params.friction) end
     if params.restitution then
         self.fixture:setRestitution(params.restitution)
