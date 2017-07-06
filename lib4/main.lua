@@ -63,6 +63,7 @@ function love.load()
     math.randomseed(os.time()) -- don't forget your randomseed!
     love.math.setRandomSeed(os.time())
     love.keyboard.setKeyRepeat(true)
+    love.physics.setMeter(1)
 
     -- this is called in love.load, because some external libraries might
     -- require global variables
