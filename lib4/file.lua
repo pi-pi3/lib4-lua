@@ -124,7 +124,8 @@ function file.load_node(path)
 
     types['[]'] = function(data)
         for field, val in pairs(data) do
-            if string.startswith(val, 'assets:')
+            if type(val) == 'string'
+                and string.startswith(val, 'assets:')
                 and string.endswith(val, '.node') then
                 val = json.decode(love.filesystem.read(file.expand(path)))
             end
