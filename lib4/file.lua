@@ -123,6 +123,8 @@ function file.load_node(path)
     end
 
     types['[]'] = function(data)
+        local remove = {}
+
         for field, val in pairs(data) do
             if type(val) == 'string'
                 and string.startswith(val, 'assets:')
@@ -132,7 +134,7 @@ function file.load_node(path)
 
             local t
             if string.match(field, ':') then
-                data[field] = nil
+                table.insert(remove, field)
                 t, field = string.match(field, '([%a%d_%[%]]*):([%a%d_%[%]]*)')
             end
 
@@ -147,6 +149,10 @@ function file.load_node(path)
                     end)
                 end
             end
+        end
+
+        for _, v in pairs(remove) do
+            data[v] = nil
         end
 
         return data
