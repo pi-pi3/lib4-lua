@@ -287,4 +287,22 @@ function util.isin(t, val)
     return false
 end
 
+-- inject util functions into table, math and string
+table.copy = util.copy
+table.cmp = util.cmp_table
+table.tostr = util.ttostr
+table.cat = util.concat
+table.join = util.join
+table.map = util.map
+table.map_key = util.map_key
+table.fold = util.fold
+table.filter = util.filter
+table.has = util.isin
+math.sign = util.sign
+math.clamp = util.clamp
+math.between = util.between
+string.tmatch = util.match
+string.endswith = util.endswith
+string.startswith = util.startswith
+
 return util
