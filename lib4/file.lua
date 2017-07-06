@@ -29,10 +29,10 @@ local cpml = require('cpml')
 local file = {}
 
 function file.load()
-    declare('scheme', {})
-    scheme.root = ''
-    scheme.assets = 'assets/'
-    scheme.src = 'src/'
+    file.scheme = {}
+    file.scheme.root = ''
+    file.scheme.assets = 'assets/'
+    file.scheme.src = 'src/'
 end
 
 function file.exists(path)
@@ -40,11 +40,11 @@ function file.exists(path)
 end
 
 function file.expand(path)
-    for s, val in pairs(scheme) do
+    for s, val in pairs(file.scheme) do
         if util.startswith(path, s .. '://') then
-            return scheme.root .. scheme[s] .. string.sub(path, #s + 4)
+            return file.scheme.root .. file.scheme[s] .. string.sub(path, #s + 4)
         elseif util.startswith(path, s .. ':') then
-            return scheme.root .. scheme[s] .. string.sub(path, #s + 6)
+            return file.scheme.root .. file.scheme[s] .. string.sub(path, #s + 6)
         end
     end
 

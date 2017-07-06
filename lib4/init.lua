@@ -27,20 +27,10 @@ local file = require('lib4/file')
 
 local lib4 = {}
 
-lib4.delta = 1/100
-lib4.phys_delta = 1/50
-
-function lib4.update_rate(rate, phys_rate)
-    if rate and rate > 0 then
-        lib4.delta = 1/rate
-    elseif rate and rate == 0 then
-        lib4.delta = 0
-    end
-
-    if phys_rate and phys_rate > 0 then
-        lib4.phys_delta = 1/phys_rate
-    elseif phys_rate and phys_rate == 0 then
-        lib4.phys_delta = 0
+function lib4.load()
+    if file.exists('src://conf.lua') then
+        local _, conf = dcall(file.load_src('src://conf.lua'))
+        lib4.conf(conf)
     end
 end
 
@@ -51,6 +41,9 @@ function lib4.set_root(root)
         lib4.root = root
     end
     lib4.root.id = 'root'
+    if lib4.root.script and lib4.root.script.conf then
+        lib4.conf(lib4.root.script.conf)
+    end
     lib4.root:signal('load')
 end
 
@@ -69,6 +62,46 @@ function lib4.load_game()
         lib4.set_root('assets://root.node')
     else
         lib4.set_root(node())
+    end
+end
+
+function lib4.conf(f)
+    local c = {}
+    c.window = {}
+    c.modules = {}
+    dcall(f, c)
+
+    c.window.vsync = false -- vsync breaks A LOT of things in lib4
+
+    if c.identity then love.filesystem.setIdentity(c.identity) end
+
+    for k,v in ipairs({'keyboard', 'mouse', 'audio', 'thread', 
+                       'image', 'joystick', 'physics', 'video',
+                       'sound', 'touch'}) do
+        if c.modules[v] then
+            require("love." .. v)
+        elseif c.modules[v] == false then
+            love[v] = nil
+        end
+    end
+
+    local width, height = love.window.getMode()
+    width = c.window.width or width
+    height = c.window.height or height
+    love.window.setMode(width, height, c.window)
+
+    if c.window.title then love.window.setTitle(c.window.title) end
+
+    if c.window.icon then
+        if not love.image then
+            log.warn('window.icon require love.image')
+        else
+            love.window.setIcon(love.image.newImageData(c.window.icon))
+        end
+    end
+
+    if love.physics then
+        love.physics.setMeter(1)
     end
 end
 

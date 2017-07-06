@@ -6,7 +6,6 @@ local game = {}
 
 function game:_load()
     inpt.enable_keyevents()
-    lib4.update_rate(0, 0)
     phys.enable()
     game.time = 0
 end

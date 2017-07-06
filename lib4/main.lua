@@ -64,14 +64,14 @@ function love.load()
     math.randomseed(os.time()) -- don't forget your randomseed!
     love.math.setRandomSeed(os.time())
     love.keyboard.setKeyRepeat(true)
-    love.physics.setMeter(1)
 
     -- this is called in love.load, because some external libraries might
     -- require global variables
     util.init_G()
 
-    love3d.load()
     file.load()
+    lib4.load()
+    love3d.load()
     phys.load()
 
     lib4.load_splash()
@@ -146,8 +146,6 @@ function love.run()
     love.timer.step()
  
     local delta = 0
-    local phys_dt = 0
-    local dt = 0
  
     -- Main loop time.
     while true do
@@ -167,26 +165,10 @@ function love.run()
         delta = love.timer.getDelta()
  
         if phys.enabled then
-            phys_dt = phys_dt + delta
-            if phys_dt >= lib4.phys_delta then
-                dcall(love.phys_update, phys_dt)
-                if lib4.phys_delta == 0 then
-                    phys_dt = 0
-                else
-                    phys_dt = phys_dt - lib4.phys_delta
-                end
-            end
+            dcall(love.phys_update, delta)
         end
 
-        dt = dt + delta
-        if dt >= lib4.delta then
-            dcall(love.update, dt)
-            if lib4.delta == 0 then
-                dt = 0
-            else
-                dt = dt - lib4.delta
-            end
-        end
+        dcall(love.update, delta)
  
         if love.graphics.isActive() then
             love.graphics.clear(love.graphics.getBackgroundColor())

@@ -1,13 +1,13 @@
 
 function love.conf(t)
-    t.identity = 'game'
-    t.version = "0.10.2"
+    t.identity = 'lib4'
+    t.version = '0.10.2'
     t.console = true
-    t.accelerometerjoystick = false
-    t.externalstorage = false
-    t.gammacorrect = false
+    t.accelerometerjoystick = true
+    t.externalstorage = true
+    t.gammacorrect = true
 
-    t.window.title = "Game"
+    t.window.title = 'lib4'
     t.window.icon = nil
     t.window.width = 640
     t.window.height = 360
@@ -24,20 +24,23 @@ function love.conf(t)
     t.window.x = nil
     t.window.y = nil
 
-    t.modules.audio = true
-    t.modules.event = true
-    t.modules.graphics = true
-    t.modules.image = true
-    t.modules.joystick = true
-    t.modules.keyboard = true
-    t.modules.math = true
-    t.modules.mouse = true
-    t.modules.physics = true
-    t.modules.sound = true
+    -- needed modules
     t.modules.system = true
-    t.modules.timer = true
-    t.modules.touch = true
-    t.modules.video = true
+    t.modules.event = true
     t.modules.window = true
-    t.modules.thread = true
+    t.modules.graphics = true
+    t.modules.timer = true
+    t.modules.math = true
+
+    t.modules.keyboard = true
+    t.modules.mouse = true
+
+    t.modules.audio = false
+    t.modules.image = false
+    t.modules.joystick = false
+    t.modules.physics = false
+    t.modules.sound = false
+    t.modules.touch = false
+    t.modules.video = false
+    t.modules.thread = false
 end
