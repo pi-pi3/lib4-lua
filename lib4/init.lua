@@ -99,6 +99,7 @@ function lib4.set_root(root)
     else
         lib4.root = root
     end
+    lib4.root.name = 'root'
     lib4.root:signal('load')
 end
 
