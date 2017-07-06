@@ -89,6 +89,64 @@ function file.load_node(path)
         end
     end
 
+    function types.shape(val)
+        local t = val.t
+        val = val.shape
+        local shape = require('lib4/node/box2d/' .. t)
+
+        if t == 'circle' then
+            if #val == 0 then
+                return shape.new(val.x, val.y, val.radius or val.r)
+            elseif #val == 1 then
+                return shape.new(0, 0, val[1])
+            elseif #val == 3 then
+                return shape.new(val[1], val[2], val[3])
+            end
+        elseif t == 'rectangle' then
+            if #val == 0 then
+                return shape.new(val.x, val.y,
+                                 val.width or val.w, val.height or val.h)
+            elseif #val == 2 then
+                return shape.new(0, 0, val[1], val[2])
+            elseif #val == 4 then
+                return shape.new(val[1], val[2], val[3], val[4])
+            end
+        elseif t == 'edge' or t == 'polygon'  then
+            return shape.new(val)
+        elseif t == 'chain' then
+            if #val == 0 then
+                return shape.new(val.loop or false, val.chain)
+            else
+                return shape.new(false, val)
+            end
+        end
+    end
+
+    types['[]'] = function(data)
+        for field, val in pairs(data) do
+            for k, t in pairs(types) do
+                if util.startswith(field, k .. ':') then
+                    local f = string.sub(field, #k + 2)
+                    data[f] = t(val)
+                    data[field] = nil
+                    break
+                elseif not types['[' .. k .. ']']
+                    and util.startswith(field, '[' .. k .. ']:') then
+                    local f = string.sub(field, #k + 4)
+                    data[f] = util.map(val, function(_, v) return t(v) end)
+                    data[field] = nil
+                    break
+                end
+            end
+        end
+
+        return data
+    end
+
+    types[''] = function(data)
+        return data
+    end
+
     local data
     if type(path) == 'string' then
         data = json.decode(love.filesystem.read(file.expand(path)))
@@ -96,21 +154,7 @@ function file.load_node(path)
         data = path
     end
 
-    for field, val in pairs(data) do
-        for k, t in pairs(types) do
-            if util.startswith(field, k .. ':') then
-                local f = string.sub(field, #k + 2)
-                data[f] = t(val)
-                data[field] = nil
-                break
-            elseif util.startswith(field, '[' .. k .. ']:') then
-                local f = string.sub(field, #k + 4)
-                data[f] = util.map(val, function(_, v) return t(v) end)
-                data[field] = nil
-                break
-            end
-        end
-    end
+    data = types['[]'](data)
 
     local t
     if data.t == 'node' then
