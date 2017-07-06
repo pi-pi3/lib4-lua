@@ -71,15 +71,12 @@ function body:set_params(params)
     if params.x then self.body:setX(params.x) end
     if params.y then self.body:setY(params.y) end
     if params.mass then self.body:setMass(params.mass) end
+    if params.gravity then self.body:setGravityScale(params.gravity) end
     if params.active then self.body:setActive(params.active) end
     if params.awake then self.body:setAwake(params.awake) end
     if params.bullet then self.body:setBullet(params.bullet) end
     if params.fixed_rotation then
         self.body:setFixedRotation(params.fixed_rotation)
-    end
-    if params.gravity then
-        local scale = params.gravity/self.body:getWorld():getRotation()
-        self.body:setGravityScale(scale)
     end
     if params.linear_damping then
         self.body:setLinearDamping(params.linear_damping)
