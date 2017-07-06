@@ -11,7 +11,6 @@ function bullet:on_ground()
 end
 
 function bullet:_update(dt)
-    --print(self.life, self.body:getPosition())
     self.life = self.life - dt
     if self.life <= 0 then
         self:remove()
@@ -25,7 +24,9 @@ function bullet:_post_contact(shape, other, other_shape, coll)
 end
 
 function bullet:_pre_solve(shape, other, other_shape, coll)
-    if other.body:getType() == 'dynamic' then
+    if other.body:getType() == 'static' then
+        coll:setEnabled(true)
+    else
         coll:setEnabled(false)
     end
 end
