@@ -84,6 +84,13 @@ function inpt.add_keycode(key, scancode, ...)
     end
 end
 
+function inpt.clear_keycode(key)
+    for _, v in ipairs(inpt.keycode_data[key]) do
+        inpt.keycodes[v] = nil
+    end
+    inpt.keycode_data[key] = nil
+end
+
 function inpt.keycode_down(key, ...)
     if select('#', ...) > 0 then
         for _, v in ipairs({key, ...}) do
