@@ -24,6 +24,7 @@
 
 local cpml = require('cpml')
 local node = require('lib4/node')
+local contact = require('lib4/node/box2d/contact')
 
 local box2d = {}
 local mt = {__index = box2d}
@@ -74,21 +75,24 @@ for _, f in ipairs({'pre_contact', 'post_contact',
     box2d[f] = function(a, b, coll, ...)
         local a = a:getUserData()
         local b = b:getUserData()
+
+        local a_coll = contact.new(coll)
+        local b_coll = contact.rev(coll)
     
         if a[f] then
-            dcall(a[f], a.node, a.shape, b.node, b.shape, coll, ...)
+            dcall(a[f], a.node, a.shape, b.node, b.shape, a_coll, ...)
         end
         if a.node.script and a.node.script['_' .. f] then
             dcall(a.node.script['_' .. f], a.node, a.shape,
-                                      b.node, b.shape, coll, ...)
+                                      b.node, b.shape, a_coll, ...)
         end
     
         if b[f] then
-            dcall(b[f], b.node, b.shape, a.node, a.shape, coll, ...)
+            dcall(b[f], b.node, b.shape, a.node, a.shape, b_coll, ...)
         end
         if b.node.script and b.node.script['_' .. f] then
             dcall(b.node.script['_' .. f], b.node, b.shape,
-                                      a.node, a.shape, coll, ...)
+                                      a.node, a.shape, b_coll, ...)
         end
     end
 end
