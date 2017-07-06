@@ -7,10 +7,11 @@
             "[node]:children": {
                 "world": {
                     "t": "box2d",
-                    "gravity": 220,
+                    "gravity": 300,
                     "[node]:children": {
                         "player": {
                             "t": "box2d/body",
+                            "src:script": "src://player.lua",
                             "params": {
                                 "type": "dynamic",
                                 "x": 0,
@@ -19,7 +20,6 @@
                                 "friction": 0.9,
                                 "restitution": 0.0,
                             },
-                            "src:script": "src://player.lua",
                             "[]:children": {
                                 "node:drawable": {
                                     "t": "node2d/rect",
@@ -34,29 +34,7 @@
                                 },
                             }
                         },
-                        "platform": {
-                            "t": "box2d/body",
-                            "params": {
-                                "type": "static",
-                                "x": 0,
-                                "y": 135,
-                                "friction": 1,
-                                "restitution": 0.0,
-                            },
-                            "[]:children": {
-                                "node:drawable": {
-                                    "t": "node2d/rect",
-                                    "mesh:rect": [[-320, -45, 0, 0, 127, 0, 192, 255],
-                                                  [-320,  45, 0, 0, 127, 0, 192, 255],
-                                                  [ 320,  45, 0, 0, 127, 0, 192, 255],
-                                                  [ 320, -45, 0, 0, 127, 0, 192, 255]]
-                                },
-                                "shape:shape": {
-                                    "t": "rectangle",
-                                    "shape": [640, 90],
-                                },
-                            }
-                        }
+                        "level1": "assets://level1.node",
                     }
                 }
             }
