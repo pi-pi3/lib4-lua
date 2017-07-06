@@ -6,11 +6,13 @@ local game = {}
 
 function game:_load()
     inpt.enable_keyevents()
-    inpt.add_keycode('left', 'h')
-    inpt.add_keycode('right', 'l')
-    inpt.add_keycode('jump', 'k')
-    inpt.add_keycode('sit', 'j')
-    inpt.add_keycode('shoot', 'z')
+
+    -- control scheme 1 (vim), 2 (1337), 3 (neet)
+    inpt.add_keycode('left', 'h', 'a', 'left')
+    inpt.add_keycode('right', 'l', 'd', 'right')
+    inpt.add_keycode('jump', 'k', 'w', 'up')
+    inpt.add_keycode('sit', 'j', 's', 'down')
+    inpt.add_keycode('shoot', 'z', 'o') -- 3rd is also z
 
     phys.enable()
     game.time = 0
