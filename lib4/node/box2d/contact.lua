@@ -29,20 +29,11 @@ function contact.new(coll)
     local self = {}
     setmetatable(self, mt)
 
+    self.coll = coll
     self.children = {coll:getChildren()}
     self.fixtures = {coll:getFixtures()}
     self.normal = {coll:getNormal()}
     self.positions = {coll:getPositions()}
-    self.restitution = coll:getRestitution()
-    self.friction = coll:getFriction()
-    self.restitution_orig = coll:getRestitution()
-    self.friction_orig = coll:getFriction()
-    self.enabled = coll:isEnabled()
-    self.touching = coll:isTouching()
-    self.t = {}
-    self.t[0] = coll:type()
-    self.t['Object'] = true
-    self.t['Contact'] = true
 
     return self
 end
@@ -75,16 +66,16 @@ function contact:getChildren() return unpack(self.children) end
 function contact:getFixtures() return unpack(self.fixtures) end
 function contact:getNormal() return unpack(self.normal) end
 function contact:getPositions() return unpack(self.positions) end
-function contact:getRestitution() return self.restitution end
-function contact:getFriction() return self.friction end
-function contact:isEnabled() return self.enabled end
-function contact:isTouching() return self.touching end
-function contact:resetFriction() self.friction = self.friction_orig end
-function contact:resetRestitution() self.restitution = self.restitution_orig end
-function contact:setEnabled(p) self.enabled = p end
-function contact:setFriction(a) self.friction = a end
-function contact:setRestitution(a) self.friction = a end
-function contact:type() return self.t[0] end
-function contact:typeOf(t) return self.t[t] end
+function contact:getRestitution() return self.coll:getRestitution() end
+function contact:getFriction() return self.coll:getFriction() end
+function contact:isEnabled() return self.coll:isEnabled() end
+function contact:isTouching() return self.coll:isTouching() end
+function contact:resetFriction() self.coll:resetFriction(); self.friction = self.coll:getFriction() end
+function contact:resetRestitution() self.coll:resetRestitution(); self.friction = self.coll:getRestitution() end
+function contact:setEnabled(p) self.enabled = p; self.coll:setEnabled(p) end
+function contact:setFriction(a) self.friction = a; self.coll:setFriction(a) end
+function contact:setRestitution(a) self.restitution = a; self.coll:setRestitution(a) end
+function contact:type() return coll:type() end
+function contact:typeOf(t) return coll:typeOf(t) end
 
 return contact
