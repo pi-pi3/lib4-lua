@@ -5,6 +5,7 @@ local player = {}
 function player:_load()
     self.speed = 22000
     self.jump = 61000
+    self.coll_ground = {}
     self.ground = 0
 end
 
@@ -32,14 +33,15 @@ end
 
 function player:_pre_contact(shape, other, other_shape, coll)
     local nx, ny = coll:getNormal()
-    if ny > 0.85 then -- approx. 45 deg
+    if ny > 0.85 and not self.coll_ground[other:name()] then -- approx. 45 deg
+        self.coll_ground[other:name()] = true
         self.ground = self.ground + 1
     end
 end
 
 function player:_post_contact(shape, other, other_shape, coll)
-    local nx, ny = coll:getNormal()
-    if ny == 0 then -- approx. 45 deg
+    if self.coll_ground[other:name()] then
+        self.coll_ground[other:name()] = nil
         self.ground = self.ground - 1
     end
 end
