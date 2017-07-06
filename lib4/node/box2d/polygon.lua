@@ -32,8 +32,7 @@ function polygon.new(vertices, children)
     local self = node.new(children)
     setmetatable(self, mt)
 
-    self.t = "box2d/shape"
-
+    self.t = "box2d/polygon"
     self.shape = love.physics.newPolygonShape(vertices)
 
     return self

@@ -32,8 +32,7 @@ function chain.new(loop, vertices, children)
     local self = node.new(children)
     setmetatable(self, mt)
 
-    self.t = "box2d/shape"
-
+    self.t = "box2d/chain"
     self.shape = love.physics.newChainShape(loop, vertices)
 
     return self

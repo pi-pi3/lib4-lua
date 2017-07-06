@@ -32,8 +32,7 @@ function circle.new(x, y, radius, children)
     local self = node.new(children)
     setmetatable(self, mt)
 
-    self.t = "box2d/shape"
-
+    self.t = "box2d/circle"
     self.shape = love.physics.newCircleShape(x, y, radius)
 
     return self

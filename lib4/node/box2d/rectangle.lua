@@ -32,8 +32,7 @@ function rectangle.new(x, y, width, height, r, children)
     local self = node.new(children)
     setmetatable(self, mt)
 
-    self.t = "box2d/shape"
-
+    self.t = "box2d/rectangle"
     self.shape = love.physics.newRectangleShape(x, y, width, height or width, r)
 
     return self

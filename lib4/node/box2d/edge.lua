@@ -32,8 +32,7 @@ function edge.new(points, children)
     local self = node.new(children)
     setmetatable(self, mt)
 
-    self.t = "box2d/shape"
-
+    self.t = "box2d/edge"
     self.shape = love.physics.newEdgeShape(unpack(points))
 
     return self
