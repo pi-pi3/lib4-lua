@@ -17,6 +17,9 @@ function player:_load()
     self.bullet_time = 1/8
     self.btime = 0
     self.isplayer = true
+    self.rotation = 0
+    self.rotation_time = 0.5
+    self.rtime = 0
 end
 
 function player:on_ground()
@@ -26,6 +29,12 @@ end
 function player:_update(dt)
     if self.hop > 0.0 then self.hop = self.hop - dt end
     if self.btime > 0.0 then self.btime = self.btime - dt end
+
+    if self.rtime >= 0 then
+        self.rtime = self.rtime - dt
+        local w = self.rtime/self.rotation_time
+        self.body:setAngle(self.rotation*w)
+    end
 end
 
 function player:_keypressed(_, key, isrepeat)
@@ -34,6 +43,17 @@ function player:_keypressed(_, key, isrepeat)
             self.facing = -1
         elseif key == 'l' then
             self.facing = 1
+        end
+
+        if key == 'j' and self:on_ground() then
+            self.body:applyLinearImpulse(0, -self.jump*0.5)
+            self.rotation = math.fmod(self.body:getAngle(), 360)
+            if self.rotation > math.pi then
+                self.rotation = self.rotation - 2*math.pi
+            elseif self.rotation < -math.pi then
+                self.rotation = self.rotation + 2*math.pi
+            end
+            self.rtime = self.rotation_time
         end
     end
 end
