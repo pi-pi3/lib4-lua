@@ -27,49 +27,8 @@ local file = require('lib4/file')
 
 local lib4 = {}
 
-lib4.keyevents = false
 lib4.delta = 1/100
 lib4.phys_delta = 1/50
-lib4.keysdown = {}
-lib4.scancodes = {
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
-    'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-    'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
-    'y', 'z',
-    '1', '2', '3', '4', '5',
-    '6', '7', '8', '9', '0',
-    'return', 'escape', 'backspace', 'tab', 'space',
-    '-', '=', '[', ']', '\\', 'nonus#', ';',
-    '\'', '`', ',', '.', '/', 'capslock',
-    'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8',
-    'f9', 'f10', 'f11', 'f12', 'f13', 'f14', 'f15', 'f16',
-    'f17', 'f18', 'f19', 'f20', 'f21', 'f22', 'f23', 'f24',
-    'lctrl', 'lshift', 'lalt', 'lgui', 'rctrl', 'rshift', 'ralt', 'rgui',
-    'printscreen', 'scrolllock', 'pause', 'insert', 'home',
-    'numlock', 'pageup', 'delete', 'end', 'pagedown',
-    'right', 'left', 'down', 'up',
-    'nonusbackslash', 'application', 'execute', 'help',
-    'menu', 'select', 'stop', 'again', 'undo',
-    'cut', 'copy', 'paste', 'find',
-    'kp/', 'kp*', 'kp-', 'kp+', 'kp=', 'kpenter', 'kp.',
-    'kp1', 'kp2', 'kp3', 'kp4', 'kp5',
-    'kp6', 'kp7', 'kp8', 'kp9', 'kp0',
-    'international1', 'international2', 'international3',
-    'international4', 'international5', 'international6',
-    'international7', 'international8', 'international9',
-    'lang1', 'lang2', 'lang3', 'lang4', 'lang5',
-    'mute', 'volumeup', 'volumedown', 'audionext', 'audioprev',
-    'audiostop', 'audioplay', 'audiomute', 'mediaselect',
-    'www', 'mail', 'calculator', 'computer', 'acsearch', 'achome',
-    'acback', 'acforward', 'acstop', 'acrefresh', 'acbookmarks',
-    'power', 'brightnessdown', 'brightnessup', 'displayswitch',
-    'kbdillumtoggle', 'kbdillumdown', 'kbdillumup',
-    'eject', 'sleep', 'alterase', 'sysreq', 'cancel', 'clear',
-    'prior', 'return2', 'separator', 'out', 'oper', 'clearagain',
-    'crsel', 'exsel', 'kp00', 'kp000', 'thsousandsseparator',
-    'decimalseparator', 'currencyunit', 'currencysubunit', 'app1',
-    'app2', 'unknown'
-}
 
 function lib4.update_rate(rate, phys_rate)
     if rate and rate > 0 then
@@ -83,14 +42,6 @@ function lib4.update_rate(rate, phys_rate)
     elseif phys_rate and phys_rate == 0 then
         lib4.phys_delta = 0
     end
-end
-
-function lib4.enable_keyevents(p)
-    lib4.keyevents = (p == nil) or p
-end
-
-function lib4.disable_keyevents()
-    lib4.keyevents = false
 end
 
 function lib4.set_root(root)

@@ -1,10 +1,11 @@
 
+local inpt = require('lib4/inpt')
 local phys = require('lib4/phys')
 
 local game = {}
 
 function game:_load()
-    lib4.enable_keyevents()
+    inpt.enable_keyevents()
     lib4.update_rate(0, 0)
     phys.enable()
     game.time = 0

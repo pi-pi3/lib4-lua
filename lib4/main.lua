@@ -55,6 +55,7 @@ util = require('lib4/util')
 log = require('log')
 declare = util.declare -- global alias for declare, should work in every file
 
+local inpt = require('lib4/inpt')
 local file = require('lib4/file')
 local phys = require('lib4/phys')
 local node = require('lib4/node')
@@ -77,8 +78,8 @@ function love.load()
 end
 
 function love.update(dt)
-    if lib4.keyevents then
-        for scancode, _ in pairs(lib4.keysdown) do
+    if inpt.keyevents then
+        for scancode, _ in pairs(inpt.keysdown) do
             local key = love.keyboard.getKeyFromScancode(scancode)
             love.keydown(key, scancode)
         end
@@ -106,7 +107,7 @@ function love.draw()
 end
 
 function love.keypressed(key, scancode, isrepeat)
-    lib4.keysdown[scancode] = true
+    if inpt.keyevents then inpt.keysdown[scancode] = true end
 
     if lib4.root and not lib4.root.pause then
         lib4.root:signal('keypressed', key, scancode, isrepeat)
@@ -114,7 +115,7 @@ function love.keypressed(key, scancode, isrepeat)
 end
 
 function love.keyreleased(key, scancode, isrepeat)
-    lib4.keysdown[scancode] = nil
+    if inpt.keyevents then inpt.keysdown[scancode] = nil end
 
     if lib4.root and not lib4.root.pause then
         lib4.root:signal('keyreleased', key, scancode, isrepeat)
