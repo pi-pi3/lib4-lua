@@ -31,11 +31,16 @@ function node.new(children)
     setmetatable(self, mt)
 
     self.t = "node"
+    self.id = nil
+    self.parent = nil
+    self.children = {}
 
-    if children and children.t then
-        self.children = {children}
-    else
-        self.children = children or {}
+    if children then
+        if children.t then
+            self:add(children)
+        else
+            self:addn(children)
+        end
     end
 
     return self
@@ -127,6 +132,14 @@ function node:signal(s, ...)
     end
 end
 
+function node:name()
+    if self.parent then
+        return self.parent:name() .. '.' .. self.id
+    else
+        return self.id
+    end
+end
+
 -- Set an arbitrary key to value
 function node:set(k, v)
     if k ~= t and k ~= 'children' then
@@ -136,11 +149,11 @@ end
 
 -- Adds a child
 function node:add(c, k)
-    if k then
-        self.children[k] = c
-    else
-        table.insert(self.children, c)
-    end
+    k = k or #self.children + 1
+    self.children[k] = c
+
+    c.parent = self
+    c.id = k
 end
 
 -- Adds a table of children
@@ -152,13 +165,33 @@ end
 
 -- Remove a child
 function node:remove(k)
-    self.children[k]:signal('destroy')
-    self.children[k] = nil
+    if not k or k and k == 'self' then
+        self:signal('destroy')
+        if self.parent and self.id then
+            self.parent.remove(self.id)
+        end
+    else
+        self.children[k]:signal('destroy')
+        self.children[k] = nil
+    end
 end
 
 -- Find a child
 function node:find(k)
-    return self.children[k]
+    if type(k) == 'table' then
+        if k[1] == 'self' or k[1] == self.id then
+            if #k == 1 then
+                return self
+            end
+            table.remove(k, 1)
+        end
+
+        local c = k[1]
+        table.remove(k, 1)
+        self.children[c]:find(k)
+    elseif type(k) == 'string' then
+        return self:find(string.tmatch(k, '[%a%d_]*'))
+    end
 end
 
 setmetatable(node, {__call = function(_, ...) return node.new(...) end })
