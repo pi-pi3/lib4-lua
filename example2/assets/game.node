@@ -20,14 +20,18 @@
                                 "restitution": 0.0,
                             },
                             "src:script": "src://player.lua",
-                            "[node]:children": {
-                                "drawable": {
+                            "[]:children": {
+                                "node:drawable": {
                                     "t": "node2d/rect",
                                     "mesh:rect": [[-12, -12, 0, 0, 255, 0, 127, 255],
                                                   [-12,  12, 0, 0, 255, 0, 127, 255],
                                                   [ 12,  12, 0, 0, 255, 0, 127, 255],
                                                   [ 12, -12, 0, 0, 255, 0, 127, 255]]
-                                }
+                                },
+                                "shape:shape": {
+                                    "t": "rectangle",
+                                    "shape": [24, 24],
+                                },
                             }
                         },
                         "platform": {
@@ -39,15 +43,18 @@
                                 "friction": 1,
                                 "restitution": 0.0,
                             },
-                            "src:script": "src://platform.lua",
-                            "[node]:children": {
-                                "drawable": {
+                            "[]:children": {
+                                "node:drawable": {
                                     "t": "node2d/rect",
                                     "mesh:rect": [[-320, -45, 0, 0, 127, 0, 192, 255],
                                                   [-320,  45, 0, 0, 127, 0, 192, 255],
                                                   [ 320,  45, 0, 0, 127, 0, 192, 255],
                                                   [ 320, -45, 0, 0, 127, 0, 192, 255]]
-                                }
+                                },
+                                "shape:shape": {
+                                    "t": "rectangle",
+                                    "shape": [640, 90],
+                                },
                             }
                         }
                     }

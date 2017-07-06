@@ -3,9 +3,6 @@ local rect = require('lib4/node/box2d/rectangle')
 local player = {}
 
 function player:_load()
-    self:set_params()
-    self:add(rect(0, 0, 24, 24))
-
     self.speed = 22000
     self.jump = 61000
     self.ground = 0
