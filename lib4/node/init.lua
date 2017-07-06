@@ -166,9 +166,8 @@ end
 -- Remove a child
 function node:remove(k)
     if not k or k and k == 'self' then
-        self:signal('destroy')
         if self.parent and self.id then
-            self.parent.remove(self.id)
+            self.parent:remove(self.id)
         end
     else
         self.children[k]:signal('destroy')
