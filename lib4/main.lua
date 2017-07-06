@@ -106,27 +106,52 @@ function love.draw()
     end
 end
 
-function love.keypressed(key, scancode, isrepeat)
-    if inpt.keyevents then inpt.keysdown[scancode] = true end
+function love.keydown(key, scancode, isrepeat)
+    local keycode = inpt.keycodes[scancode]
 
     if lib4.root and not lib4.root.pause then
-        lib4.root:signal('keypressed', key, scancode, isrepeat)
+        lib4.root:signal('keydown', key, scancode, keycode, isrepeat)
+    end
+end
+
+function love.keypressed(key, scancode, isrepeat)
+    if inpt.keyevents then inpt.keysdown[scancode] = true end
+    local keycode = inpt.keycodes[scancode]
+
+    if lib4.root and not lib4.root.pause then
+        lib4.root:signal('keypressed', key, scancode, keycode, isrepeat)
     end
 end
 
 function love.keyreleased(key, scancode, isrepeat)
     if inpt.keyevents then inpt.keysdown[scancode] = nil end
+    local keycode = inpt.keycodes[scancode]
 
     if lib4.root and not lib4.root.pause then
-        lib4.root:signal('keyreleased', key, scancode, isrepeat)
+        lib4.root:signal('keyreleased', key, scancode, keycode, isrepeat)
+    end
+end
+
+function love.mousepressed(x, y, button, istouch)
+    local keycode = inpt.keycodes[scancode]
+
+    if lib4.root and not lib4.root.pause then
+        lib4.root:signal('mousepressed', x, y, button, keycode, istouch)
+    end
+end
+
+function love.mousereleased(x, y, button, istouch)
+    local keycode = inpt.keycodes[scancode]
+
+    if lib4.root and not lib4.root.pause then
+        lib4.root:signal('mousereleased', x, y, button, keycode, istouch)
     end
 end
 
 for _, func in pairs({
     'directorydropped', 'errhand', 'filedropped', 'focus',
-    'keydown', 'lowmemory',
-    'mousefocus', 'mousemoved', 'mousepressed', 'mousereleased',
-    'quit', 'resize', 'textedited', 'textinput',
+    'mousefocus', 'mousemoved',
+    'quit', 'resize', 'textedited', 'textinput', 'lowmemory',
     'threaderror', 'touchmoved', 'touchpressed', 'touchreleased',
     'visible', 'wheelmoved', 'gamepadaxis', 'gamepadpressed',
     'gamepadreleased', 'joystickadded', 'joystickaxis', 'joystickhat',

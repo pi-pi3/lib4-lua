@@ -1,6 +1,7 @@
 
 local cpml = require('cpml')
 local file = require('lib4/file')
+local inpt = require('lib4/inpt')
 local player = {}
 
 local bullet = file.load_node('assets://bullet.node')
@@ -37,15 +38,15 @@ function player:_update(dt)
     end
 end
 
-function player:_keypressed(_, key, isrepeat)
+function player:_keypressed(_, _, key, isrepeat)
     if not isrepeat then
-        if key == 'h' then
+        if key == 'left' then
             self.facing = -1
-        elseif key == 'l' then
+        elseif key == 'right' then
             self.facing = 1
         end
 
-        if key == 'j' and self:on_ground() then
+        if key == 'sit' and self:on_ground() then
             self.body:applyLinearImpulse(0, -self.jump*0.5)
             self.rotation = math.fmod(self.body:getAngle(), 2*math.pi)
             if self.rotation > math.pi then
@@ -58,8 +59,8 @@ function player:_keypressed(_, key, isrepeat)
     end
 end
 
-function player:_keydown(_, key)
-    if key == 'z' and self.btime <= 0 then
+function player:_keydown(_, _, key)
+    if key == 'shoot' and self.btime <= 0 then
         local v
         v = cpml.vec2(self.facing, 0.0):rotate(self.body:getAngle())
         v = v * self.bullet_speed
@@ -76,14 +77,14 @@ function player:_keydown(_, key)
     end
 
     if self:on_ground() then
-        if key == 'h' then
+        if key == 'left' then
             self.body:applyLinearImpulse(-self.speed, -self.jump*0.25)
             self.hop = self.hop_time
-        elseif key == 'l' then
+        elseif key == 'right' then
             self.body:applyLinearImpulse(self.speed, -self.jump*0.25)
             self.hop = self.hop_time
-        elseif key == 'k' then
-            if love.keyboard.isScancodeDown('h', 'l') then
+        elseif key == 'jump' then
+            if inpt.keycode_down('left', 'right') then
                 self.body:applyLinearImpulse(0, -self.jump*0.7)
             else
                 self.body:applyLinearImpulse(0, -self.jump)
@@ -96,9 +97,9 @@ function player:_keydown(_, key)
             mult = 7.5
             jmult = 1
         end
-        if key == 'h' then
+        if key == 'left' then
             self.body:applyForce(-self.speed*mult, -self.jump*jmult)
-        elseif key == 'l' then
+        elseif key == 'right' then
             self.body:applyForce(self.speed*mult, -self.jump*jmult)
         end
     end

@@ -25,6 +25,8 @@
 local inpt = {}
 
 inpt.keyevents = false
+inpt.keycodes = {}
+inpt.keycode_data = {}
 inpt.keysdown = {}
 inpt.scancodes = {
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
@@ -72,6 +74,31 @@ end
 
 function inpt.disable_keyevents()
     inpt.keyevents = false
+end
+
+function inpt.add_keycode(key, scancode, ...)
+    if not inpt.keycode_data[key] then inpt.keycode_data[key] = {} end
+    for _, v in ipairs({scancode, ...}) do
+        table.insert(inpt.keycode_data[key], v)
+        inpt.keycodes[v] = key
+    end
+end
+
+function inpt.keycode_down(key, ...)
+    if select('#', ...) > 0 then
+        for _, v in ipairs({key, ...}) do
+            if inpt.keycode_down(v) then return true end
+        end
+    elseif inpt.keycode_data[key] then
+        local mouse = table.filter(inpt.keycode_data[key],
+            function(_, v) return type(v) == 'number' end)
+        local keys = table.filter(inpt.keycode_data[key],
+            function(_, v) return type(v) == 'string' end)
+        return love.keyboard.isScancodeDown(unpack(keys))
+            or love.mouse.isDown(unpack(mouse))
+    end
+
+    return false
 end
 
 return inpt
