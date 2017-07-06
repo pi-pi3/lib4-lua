@@ -36,6 +36,7 @@ function fixture.new(params, children)
     self.t = "box2d/fixture"
 
     self.fixture = nil
+    self.shape = nil
     self.params = params or {}
 
     return self

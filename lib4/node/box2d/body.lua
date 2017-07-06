@@ -92,6 +92,14 @@ end
 function body:make_body(world)
     self.body = love.physics.newBody(world.world, self.x, self.y, self.type)
     self:set_params()
+
+    for k, v in pairs(self.children) do
+        if v.t == 'box2d/fixture' then
+            local c = string.sub(k, 1, #k-2)
+            v:make_fixture(self, self.children[c])
+            v.fixture:setUserData({node = self, shape = c})
+        end
+    end
 end
 
 function body:destroy()
@@ -117,10 +125,12 @@ function body:add(c, k, params)
     end
 
     local f = fixture(params)
-    f:make_fixture(self, c)
-    f.fixture:setUserData({node = self, shape = k})
+    if self.body then
+        f:make_fixture(self, c)
+        f.fixture:setUserData({node = self, shape = k})
+    end
 
-    node.add(self, f, tostring(k) .. '_fixture')
+    node.add(self, f, tostring(k) .. '_f')
     node.add(self, c, k)
 end
 
