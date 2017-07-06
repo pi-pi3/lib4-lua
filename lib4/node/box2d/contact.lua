@@ -33,7 +33,6 @@ function contact.new(coll)
     self.children = {coll:getChildren()}
     self.fixtures = {coll:getFixtures()}
     self.normal = {coll:getNormal()}
-    self.positions = {coll:getPositions()}
 
     return self
 end
@@ -41,6 +40,8 @@ end
 function contact.rev(coll)
     local self = {}
     setmetatable(self, mt)
+
+    self.coll = coll
 
     local a, b
     a, b = coll:getChildren()
@@ -52,20 +53,13 @@ function contact.rev(coll)
     local nx, ny = coll:getNormal()
     self.normal = {-nx, -ny}
 
-    self.positions = {coll:getPositions()}
-    self.restitution = coll:getRestitution()
-    self.friction = coll:getFriction()
-    self.enabled = coll:isEnabled()
-    self.touching = coll:isTouching()
-    self.t = coll:type()
-
     return self
 end
 
 function contact:getChildren() return unpack(self.children) end
 function contact:getFixtures() return unpack(self.fixtures) end
 function contact:getNormal() return unpack(self.normal) end
-function contact:getPositions() return unpack(self.positions) end
+function contact:getPositions() return self.coll:getPositions() end
 function contact:getRestitution() return self.coll:getRestitution() end
 function contact:getFriction() return self.coll:getFriction() end
 function contact:isEnabled() return self.coll:isEnabled() end
