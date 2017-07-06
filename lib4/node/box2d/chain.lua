@@ -33,13 +33,15 @@ function chain.new(loop, vertices, children)
     setmetatable(self, mt)
 
     self.t = "box2d/chain"
-    self.shape = love.physics.newChainShape(loop, vertices)
+    self.loop = loop or false
+    self.vertices = vertices or {}
+    self.shape = love.physics.newChainShape(self.loop, self.vertices)
 
     return self
 end
 
-function chain:destroy()
-    self.shape:destroy()
+function chain:clone()
+    return chain.new(self.loop, self.vertices)
 end
 
 setmetatable(chain, {

@@ -33,13 +33,19 @@ function rectangle.new(x, y, width, height, r, children)
     setmetatable(self, mt)
 
     self.t = "box2d/rectangle"
-    self.shape = love.physics.newRectangleShape(x, y, width, height or width, r)
+    self.x = x or 0
+    self.y = y or 0
+    self.w = width or 0
+    self.h = height or width or 0
+    self.r = r or 0
+    self.shape = love.physics.newRectangleShape(self.x, self.y,
+                                                self.w, self.h, self.r)
 
     return self
 end
 
-function rectangle:destroy()
-    self.shape:destroy()
+function rectangle:clone()
+    return rectangle.new(self.x, self.y, self.w, self.h, self.r)
 end
 
 setmetatable(rectangle, {

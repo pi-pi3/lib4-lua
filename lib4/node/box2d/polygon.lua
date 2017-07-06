@@ -33,13 +33,14 @@ function polygon.new(vertices, children)
     setmetatable(self, mt)
 
     self.t = "box2d/polygon"
+    self.vertices = vertices or {}
     self.shape = love.physics.newPolygonShape(vertices)
 
     return self
 end
 
-function polygon:destroy()
-    self.shape:destroy()
+function polygon:clone()
+    return polygon.new(self.vertices)
 end
 
 setmetatable(polygon, {

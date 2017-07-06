@@ -33,13 +33,16 @@ function circle.new(x, y, radius, children)
     setmetatable(self, mt)
 
     self.t = "box2d/circle"
-    self.shape = love.physics.newCircleShape(x, y, radius)
+    self.x = x or 0
+    self.y = y or 0
+    self.radius = radius or 0
+    self.shape = love.physics.newCircleShape(self.x, self.y, self.radius)
 
     return self
 end
 
-function circle:destroy()
-    self.shape:destroy()
+function circle:clone()
+    return circle.new(self.x, self.y, self.radius)
 end
 
 setmetatable(circle, {

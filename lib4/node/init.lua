@@ -63,23 +63,26 @@ function node:set_script(script, load)
     end
 end
 
--- Create an identical node without inheriting children
+-- Create an identical node
 function node:clone()
-    local new = {}
-    setmetatable(new, getmetatable(self))
+    local t = self.t
 
-    new.t = self.t
-    new.script = self.script
-    new.children = {}
+    local new
+    if t == 'node' then
+        new = node.new()
+    else
+        new = require('lib4/node/' .. t).new()
+    end
+    setmetatable(new, getmetatable(self))
 
     for k, v in pairs(self) do
         if k ~= 'children' then
-            new[k] = util.copy(v, true)
+            new:set(k, table.copy(v, true))
         end
     end
 
-    if new.script then
-        new:set_script(new.script)
+    for k, v in pairs(self.children) do
+        new:add(v:clone(), k)
     end
 
     return new
@@ -142,7 +145,9 @@ end
 
 -- Set an arbitrary key to value
 function node:set(k, v)
-    if k ~= t and k ~= 'children' then
+    if self['set_' .. k] then
+        self['set_' .. k](self, v)
+    elseif k ~= 't' and k ~= 'children' then
         self[k] = v
     end
 end

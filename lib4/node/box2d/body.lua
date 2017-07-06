@@ -57,10 +57,26 @@ function body:signal(s, ...)
     end
 end
 
+function body:clone()
+    local new = node.clone(self)
+    new.body = nil
+    for k, v in pairs(new.children) do
+        if v.t == 'box2d/fixture' then
+            new.children[k] = nil
+        end
+    end
+    return new
+end
+
 function body:set_params(params)
-    if not params then params = self.params end
-    for k, v in pairs(params) do
-        self.params[k] = v
+    if not params then
+        params = self.params
+    elseif not self.params then
+        self.params = params
+    else
+        for k, v in pairs(params) do
+            self.params[k] = v
+        end
     end
 
     if not self.body then

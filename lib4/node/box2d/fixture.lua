@@ -42,6 +42,13 @@ function fixture.new(params, children)
     return self
 end
 
+function fixture:clone()
+    local new = node.clone(self)
+    new.fixture = nil
+    new.shape = nil
+    return new
+end
+
 function fixture:set_params(params)
     if not params then params = self.params end
     for k, v in pairs(params) do

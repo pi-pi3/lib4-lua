@@ -33,13 +33,14 @@ function edge.new(points, children)
     setmetatable(self, mt)
 
     self.t = "box2d/edge"
+    self.points = points or {}
     self.shape = love.physics.newEdgeShape(unpack(points))
 
     return self
 end
 
-function edge:destroy()
-    self.shape:destroy()
+function edge:clone()
+    return edge.new(self.points)
 end
 
 setmetatable(edge, {

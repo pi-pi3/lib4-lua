@@ -46,6 +46,14 @@ function box2d.new(meter, children)
     return self
 end
 
+function box2d:clone()
+    local new = node.clone(self)
+    new.meter = self.meter
+    new.world = love.physics.newWorld()
+    new:set_gravity({self.gravity.x, self.gravity.y})
+    return new
+end
+
 function box2d:phys_update(dt)
     love.physics.setMeter(self.meter)
     self.world:update(dt)
