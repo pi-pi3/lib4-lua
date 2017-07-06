@@ -129,18 +129,22 @@ function file.load_node(path)
                 and string.endswith(val, '.node') then
                 val = json.decode(love.filesystem.read(file.expand(path)))
             end
-            for k, t in pairs(types) do
-                if util.startswith(field, k .. ':') then
-                    local f = string.sub(field, #k + 2)
-                    data[f] = t(val)
-                    data[field] = nil
-                    break
-                elseif not types['[' .. k .. ']']
-                    and util.startswith(field, '[' .. k .. ']:') then
-                    local f = string.sub(field, #k + 4)
-                    data[f] = util.map(val, function(_, v) return t(v) end)
-                    data[field] = nil
-                    break
+
+            local t
+            if string.match(field, ':') then
+                data[field] = nil
+                t, field = string.match(field, '([%a%d_%[%]]*):([%a%d_%[%]]*)')
+            end
+
+            if t then
+                if types[t] then
+                    data[field] = types[t](val)
+                elseif string.startswith(t, '[')
+                    and string.endswith(t, ']') then
+                    t = string.sub(t, 2, #t-1)
+                    data[field] = util.map(val, function(_, v)
+                        return types[t](v)
+                    end)
                 end
             end
         end
