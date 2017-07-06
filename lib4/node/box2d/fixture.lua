@@ -76,7 +76,7 @@ function fixture:make_fixture(body, shape)
 end
 
 function fixture:destroy()
-    self.fixture:destroy()
+    if not self.fixture:isDestroyed() then self.fixture:destroy() end
 end
 
 setmetatable(fixture, {

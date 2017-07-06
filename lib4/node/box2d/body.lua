@@ -60,11 +60,6 @@ end
 function body:clone()
     local new = node.clone(self)
     new.body = nil
-    for k, v in pairs(new.children) do
-        if v.t == 'box2d/fixture' then
-            new.children[k] = nil
-        end
-    end
     return new
 end
 
@@ -116,13 +111,15 @@ function body:make_body(world)
 end
 
 function body:destroy()
-    self.body:destroy()
+    if not self.body:isDestroyed() then self.body:destroy() end
 end
 
 function body:add(c, k, params)
     k = k or #self.children + 1
 
-    if not util.startswith(c.t, 'box2d/') then
+    if not util.startswith(c.t, 'box2d/')
+        or c.t == 'box2d/fixture'
+        or c.t == 'box2d/body' then
         node.add(self, c, k)
         return
     end
