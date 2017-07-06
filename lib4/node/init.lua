@@ -190,7 +190,12 @@ function node:find(k)
         table.remove(k, 1)
         self.children[c]:find(k)
     elseif type(k) == 'string' then
-        return self:find(string.tmatch(k, '[%a%d_]*'))
+        -- turn every digit key to a number
+        -- so 'root.1' would be interpreted as {'root', 1}
+        k = table.map(string.tmatch(k, '[%a%d_]*'), function(_, v)
+            return type(v) == 'string' and tonumber(v) or v
+        end)
+        return self:find(k)
     end
 end
 
