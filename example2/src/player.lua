@@ -18,7 +18,7 @@ function player:_load()
     self.btime = 0
     self.isplayer = true
     self.rotation = 0
-    self.rotation_time = 0.5
+    self.rotation_time = 0.25
     self.rtime = 0
 end
 
@@ -33,7 +33,7 @@ function player:_update(dt)
     if self.rtime >= 0 then
         self.rtime = self.rtime - dt
         local w = self.rtime/self.rotation_time
-        self.body:setAngle(self.rotation*w)
+        self.body:setAngle(self.rotation*w*w)
     end
 end
 
@@ -47,7 +47,7 @@ function player:_keypressed(_, key, isrepeat)
 
         if key == 'j' and self:on_ground() then
             self.body:applyLinearImpulse(0, -self.jump*0.5)
-            self.rotation = math.fmod(self.body:getAngle(), 360)
+            self.rotation = math.fmod(self.body:getAngle(), 2*math.pi)
             if self.rotation > math.pi then
                 self.rotation = self.rotation - 2*math.pi
             elseif self.rotation < -math.pi then
