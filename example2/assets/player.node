@@ -1,0 +1,25 @@
+{
+    "t": "box2d/body",
+    "src:script": "src://player.lua",
+    "params": {
+        "type": "dynamic",
+        "x": 0,
+        "y": -180,
+        "mass": 60,
+        "friction": 0.9,
+        "restitution": 0.0,
+    },
+    "[]:children": {
+        "node:drawable": {
+            "t": "node2d/rect",
+            "mesh:rect": [[-12, -12, 0, 0, 255, 0, 127, 255],
+                          [-12,  12, 0, 0, 255, 0, 127, 255],
+                          [ 12,  12, 0, 0, 255, 0, 127, 255],
+                          [ 12, -12, 0, 0, 255, 0, 127, 255]]
+        },
+        "shape:shape": {
+            "t": "rectangle",
+            "shape": [24, 24],
+        },
+    }
+}
