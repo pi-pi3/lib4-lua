@@ -49,7 +49,7 @@ local static_shader = [[
 #ifdef PIXEL
     vec4 effect(vec4 _col, Image s_color, vec2 uv, vec2 _sc) {
         vec4 col = texture2D(s_color, uv);
-        return vec4(col.rgb, 1.0);
+        return vec4(col.rgb, 0.0) + _col;
     }
 #endif
 ]]
@@ -84,7 +84,7 @@ local anim_shader = [[
 #ifdef PIXEL
     vec4 effect(vec4 _col, Image s_color, vec2 uv, vec2 _sc) {
         vec4 col = texture2D(s_color, uv);
-        return vec4(col.rgb, 1.0);
+        return vec4(col.rgb, 0.0) + _col;
     }
 #endif
 ]]
