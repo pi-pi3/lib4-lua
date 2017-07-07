@@ -29,7 +29,7 @@ local perspective3d = {}
 local mt = {__index = perspective3d}
 
 -- Create a new perspective3d
-function perspective3d.new(children)
+function perspective3d.new(cam, children)
     local self = node.new(children)
     setmetatable(self, mt)
 
