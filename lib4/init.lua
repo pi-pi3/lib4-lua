@@ -85,11 +85,6 @@ function lib4.conf(f)
         end
     end
 
-    local width, height = love.window.getMode()
-    width = c.window.width or width
-    height = c.window.height or height
-    love.window.setMode(width, height, c.window)
-
     if c.window.title then love.window.setTitle(c.window.title) end
 
     if c.window.icon then
@@ -99,6 +94,15 @@ function lib4.conf(f)
             love.window.setIcon(love.image.newImageData(c.window.icon))
         end
     end
+
+    local width, height = love.window.getMode()
+    width = c.window.width or width
+    height = c.window.height or height
+    c.window.title = nil
+    c.window.icon = nil
+    c.window.width = nil
+    c.window.height = nil
+    love.window.setMode(width, height, c.window)
 
     if love.physics then
         love.physics.setMeter(1)
