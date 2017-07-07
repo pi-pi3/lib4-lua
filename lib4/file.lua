@@ -93,6 +93,11 @@ function file.load_node(path)
         end
     end
 
+    function types.model3(val)
+        local model = require('lib4/node/node3d/model')
+        return model.new(file.load_model(val.mesh), file.load_image(val.texture))
+    end
+
     function types.shape(val)
         local t = val.t
         val = val.shape
