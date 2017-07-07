@@ -24,6 +24,7 @@
 
 local anim9 = require('anim9')
 local node = require('lib4/node')
+local file = require('lib4/file')
 
 local model = {}
 local mt = {__index = model}
