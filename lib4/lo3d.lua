@@ -297,17 +297,17 @@ function love3d.draw(model)
         love3d.set_shader(love3d.static_shader)
     end
 
-    if not lo3d.matrix_up.model then
+    if not love3d.matrix_up.model then
         local model = love3d.model[#love3d.model]
         love3d.shader:send('u_model', model:to_vec4s())
     end
 
-    if not lo3d.matrix_up.view then
+    if not love3d.matrix_up.view then
         local view = love3d.view[#love3d.view]
         love3d.shader:send('u_view', view:to_vec4s())
     end
 
-    if not lo3d.matrix_up.proj then
+    if not love3d.matrix_up.proj then
         local proj = love3d.proj[#love3d.proj]
         love3d.shader:send('u_proj', proj:to_vec4s())
     end
