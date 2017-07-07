@@ -56,8 +56,8 @@ function sprite.new(texture, quad, children)
                                                 self.texture:getDimensions())
     end
 
-    self.ox = self.texture.getWidth()/2
-    self.oy = self.texture.getHeight()/2
+    self.ox = self.texture:getWidth()/2
+    self.oy = self.texture:getHeight()/2
 
     return self
 end
