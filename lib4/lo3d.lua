@@ -255,8 +255,8 @@ function love3d.perspective(fov, aspect, zn, zf)
     local proj = cpml.mat4.new(
         {1/(t*aspect), 0.0, 0.0,            0.0,
          0.0,          1/t, 0.0,            0.0,
-         0.0,          0.0, (f+n)/(f-n),    1.0,
-         0.0,          0.0, -(2*f*n)/(f-n), 0.0})
+         0.0,          0.0, (zf+zn)/(zf-zn),    1.0,
+         0.0,          0.0, -(2*zf*zn)/(zf-zn), 0.0})
 
     local mat = love3d.top()
     cpml.mat4.mul(mat, mat, proj)
