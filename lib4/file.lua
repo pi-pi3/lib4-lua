@@ -39,6 +39,10 @@ function file.exists(path)
     return love.filesystem.exists(file.expand(path))
 end
 
+function file.load_text(path)
+    return love.filesystem.read(file.expand(path))
+end
+
 function file.expand(path)
     for s, val in pairs(file.scheme) do
         if util.startswith(path, s .. '://') then
