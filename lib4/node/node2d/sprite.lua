@@ -36,7 +36,7 @@ function sprite.new(texture, quad, children)
     self.t = "node2d/sprite"
 
     if type(texture) == 'string' then
-        self.texture = file.load(texture)
+        self.texture = file.load_image(texture)
     else
         self.texture = texture
     end
