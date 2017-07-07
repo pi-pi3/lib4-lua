@@ -37,7 +37,7 @@ function node3d.new(children)
 
     self.origin = false
     self.position = cpml.vec3()
-    self.rotation = cpml.quaternion()
+    self.rotation = cpml.quat()
     self.scale = cpml.vec3(1.0)
 
     return self

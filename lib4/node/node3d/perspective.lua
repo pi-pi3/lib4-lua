@@ -37,7 +37,7 @@ function perspective3d.new(children)
 
     self.origin = cpml.vec3()
     self.position = cpml.vec3()
-    self.rotation = cpml.quaternion()
+    self.rotation = cpml.quat()
 
     self.cam = {}
     if cam then
