@@ -32,7 +32,7 @@ local screen = cpml.vec2(love.graphics.getWidth(),
                          love.graphics.getHeight())
 
 -- Create a new cam2d
-function cam2d.new(children)
+function cam2d.new(w, h, children)
     local self = node.new(children)
     setmetatable(self, mt)
 
@@ -41,6 +41,15 @@ function cam2d.new(children)
     self.origin = cpml.vec2()
     self.position = cpml.vec2()
     self.rotation = 0
+    self.scale = cpml.vec2(1)
+
+    if w then
+        self.scale.x = w/love.graphics.getWidth()
+    end
+
+    if h then
+        self.scale.y = h/love.graphics.getHeight()
+    end
 
     return self
 end
@@ -58,6 +67,7 @@ function cam2d:signal(s, ...)
         love.graphics.rotate(rot)
         love.graphics.translate(-origin.x, -origin.y)
         love.graphics.translate(pos.x, pos.y)
+        love.graphics.scale(self.scale.x, self.scale.y)
 
         node.signal(self, s, ...)
 
