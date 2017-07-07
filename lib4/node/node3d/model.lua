@@ -43,7 +43,7 @@ function model.new(model, textures, anim, children)
         self.model = model
     end
 
-    if type(model) == 'string' then
+    if textures then
         self.model.textures = {}
         for k, t in pairs(textures) do
             self.model.textures[k] = file.load_image(t)
