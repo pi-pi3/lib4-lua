@@ -40,7 +40,7 @@ function file.exists(path)
 end
 
 function file.load_text(path)
-    return love.filesystem.read(file.expand(path))
+    return path and love.filesystem.read(file.expand(path))
 end
 
 function file.expand(path)
@@ -56,6 +56,8 @@ function file.expand(path)
 end
 
 function file.load_node(path)
+    if not path then return end
+
     local types = {}
 
     function types.vec(val)
@@ -208,20 +210,22 @@ function file.load_node(path)
 end
 
 function file.load_src(path)
-    return love.filesystem.load(file.expand(path))
+    return path and love.filesystem.load(file.expand(path))
 end
 
 function file.load_image(path)
+    if not path then return end
     local tex = love.graphics.newImage(file.expand(path), {mipmaps = true})
     tex:setFilter('nearest', 'nearest')
+    return tex
 end
 
 function file.load_model(path)
-    return iqm.load(file.expand(path))
+    return path and iqm.load(file.expand(path))
 end
 
 function file.load_anims(path)
-    return iqm.load_anims(file.expand(path))
+    return path and iqm.load_anims(file.expand(path))
 end
 
 return file
