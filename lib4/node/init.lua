@@ -115,14 +115,15 @@ function node:signal(s, ...)
     local result = nil
     local err = nil
 
-    if not string.startswith(s, 'post') then
-        if not self.pause then
-            local eh, err = self:callback(s, ...)
-            if not eh then
-                return false, err
-            end
-            self:script_callback(s, ...)
+    if not self.pause then
+        self:callback('pre' .. s, ...)
+        self:script_callback('pre' .. s, ...)
+
+        local eh, err = self:callback(s, ...)
+        if not eh then
+            return false, err
         end
+        self:script_callback(s, ...)
     end
 
     for _, c in pairs(self.children) do
@@ -136,15 +137,11 @@ function node:signal(s, ...)
         end
     end
 
-    if string.startswith(s, 'post') then
-        if not self.pause then
-            self:script_callback(s, ...)
-            local eh, err = self:callback(s, ...)
-            if not eh then
-                return false, err
-            end
-        end
+    if not self.pause then
+        self:script_callback('post' .. s, ...)
+        self:callback('post' .. s, ...)
     end
+    
 
     if success then
         return true, result
