@@ -66,6 +66,10 @@ function sprite.new(texture, quad, children)
     return self
 end
 
+function sprite:clone()
+    return sprite.new(self.texture, {self.quad:getViewport()})
+end
+
 function sprite:draw()
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(self.texture, self.quad, -self.ox, -self.oy)

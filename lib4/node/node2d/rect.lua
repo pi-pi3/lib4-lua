@@ -93,6 +93,14 @@ function rect.new(rect, col, children)
     return self
 end
 
+function rect:clone()
+    local new = node.new()
+    setmetatable(new, mt)
+    new.t = 'node2d/rect'
+    new.rect = self.rect
+    return new
+end
+
 function rect:draw()
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(self.rect, 0, 0)
