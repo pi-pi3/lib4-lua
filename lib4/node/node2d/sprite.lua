@@ -41,23 +41,23 @@ function sprite.new(texture, quad, children)
         self.texture = texture
     end
 
-    local x, y, w, h = 0, 0, self.texture:getDimensions()
+    local w0, h0 = self.texture:getDimensions()
+    local x, y, w, h = 0, 0, w0, h0
 
     if quad.x and quad.y then
-        x, y, = quad.x, quad.y
+        x, y = quad.x, quad.y
     end
     if quad.w and quad.h then
         w, h = quad.w, quad.h
     end
     if quad[1] and quad[2] then
-        x, y, = quad[1], quad[2]
+        x, y = quad[1], quad[2]
     end
     if quad[3] and quad[4] then
         w, h = quad[3], quad[4]
     end
 
-    self.quad = love.graphics.newQuad(x, y, w, h,
-                                      self.texture:getDimensions())
+    self.quad = love.graphics.newQuad(x, y, w, h, w0, h0)
     self.ox = w/2
     self.oy = h/2
 
