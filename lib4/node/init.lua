@@ -34,6 +34,8 @@ function node.new(children)
     self.id = nil
     self.parent = nil
     self.children = {}
+    self.active = true
+    self.pause = nil
 
     if children then
         if children.t then
@@ -95,36 +97,40 @@ function node:signal(s, ...)
     local result = nil
     local err = nil
 
-    if self[s] then
-        local s, err = dcall(self[s], self, ...)
-        if s == false then
-            success = false
-            err = err
+    if not self.pause and self.active then
+        if self[s] then
+            local s, err = dcall(self[s], self, ...)
+            if s == false then
+                success = false
+                err = err
+            end
+            if result == nil then
+                result = err
+            end
         end
-        if result == nil then
-            result = err
+
+        if self.script and self.script['_' .. s] then
+            local s, err = dcall(self.script['_' .. s], self, ...)
+            if s == false then
+                success = false
+                err = err
+            end
+            if result == nil then
+                result = err
+            end
         end
     end
 
-    if self.script and self.script['_' .. s] then
-        local s, err = dcall(self.script['_' .. s], self, ...)
-        if s == false then
-            success = false
-            err = err
-        end
-        if result == nil then
-            result = err
-        end
-    end
-
-    for _, c in pairs(self.children) do
-        local s, err = c:signal(s, ...)
-        if s == false then
-            success = false
-            err = err
-        end
-        if result == nil then
-            result = err
+    if self.active then
+        for _, c in pairs(self.children) do
+            local s, err = c:signal(s, ...)
+            if s == false then
+                success = false
+                err = err
+            end
+            if result == nil then
+                result = err
+            end
         end
     end
 

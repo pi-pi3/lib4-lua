@@ -85,13 +85,13 @@ function love.update(dt)
         end
     end
 
-    if lib4.root and not lib4.root.pause then
+    if lib4.root then
         lib4.root:signal('update', dt)
     end
 end
 
 function love.phys_update(dt)
-    if lib4.root and not lib4.root.pause then
+    if lib4.root then
         lib4.root:signal('phys_update', dt)
     end
 end
@@ -109,7 +109,7 @@ end
 function love.keydown(key, scancode, isrepeat)
     local keycode = inpt.keycodes[scancode]
 
-    if lib4.root and not lib4.root.pause then
+    if lib4.root then
         lib4.root:signal('keydown', key, scancode, keycode, isrepeat)
     end
 end
@@ -118,7 +118,7 @@ function love.keypressed(key, scancode, isrepeat)
     if inpt.keyevents then inpt.keysdown[scancode] = true end
     local keycode = inpt.keycodes[scancode]
 
-    if lib4.root and not lib4.root.pause then
+    if lib4.root then
         lib4.root:signal('keypressed', key, scancode, keycode, isrepeat)
     end
 end
@@ -127,7 +127,7 @@ function love.keyreleased(key, scancode, isrepeat)
     if inpt.keyevents then inpt.keysdown[scancode] = nil end
     local keycode = inpt.keycodes[scancode]
 
-    if lib4.root and not lib4.root.pause then
+    if lib4.root then
         lib4.root:signal('keyreleased', key, scancode, keycode, isrepeat)
     end
 end
@@ -135,7 +135,7 @@ end
 function love.mousepressed(x, y, button, istouch)
     local keycode = inpt.keycodes[scancode]
 
-    if lib4.root and not lib4.root.pause then
+    if lib4.root then
         lib4.root:signal('mousepressed', x, y, button, keycode, istouch)
     end
 end
@@ -143,7 +143,7 @@ end
 function love.mousereleased(x, y, button, istouch)
     local keycode = inpt.keycodes[scancode]
 
-    if lib4.root and not lib4.root.pause then
+    if lib4.root then
         lib4.root:signal('mousereleased', x, y, button, keycode, istouch)
     end
 end
@@ -158,7 +158,7 @@ for _, func in pairs({
     'joystickpressed', 'joystickreleased', 'joystickremoved',
 }) do
     love[func] = function(...)
-        if lib4.root and not lib4.root.pause then
+        if lib4.root then
             lib4.root:signal(func, ...)
         end
     end
