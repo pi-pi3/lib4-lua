@@ -49,11 +49,6 @@ elif [ -f 'lib4.love' ]; then
     zip -9 -r $dir/$love *
     cd $dir
     
-    cd $1/
-    for f in $(find . -type f -regex '.*\.lua'); do
-        [[ $f != *.git* ]] && zip -9 -r $dir/$love $f
-    done
-    
     for f in src assets LICENSE README.md; do
         [[ -e ./$f ]] && zip -9 -r $dir/$love $f
     done
@@ -94,11 +89,6 @@ else
     if [[ -e $dir/lib4/lib4 ]]; then
         cd $dir
     fi
-    
-    cd $1/
-    for f in $(find . -type f -regex '.*\.lua'); do
-        [[ $f != *.git* ]] && zip -9 -r $dir/$love $f
-    done
     
     for f in src assets LICENSE README.md; do
         [[ -e ./$f ]] && zip -9 -r $dir/$love $f
