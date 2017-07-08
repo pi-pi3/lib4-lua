@@ -133,7 +133,7 @@ function love.keyreleased(key, scancode, isrepeat)
 end
 
 function love.mousepressed(x, y, button, istouch)
-    local keycode = inpt.keycodes[scancode]
+    local keycode = inpt.keycodes[button]
 
     if lib4.root then
         lib4.root:signal('mousepressed', x, y, button, keycode, istouch)
@@ -141,7 +141,7 @@ function love.mousepressed(x, y, button, istouch)
 end
 
 function love.mousereleased(x, y, button, istouch)
-    local keycode = inpt.keycodes[scancode]
+    local keycode = inpt.keycodes[button]
 
     if lib4.root then
         lib4.root:signal('mousereleased', x, y, button, keycode, istouch)
