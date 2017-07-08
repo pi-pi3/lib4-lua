@@ -43,6 +43,17 @@ function node2d.new(children)
     return self
 end
 
+function node2d:clone()
+    local new = node.clone(self)
+    setmetatable(new, mt)
+    new.t = 'node2d'
+    new.position = cpml.vec2(self.position.x, self.position.y)
+    new.rotation = self.rotation
+    new.scale = cpml.vec2(self.scale.x, self.scale.y)
+    new.shear = cpml.vec2(self.shear.x, self.shear.y)
+    return new
+end
+
 function node2d:predraw()
     love.graphics.push()
 
