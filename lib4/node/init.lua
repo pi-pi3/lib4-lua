@@ -90,14 +90,14 @@ function node:clone()
     return new
 end
 
-function node:callback(s)
+function node:callback(s, ...)
     if self[s] then
         return dcall(self[s], self, ...)
     end
     return true, nil
 end
 
-function node:script_callback(s)
+function node:script_callback(s, ...)
     if self.script and self.script['_' .. s] then
         return dcall(self.script['_' .. s], self, ...)
     end
@@ -117,11 +117,11 @@ function node:signal(s, ...)
 
     if not string.startswith(s, 'post') then
         if not self.pause then
-            local eh, err = self:callback(s)
+            local eh, err = self:callback(s, ...)
             if not eh then
                 return false, err
             end
-            self:script_callback(s)
+            self:script_callback(s, ...)
         end
     end
 
@@ -138,8 +138,8 @@ function node:signal(s, ...)
 
     if string.startswith(s, 'post') then
         if not self.pause then
-            self:script_callback(s)
-            local eh, err = self:callback(s)
+            self:script_callback(s, ...)
+            local eh, err = self:callback(s, ...)
             if not eh then
                 return false, err
             end
