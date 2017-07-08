@@ -102,7 +102,9 @@ function love.draw()
     end
 
     if lib4.root then
+        lib4.root:signal('predraw')
         lib4.root:signal('draw')
+        lib4.root:signal('postdraw')
     end
 end
 
