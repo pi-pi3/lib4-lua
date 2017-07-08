@@ -39,7 +39,6 @@ function node2d.new(children)
     self.rotation = 0
     self.scale = cpml.vec2(1.0)
     self.shear = cpml.vec2()
-    self.origin = cpml.vec2()
 
     return self
 end
@@ -48,12 +47,10 @@ function node2d:signal(s, ...)
     if s == 'draw' then
         love.graphics.push()
 
-        love.graphics.translate(-self.origin.x, -self.origin.y)
         love.graphics.translate(self.position.x, self.position.y)
         love.graphics.rotate(self.rotation)
         love.graphics.scale(self.scale.x, self.scale.y)
         love.graphics.shear(self.shear.x, self.shear.y)
-        love.graphics.translate(self.origin.x, self.origin.y)
 
         node.signal(self, s, ...)
 
