@@ -90,46 +90,58 @@ function node:clone()
     return new
 end
 
+function node:callback(s)
+    if self[s] then
+        return dcall(self[s], self, ...)
+    end
+    return true, nil
+end
+
+function node:script_callback(s)
+    if self.script and self.script['_' .. s] then
+        return dcall(self.script['_' .. s], self, ...)
+    end
+    return true, nil
+end
+
 -- Send a signal to all children (recursively)
 -- Any function can be considered a signal
 function node:signal(s, ...)
+    if not self.active then
+        return true, nil
+    end
+
     local success = true
     local result = nil
     local err = nil
 
-    if not self.pause and self.active then
-        if self[s] then
-            local s, err = dcall(self[s], self, ...)
-            if s == false then
-                success = false
-                err = err
+    if not string.startswith(s, 'post') then
+        if not self.pause then
+            local eh, err = self:callback(s)
+            if not eh then
+                return false, err
             end
-            if result == nil then
-                result = err
-            end
-        end
-
-        if self.script and self.script['_' .. s] then
-            local s, err = dcall(self.script['_' .. s], self, ...)
-            if s == false then
-                success = false
-                err = err
-            end
-            if result == nil then
-                result = err
-            end
+            self:script_callback(s)
         end
     end
 
-    if self.active then
-        for _, c in pairs(self.children) do
-            local s, err = c:signal(s, ...)
-            if s == false then
-                success = false
-                err = err
-            end
-            if result == nil then
-                result = err
+    for _, c in pairs(self.children) do
+        local s, err = c:signal(s, ...)
+        if s == false then
+            success = false
+            err = err
+        end
+        if result == nil then
+            result = err
+        end
+    end
+
+    if string.startswith(s, 'post') then
+        if not self.pause then
+            self:script_callback(s)
+            local eh, err = self:callback(s)
+            if not eh then
+                return false, err
             end
         end
     end

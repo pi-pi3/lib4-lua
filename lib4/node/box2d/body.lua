@@ -42,19 +42,15 @@ function body.new(params, children)
     return self
 end
 
-function body:signal(s, ...)
-    if s == 'draw' then
-        love.graphics.push()
+function body:predraw()
+    love.graphics.push()
 
-        love.graphics.translate(self.body:getPosition())
-        love.graphics.rotate(self.body:getAngle())
+    love.graphics.translate(self.body:getPosition())
+    love.graphics.rotate(self.body:getAngle())
+end
 
-        node.signal(self, s, ...)
-
-        love.graphics.pop()
-    else
-        node.signal(self, s, ...)
-    end
+function body:postdraw()
+    love.graphics.pop()
 end
 
 function body:clone()
