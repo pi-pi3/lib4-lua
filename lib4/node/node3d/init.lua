@@ -47,15 +47,15 @@ function node3d:predraw()
     love3d.push()
 
     love3d.translate(self.position.x,
-                              self.position.y,
-                              self.position.z)
+                     self.position.y,
+                     self.position.z)
     love3d.rotate(self.rotation.w,
-                           self.rotation.x,
-                           self.rotation.y,
-                           self.rotation.z)
+                  self.rotation.x,
+                  self.rotation.y,
+                  self.rotation.z)
     love3d.scale(self.scale.x,
-                          self.scale.y,
-                          self.scale.z)
+                 self.scale.y,
+                 self.scale.z)
     love3d.transform()
 end
 
