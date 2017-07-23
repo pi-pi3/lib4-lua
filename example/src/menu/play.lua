@@ -7,4 +7,10 @@ function button:_released()
     end
 end
 
+function button:_keypressed(key)
+    if key == 'space' then
+        lib4.set_root('assets://game.node')
+    end
+end
+
 return button
