@@ -90,6 +90,7 @@ else
         cd $dir
     fi
     
+    cd $1
     for f in src assets LICENSE README.md; do
         [[ -e ./$f ]] && zip -9 -r $dir/$love $f
     done
