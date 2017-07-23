@@ -1,0 +1,20 @@
+{
+    "t": "node",
+    "src:script": "src://game.lua",
+    "[node]:children": {
+        "camera": {
+            "t": "node3d/perspective",
+            "src:script": "src://cam.lua",
+            "[node]:children": {
+                "susanne": {
+                    "t": "node3d",
+                    "[]:children": {
+                        "model3:model": {
+                            "mesh": "assets://susanne.iqm",
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

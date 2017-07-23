@@ -1,0 +1,24 @@
+{
+    "t": "gui/element",
+    "vec:position": [0, 0],
+    "width": 640,
+    "height": 360,
+    "[node]:children": {
+        "play": {
+            "t": "gui/button",
+            "text": "Play",
+            "vec:position": [260, 100],
+            "width": 120,
+            "height": 40,
+            "src:script": "src://menu/play.lua",
+        },
+        "quit": {
+            "t": "gui/button",
+            "text": "Quit",
+            "vec:position": [270, 160],
+            "width": 100,
+            "height": 40,
+            "src:script": "src://menu/quit.lua",
+        }
+    }
+}
