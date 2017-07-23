@@ -59,28 +59,24 @@ function ortho3d.new(cam, children)
     return self
 end
 
-function ortho3d:signal(s, ...)
-    if s == 'draw' then
-        love3d.matrix_mode('proj')
+function ortho3d:predraw()
+    love3d.matrix_mode('proj')
 
-        love3d.identity()
-        love3d.ortho(self.cam.l, self.cam.r,
-                     self.cam.t, self.cam.b,
-                     self.cam.n, self.cam.f)
+    love3d.identity()
+    love3d.ortho(self.cam.l, self.cam.r,
+                 self.cam.t, self.cam.b,
+                 self.cam.n, self.cam.f)
 
-        love3d.matrix_mode('view')
-        love3d.push()
+    love3d.matrix_mode('view')
+    love3d.push()
 
-        love3d.camera(self.position, self.rotation, self.origin)
-        love3d.transform()
+    love3d.camera(self.position, self.rotation, self.origin)
+    love3d.transform()
+end
 
-        node.signal(self, s, ...)
-
-        love3d.matrix_mode('view')
-        love3d.pop()
-    else
-        node.signal(self, s, ...)
-    end
+function ortho3d:postdraw()
+    love3d.matrix_mode('view')
+    love3d.pop()
 end
 
 setmetatable(ortho3d, {

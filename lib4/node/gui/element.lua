@@ -60,24 +60,26 @@ function element.new(opts, children)
     return self
 end
 
+function element:predraw()
+    love.graphics.push()
+
+    love.graphics.translate(self.position.x, self.position.y)
+    love.graphics.rotate(self.rotation)
+    love.graphics.scale(self.scale.x, self.scale.y)
+
+    love.graphics.stencil(function()
+        love.graphics.rectangle('fill', 0, 0, self.width, self.height)
+    end, 'replace', 1)
+    love.graphics.setStencilTest('greater', 0)
+end
+
+function element:postdraw()
+    love.graphics.setStencilTest()
+    love.graphics.pop()
+end
+
 function element:signal(s, ...)
-    if s == 'draw' then
-        love.graphics.push()
-
-        love.graphics.translate(self.position.x, self.position.y)
-        love.graphics.rotate(self.rotation)
-        love.graphics.scale(self.scale.x, self.scale.y)
-
-        love.graphics.stencil(function()
-            love.graphics.rectangle('fill', 0, 0, self.width, self.height)
-        end, 'replace', 1)
-        love.graphics.setStencilTest('greater', 0)
-
-        node.signal(self, s, ...)
-
-        love.graphics.setStencilTest()
-        love.graphics.pop()
-    elseif util.startswith(s, 'mouse') and s ~= 'mousefocus' then
+    if util.startswith(s, 'mouse') and s ~= 'mousefocus' then
         local x, y = ...
         x = x - self.position.x
         y = y - self.position.y

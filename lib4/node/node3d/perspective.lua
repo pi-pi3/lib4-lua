@@ -56,27 +56,23 @@ function perspective3d.new(cam, children)
     return self
 end
 
-function perspective3d:signal(s, ...)
-    if s == 'draw' then
-        love3d.matrix_mode('proj')
+function perspective3d:predraw()
+    love3d.matrix_mode('proj')
 
-        love3d.identity()
-        love3d.perspective(self.cam.fov, self.cam.aspect,
-                           self.cam.zn, self.cam.zf)
+    love3d.identity()
+    love3d.perspective(self.cam.fov, self.cam.aspect,
+                       self.cam.zn, self.cam.zf)
 
-        love3d.matrix_mode('view')
-        love3d.push()
+    love3d.matrix_mode('view')
+    love3d.push()
 
-        love3d.camera(self.position, self.rotation, self.origin)
-        love3d.transform()
+    love3d.camera(self.position, self.rotation, self.origin)
+    love3d.transform()
+end
 
-        node.signal(self, s, ...)
-
-        love3d.matrix_mode('view')
-        love3d.pop()
-    else
-        node.signal(self, s, ...)
-    end
+function perspective3d:postdraw()
+    love3d.matrix_mode('view')
+    love3d.pop()
 end
 
 setmetatable(perspective3d, {

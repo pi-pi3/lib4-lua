@@ -54,27 +54,23 @@ function cam2d.new(w, h, children)
     return self
 end
 
-function cam2d:signal(s, ...)
-    if s == 'draw' then
-        love.graphics.push()
-        love.graphics.origin()
+function cam2d:predraw()
+    love.graphics.push()
+    love.graphics.origin()
 
-        local origin = -self.origin + screen/2
-        local pos = -self.position + screen/2
-        local rot = -math.rad(self.rotation)
+    local origin = -self.origin + screen/2
+    local pos = -self.position + screen/2
+    local rot = -math.rad(self.rotation)
 
-        love.graphics.translate(origin.x, origin.y)
-        love.graphics.rotate(rot)
-        love.graphics.translate(-origin.x, -origin.y)
-        love.graphics.translate(pos.x, pos.y)
-        love.graphics.scale(self.scale.x, self.scale.y)
+    love.graphics.translate(origin.x, origin.y)
+    love.graphics.rotate(rot)
+    love.graphics.translate(-origin.x, -origin.y)
+    love.graphics.translate(pos.x, pos.y)
+    love.graphics.scale(self.scale.x, self.scale.y)
+end
 
-        node.signal(self, s, ...)
-
-        love.graphics.pop()
-    else
-        node.signal(self, s, ...)
-    end
+function cam2d:postdraw()
+    love.graphics.pop()
 end
 
 function cam2d:resize(width, height)

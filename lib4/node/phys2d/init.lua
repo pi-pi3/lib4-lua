@@ -53,20 +53,17 @@ function phys2d.new(children)
     return self
 end
 
-function phys2d:signal(s, ...)
-    if s == 'draw' then
-        love.graphics.push()
+function node2d:predraw()
+    love.graphics.push()
 
-        love.graphics.translate(self.position.x, self.position.y)
-        love.graphics.rotate(self.rotation)
-        love.graphics.scale(self.scale.x, self.scale.y)
+    love.graphics.translate(self.position.x, self.position.y)
+    love.graphics.rotate(self.rotation)
+    love.graphics.scale(self.scale.x, self.scale.y)
+    love.graphics.shear(self.shear.x, self.shear.y)
+end
 
-        node.signal(self, s, ...)
-
-        love.graphics.pop()
-    else
-        node.signal(self, s, ...)
-    end
+function node2d:postdraw()
+    love.graphics.pop()
 end
 
 function phys2d:phys_update(dt)
